@@ -1,17 +1,15 @@
 import { useState } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
-import NavLink from "@/Components/NavLink";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import {
     BellIcon,
     Cog6Tooth,
     HomeIcon,
-    MagnifyingGlassIcon,
+    QueueListIcon,
     UserGroupIcon,
     ViewFinderCircleIcon,
 } from "@/icons";
+import RectangleStackIcon from "@/icons/RectangleStackIcon";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -27,94 +25,87 @@ export default function Authenticated({ user, header, children }) {
             name: "Clients",
             icon: UserGroupIcon,
             to: "/clients",
+
+        },
+        {
+            name: "Projects",
+            icon: RectangleStackIcon,
+            to: "/projects",
+        },
+        {
+            name: "Tasks",
+            icon: QueueListIcon,
+            to: "/tasks",
         },
     ]);
 
     return (
-        <div className="h-[100dvh] bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300 p-2 flex">
-            {/* {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-                </header>
-            )} */}
-            <div
-                className={`${
-                    showingNavigationDropdown ? "w-[17%]" : "w-[50px]"
-                } h-full pt-3 rounded-xl`}
-            >
-                <div className="flex items-center pb-2 border-b border-gray-300 dark:border-gray-500 mx-6">
-                    <ViewFinderCircleIcon className="h-11 mr-3" />
-                    <div>
-                        <h1 className="text-2xl leading-6 font-bold antialiased">
-                            MyTarget
-                        </h1>
+        <>
+            <div className="h-[100dvh] bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-300 flex p-2">
+                <div className={`w-0 lg:w-[20%] h-full pt-3 transition-all`}>
+                    <div className="flex items-center pb-2 border-b border-gray-300 dark:border-gray-300 mx-6">
+                        <div className={`mr-3 -ml-2`}>
+                            <ViewFinderCircleIcon
+                                className={
+                                    "h-11 text-gray-800 dark:text-gray-300"
+                                }
+                            />
+                        </div>
+                        <div>
+                            <h1 className="text-xl leading-6 font-bold antialiased text-gray-800 dark:text-gray-300">
+                                MyTarget
+                            </h1>
+                        </div>
                     </div>
-                </div>
-                <div className="mx-6 my-4 border-gray-300 rounded-md border shadow-sm flex items-center">
-                    <MagnifyingGlassIcon className={"h-5 w-5 ml-2"} />
-                    <input className="w-full focus:outline-none focus:ring-0 text-sm border-none bg-transparent -ml-2" />
-                </div>
-                <div className="">
-                    <div className="px-6">
-                        <span className="text-sm font-bold opacity-50">
-                            Main
-                        </span>
-                    </div>
-                    <div className="pt-1">
-                        <ul className="space-y-1">
-                            {navigation.map((item) => (
-                                <Link
-                                    to={item.to}
-                                    key={item.name}
-                                    className="flex mx-3 px-3 cursor-pointer items-center text-normal h-10 hover:rounded-lg hover:bg-gray-300 hover:text-gray-700 hover:font-bold"
-                                >
-                                    <item.icon className="h-5 w-5 mr-3" />
-                                    {item.name}
-                                </Link>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div className="w-full">
-                <nav className="flex justify-end pb-6 pt-2">
-                    <div className="flex space-x-2 pr-4">
-                        <button>
-                            <BellIcon className="w-7 h-7" />
-                        </button>
-                        <button>
-                            <Cog6Tooth className="w-7 h-7" />
-                        </button>
-                    </div>
-                </nav>
-                {/* <nav className="bg-white border-b border-gray-100">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex justify-between h-16">
-                            <div className="flex">
-                                <div className="shrink-0 flex items-center">
-                                    <Link href="/">
-                                        <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                    </Link>
-                                </div>
 
-                                <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                    <NavLink
-                                        href={route("dashboard")}
-                                        active={route().current("dashboard")}
+                    <div className="pt-6">
+                        <div className="px-6">
+                            <span className="text-xs font-bold lg:opacity-70">
+                                Main
+                            </span>
+                        </div>
+                        <div className="pt-1">
+                            <ul className={`space-y-0.5`}>
+                                {navigation.map((item) => (
+                                    <Link
+                                        href={item.to}
+                                        key={item.name}
+                                        className={`flex mx-3 px-3 cursor-pointer text-sm items-center h-10 hover:rounded-lg hover:bg-teal-600 hover:text-gray-100 dark:hover:text-gray-300 hover:font-bold ${item.to === window.location.pathname ? "bg-teal-600 rounded-lg text-gray-100 dark:text-gray-300 font-bold" : "text-gray-500 dark:text-gray-300 "}`}
                                     >
-                                        Dashboard
-                                    </NavLink>
-                                </div>
-                            </div>
-
-                            <div className="hidden sm:flex sm:items-center sm:ms-6">
-                                <div className="ms-3 relative">
+                                        <item.icon
+                                            className={`${
+                                                showingNavigationDropdown
+                                                    ? "h-5 w-5 mr-3"
+                                                    : "h-7 w-7"
+                                            }`}
+                                        />
+                                        <span
+                                            className={`${
+                                                !showingNavigationDropdown
+                                                    ? "hidden"
+                                                    : "block"
+                                            } transition-all`}
+                                        >
+                                            {item.name}
+                                        </span>
+                                    </Link>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <main className="h-full w-full ml-0 lg:ml-3 bg-gray-100 dark:bg-gray-800 border p-1 border-gray-300 rounded-lg shadow-lg">
+                    <nav className="border-b border-gray-300 dark:border-gray-600">
+                        <div className="flex justify-between items-center h-12 px-6">
+                            <div>{header || null}</div>
+                            <div className="flex lg:hidden sm:items-center">
+                                <div className="ms-3 relative flex items-center">
                                     <Dropdown>
                                         <Dropdown.Trigger>
-                                            <span className="inline-flex rounded-md">
+                                            <span className="inline-flex rounded-md items-center">
                                                 <button
                                                     type="button"
-                                                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                    className="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-300 hover:text-gray-400 focus:outline-none transition ease-in-out duration-150"
                                                 >
                                                     {user.name}
 
@@ -151,94 +142,45 @@ export default function Authenticated({ user, header, children }) {
                                     </Dropdown>
                                 </div>
                             </div>
-
-                            <div className="-me-2 flex items-center sm:hidden">
-                                <button
-                                    onClick={() =>
-                                        setShowingNavigationDropdown(
-                                            (previousState) => !previousState
-                                        )
+                        </div>
+                    </nav>
+                    <div className="p-6">{children}</div>
+                </main>
+                <div className="w-[4%] hidden lg:flex lg:justify-center">
+                    <div className="pt-4 space-y-5">
+                        <Dropdown>
+                            <Dropdown.Trigger>
+                                <img
+                                    src={
+                                        "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_3.png"
                                     }
-                                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                                >
-                                    <svg
-                                        className="h-6 w-6"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            className={
-                                                !showingNavigationDropdown
-                                                    ? "inline-flex"
-                                                    : "hidden"
-                                            }
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M4 6h16M4 12h16M4 18h16"
-                                        />
-                                        <path
-                                            className={
-                                                showingNavigationDropdown
-                                                    ? "inline-flex"
-                                                    : "hidden"
-                                            }
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M6 18L18 6M6 6l12 12"
-                                        />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                                    className="rounded-full h-6 w-6 select-none cursor-pointer"
+                                    draggable={false}
+                                />
+                            </Dropdown.Trigger>
 
-                    <div
-                        className={
-                            (showingNavigationDropdown ? "block" : "hidden") +
-                            " sm:hidden"
-                        }
-                    >
-                        <div className="pt-2 pb-3 space-y-1">
-                            <ResponsiveNavLink
-                                href={route("dashboard")}
-                                active={route().current("dashboard")}
-                            >
-                                Dashboard
-                            </ResponsiveNavLink>
-                        </div>
-
-                        <div className="pt-4 pb-1 border-t border-gray-200">
-                            <div className="px-4">
-                                <div className="font-medium text-base text-gray-800">
-                                    {user.name}
-                                </div>
-                                <div className="font-medium text-sm text-gray-500">
-                                    {user.email}
-                                </div>
-                            </div>
-
-                            <div className="mt-3 space-y-1">
-                                <ResponsiveNavLink href={route("profile.edit")}>
+                            <Dropdown.Content>
+                                <Dropdown.Link href={route("profile.edit")}>
                                     Profile
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
-                                    method="post"
+                                </Dropdown.Link>
+                                <Dropdown.Link
                                     href={route("logout")}
+                                    method="post"
                                     as="button"
                                 >
                                     Log Out
-                                </ResponsiveNavLink>
-                            </div>
+                                </Dropdown.Link>
+                            </Dropdown.Content>
+                        </Dropdown>
+                        <div className="cursor-pointer">
+                            <BellIcon />
+                        </div>
+                        <div className="cursor-pointer">
+                            <Cog6Tooth />
                         </div>
                     </div>
-                </nav> */}
-                <main className="border h-[90dvh] border-gray-400 shadow-2xl ml-3 p-6 rounded-md mr-4">
-                    {children}
-                </main>
+                </div>
             </div>
-        </div>
+        </>
     );
 }

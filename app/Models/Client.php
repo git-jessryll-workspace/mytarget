@@ -12,7 +12,11 @@ class Client extends Model
     protected $fillable = [
         'name',
         'active',
-        'user_id'
+        'user_id',
+        'note',
+        'date_started',
+        'date_ended',
+        'position',
     ];
 
     public function user()
