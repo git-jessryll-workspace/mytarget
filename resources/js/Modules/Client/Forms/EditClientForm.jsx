@@ -1,7 +1,8 @@
 import { memo, useEffect } from "react";
+import { useForm } from "@inertiajs/react";
+
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import { useForm } from "@inertiajs/react";
 import SecondaryButton from "@/Components/SecondaryButton";
 import PrimaryButton from "@/Components/PrimaryButton";
 

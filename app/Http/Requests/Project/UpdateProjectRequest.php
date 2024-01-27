@@ -24,7 +24,7 @@ class UpdateProjectRequest extends FormRequest
         return [
             'project_name' => "required|string|min:3",
             'description' => 'nullable',
-            'active' => 'boolean',
+            'active' => 'nullable|boolean',
             'client_id' => 'required|numeric'
         ];
     }

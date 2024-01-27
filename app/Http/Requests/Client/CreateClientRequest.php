@@ -22,7 +22,7 @@ class CreateClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:4|alpha',
+            'name' => 'required|min:4',
             'note' => 'nullable',
             'date_started' => 'nullable|date',
             'date_ended' => 'nullable|date',

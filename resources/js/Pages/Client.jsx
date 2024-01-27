@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { QueueListIcon } from "@/icons";
-import ClientList from "./Client/Partial/ClientList";
-import CreateClientForm from "./Client/Forms/CreateClientForm";
 import NavPanel from "@/Components/partials/NavPanel";
+import { CreateClientForm } from "@/Modules/Client/Forms";
+import { ClientList } from "@/Modules/Client/Partial";
 
 export default function Client({ auth, clients, search_query }) {
     const [clientList, setClientList] = useState([]);
@@ -37,7 +37,7 @@ export default function Client({ auth, clients, search_query }) {
                 <NavPanel
                     search_query={search_query}
                     keyProps="clients"
-                    updateClientList={updateClientList}
+                    updateList={updateClientList}
                     data={clients}
                     CreateForm={CreateClientForm}
                 />

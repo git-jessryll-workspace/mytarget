@@ -12,6 +12,7 @@ import PlusIcon from "./PlusIcon";
 import ChevronLeftIcon from "./ChevronLeftIcon";
 import ChevronRightIcon from "./ChevronRightIcon";
 import CheckIcon from "./CheckIcon";
+import RectangleStackIcon from "./RectangleStackIcon";
 
 export {
     HomeIcon,
@@ -27,5 +28,6 @@ export {
     PlusIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
-    CheckIcon
+    CheckIcon,
+    RectangleStackIcon
 };

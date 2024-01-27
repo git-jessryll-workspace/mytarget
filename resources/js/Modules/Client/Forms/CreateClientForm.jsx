@@ -1,23 +1,31 @@
+import { useForm } from "@inertiajs/react";
+
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import TextInput from "@/Components/TextInput";
-import { useForm } from "@inertiajs/react";
 
-const CreateClientForm = ({ updateClientList, setShowCreateClient }) => {
-    const { data, setData, post:postFn, processing, errors, reset } = useForm({
+const CreateClientForm = ({ updateList, setShowCreate }) => {
+    const {
+        data,
+        setData,
+        post: postFn,
+        processing,
+        errors,
+        reset,
+    } = useForm({
         name: "",
         date_started: "",
         date_ended: "",
         position: "",
         note: "",
     });
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        await postFn(route("clients.store"), {
+        postFn(route("clients.store"), {
             onSuccess: (res) => {
-                setShowCreateClient(false);
-                updateClientList(res.props.clients);
+                setShowCreate(false);
+                updateList(res.props.clients);
                 reset();
             },
         });
@@ -46,6 +54,9 @@ const CreateClientForm = ({ updateClientList, setShowCreateClient }) => {
                             }
                         />
                     </div>
+                    {errors.name && (
+                        <p className="text-sm text-error">{errors.name}</p>
+                    )}
                 </div>
                 <div className="space-y-2">
                     <InputLabel value="Position" />
@@ -59,6 +70,9 @@ const CreateClientForm = ({ updateClientList, setShowCreateClient }) => {
                             }
                         />
                     </div>
+                    {errors.position && (
+                        <p className="text-sm text-error">{errors.position}</p>
+                    )}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <div className="space-y-2">
@@ -73,6 +87,11 @@ const CreateClientForm = ({ updateClientList, setShowCreateClient }) => {
                                     setData("date_started", event.target.value)
                                 }
                             />
+                            {errors.date_started && (
+                                <p className="text-sm text-error">
+                                    {errors.date_started}
+                                </p>
+                            )}
                         </div>
                     </div>
                     <div className="space-y-2">
@@ -88,6 +107,11 @@ const CreateClientForm = ({ updateClientList, setShowCreateClient }) => {
                                 }
                             />
                         </div>
+                        {errors.date_ended && (
+                            <p className="text-sm text-error">
+                                {errors.date_ended}
+                            </p>
+                        )}
                     </div>
                 </div>
                 <div className="space-y-2">
@@ -107,15 +131,13 @@ const CreateClientForm = ({ updateClientList, setShowCreateClient }) => {
                     <div className="space-x-2">
                         <SecondaryButton
                             onClick={() => {
-                                setShowCreateClient(false);
+                                setShowCreate(false);
                             }}
                             type="button"
                         >
                             Cancel
                         </SecondaryButton>
-                        <PrimaryButton type="submit">
-                            Submit
-                        </PrimaryButton>
+                        <PrimaryButton type="submit">Submit</PrimaryButton>
                     </div>
                 </div>
             </form>

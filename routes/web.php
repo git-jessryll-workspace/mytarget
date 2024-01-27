@@ -7,8 +7,9 @@ use App\Http\Controllers\Client\DeleteClientController;
 use App\Http\Controllers\Client\UpdateClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Project\CreateProjectController;
+use App\Http\Controllers\Project\DeleteProjectController;
 use App\Http\Controllers\Project\ProjectController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\Project\UpdateProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -41,8 +42,8 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    Route::prefix('utils')->group(function() {
-        Route::prefix('clients')->group(function() {
+    Route::prefix('utils')->group(function () {
+        Route::prefix('clients')->group(function () {
             Route::get('/select', ClientSelectController::class)->name('utils.clients.select');
         });
     });
@@ -50,6 +51,10 @@ Route::middleware('auth')->group(function () {
     Route::prefix('projects')->group(function () {
         Route::get('/', ProjectController::class)->name('projects.index');
         Route::post('/', CreateProjectController::class)->name('projects.store');
+        Route::prefix('{clientProject}')->group(function () {
+            Route::put('/', UpdateProjectController::class)->name('projects.update');
+            Route::delete('/', DeleteProjectController::class)->name('projects.destroy');
+        });
     });
 });
 

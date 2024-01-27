@@ -1,17 +1,21 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, memo } from "react";
 import { Combobox, Transition } from "@headlessui/react";
+
 import { CheckIcon, ChevronUpDownIcon } from "@/icons";
 
-export default function ComboboxSelect({
+export default memo(function ComboboxSelect({
     items,
     keySearch,
     cbSelected,
     selectedItem = null,
 }) {
-    const [selected, setSelected] = useState(
-        !selectedItem ? items[0] : selectedItem
-    );
+    const [selected, setSelected] = useState(items[0]);
     const [query, setQuery] = useState("");
+    useEffect(() => {
+        if (selectedItem) {
+            setSelected(selectedItem);
+        }
+    }, [selectedItem?.id]);
 
     useEffect(() => {
         cbSelected(selected);
@@ -103,4 +107,4 @@ export default function ComboboxSelect({
             </div>
         </Combobox>
     );
-}
+});

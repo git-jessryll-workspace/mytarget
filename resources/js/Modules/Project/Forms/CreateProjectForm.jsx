@@ -8,7 +8,7 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import TextInput from "@/Components/TextInput";
 import ComboboxSelect from "@/Components/ComboboxSelect";
 
-export default function CreateProjectForm({ updateClientList, setShowCreate }) {
+export default function CreateProjectForm({ updateList, setShowCreate }) {
     const {
         data,
         setData,
@@ -26,13 +26,10 @@ export default function CreateProjectForm({ updateClientList, setShowCreate }) {
 
     useEffect(() => {
         axios.get(route("utils.clients.select")).then((res) => {
+            console.log(res.data)
             if (res.status === 200) {
                 setClientOptions(
-                    res.data.clients.map((i) => ({
-                        ...i,
-                        label: i.name,
-                        value: i.id,
-                    }))
+                    res.data.clients
                 );
             }
         });
@@ -41,10 +38,11 @@ export default function CreateProjectForm({ updateClientList, setShowCreate }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        postFn(route("projects.store"), {
+        await postFn(route("projects.store"), {
             onSuccess: (res) => {
-                updateClientList(res.props.projects);
+                updateList(res.props.projects)
                 setShowCreate(false)
+                reset();
             },
         });
     };

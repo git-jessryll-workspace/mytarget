@@ -35,6 +35,6 @@ class ProjectController extends Controller
             ->orderBy('client_projects.updated_at', 'desc')
             ->paginate(50);
 
-        return Inertia::render('ClientProject', ['projects' => $projects]);
+        return Inertia::render('ClientProject', ['projects' => $projects, 'search_query' => $search]);
     }
 }

@@ -1,0 +1,26 @@
+import { memo } from "react";
+import Dropdown from "./Dropdown";
+import EllipsisVerticalIcon from "@/icons/EllipsisVerticalIcon";
+
+export default memo(function DropdownActionTable({ actionObject }) {
+    return (
+        <div className="flex justify-center">
+            <Dropdown>
+                <Dropdown.Trigger>
+                    <EllipsisVerticalIcon className="cursor-pointer h-6 w-6" />
+                </Dropdown.Trigger>
+                <Dropdown.Content>
+                    {Object.entries(actionObject).map(([key, data]) => (
+                        <div
+                            key={key}
+                            className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-200 hover:bg-teal-600 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-100 transition cursor-pointer duration-150 ease-in-out"
+                            onClick={data.action}
+                        >
+                            {data.label}
+                        </div>
+                    ))}
+                </Dropdown.Content>
+            </Dropdown>
+        </div>
+    );
+});

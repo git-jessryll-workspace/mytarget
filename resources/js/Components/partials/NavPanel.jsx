@@ -6,23 +6,23 @@ import XCircleIcon from "@/icons/XCircleIcon";
 import { Link, useForm } from "@inertiajs/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/icons";
 
-export default memo(function NavPanel({
+export default function NavPanel({
     keyProps,
-    updateClientList,
+    updateList,
     data,
     CreateForm,
     search_query
 }) {
-    const [search, setSearch] = useState(search_query);
-    const [showCreateClient, setShowCreateClient] = useState(false);
+    const [search, setSearch] = useState(search_query || "");
+    const [showCreate, setShowCreate] = useState(false);
     const {get: getFn} = useForm({})
 
     return (
         <>
-            <Modal show={showCreateClient} maxWidth="md">
+            <Modal show={showCreate} maxWidth="md">
                 <CreateForm
-                    updateClientList={updateClientList}
-                    setShowCreate={setShowCreateClient}
+                    updateList={updateList}
+                    setShowCreate={setShowCreate}
                 />
             </Modal>
             <div className="flex justify-end lg:justify-between items-center">
@@ -41,7 +41,7 @@ export default memo(function NavPanel({
                                         {
                                             onSuccess: (res) => {
                                                 setSearch(search);
-                                                updateClientList(
+                                                updateList(
                                                     res.props[keyProps]
                                                 );
                                             },
@@ -54,14 +54,13 @@ export default memo(function NavPanel({
                             <div
                                 className="absolute right-2 cursor-pointer"
                                 onClick={() => {
-                                    console.log("asd");
                                     getFn(
                                         route(`${keyProps}.index`, {
                                             search_query: "",
                                         }),
                                         {
                                             onSuccess: (res) => {
-                                                updateClientList(
+                                                updateList(
                                                     res.props[keyProps]
                                                 );
                                                 setSearch("");
@@ -76,7 +75,7 @@ export default memo(function NavPanel({
                     </div>
                     <div className="w-auto lg:w-[30%]">
                         <PrimaryButton
-                            onClick={() => setShowCreateClient(true)}
+                            onClick={() => setShowCreate(true)}
                         >
                             <span>Create New</span>
                         </PrimaryButton>
@@ -110,4 +109,4 @@ export default memo(function NavPanel({
             </div>
         </>
     );
-});
+};
