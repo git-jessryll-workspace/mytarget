@@ -25,6 +25,15 @@ const ClientList = ({ clients, updateClientList }) => {
                         },
                         label: "Edit",
                     },
+                    show: {
+                        action: () => {
+                            window.location.href = route(
+                                "clients.show",
+                                client.id
+                            );
+                        },
+                        label: "View",
+                    },
                     delete: {
                         action: () => {
                             setSelectedClient(client);

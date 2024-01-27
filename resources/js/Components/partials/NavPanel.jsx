@@ -11,11 +11,12 @@ export default function NavPanel({
     updateList,
     data,
     CreateForm,
-    search_query
+    search_query,
+    disableSearch = false,
 }) {
     const [search, setSearch] = useState(search_query || "");
     const [showCreate, setShowCreate] = useState(false);
-    const {get: getFn} = useForm({})
+    const { get: getFn } = useForm({});
 
     return (
         <>
@@ -28,55 +29,59 @@ export default function NavPanel({
             <div className="flex justify-end lg:justify-between items-center">
                 <div className="w-full lg:w-[60%] hidden lg:flex space-x-3 items-center">
                     <div className="w-full relative flex items-center">
-                        <TextInput
-                            placeholder="Search client name"
-                            value={search}
-                            onChange={(event) => setSearch(event.target.value)}
-                            onKeyPress={(event) => {
-                                if (event.key === "Enter") {
-                                    getFn(
-                                        route(`${keyProps}.index`, {
-                                            search_query: search,
-                                        }),
-                                        {
-                                            onSuccess: (res) => {
-                                                setSearch(search);
-                                                updateList(
-                                                    res.props[keyProps]
-                                                );
-                                            },
+                        {!disableSearch && (
+                            <>
+                                <TextInput
+                                    placeholder="Search client name"
+                                    value={search}
+                                    onChange={(event) =>
+                                        setSearch(event.target.value)
+                                    }
+                                    onKeyPress={(event) => {
+                                        if (event.key === "Enter") {
+                                            getFn(
+                                                route(`${keyProps}.index`, {
+                                                    search_query: search,
+                                                }),
+                                                {
+                                                    onSuccess: (res) => {
+                                                        setSearch(search);
+                                                        updateList(
+                                                            res.props[keyProps]
+                                                        );
+                                                    },
+                                                }
+                                            );
                                         }
-                                    );
-                                }
-                            }}
-                        />
-                        {search !== "" && (
-                            <div
-                                className="absolute right-2 cursor-pointer"
-                                onClick={() => {
-                                    getFn(
-                                        route(`${keyProps}.index`, {
-                                            search_query: "",
-                                        }),
-                                        {
-                                            onSuccess: (res) => {
-                                                updateList(
-                                                    res.props[keyProps]
-                                                );
-                                                setSearch("");
-                                            },
-                                        }
-                                    );
-                                }}
-                            >
-                                <XCircleIcon className="w-5 h-5 text-gray-600/100 hover:text-gray-700 dark:hover:text-white" />
-                            </div>
+                                    }}
+                                />
+                                {search !== "" && (
+                                    <div
+                                        className="absolute right-2 cursor-pointer"
+                                        onClick={() => {
+                                            getFn(
+                                                route(`${keyProps}.index`, {
+                                                    search_query: "",
+                                                }),
+                                                {
+                                                    onSuccess: (res) => {
+                                                        updateList(
+                                                            res.props[keyProps]
+                                                        );
+                                                        setSearch("");
+                                                    },
+                                                }
+                                            );
+                                        }}
+                                    >
+                                        <XCircleIcon className="w-5 h-5 text-gray-600/100 hover:text-gray-700 dark:hover:text-white" />
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
                     <div className="w-auto lg:w-[30%]">
-                        <PrimaryButton
-                            onClick={() => setShowCreate(true)}
-                        >
+                        <PrimaryButton onClick={() => setShowCreate(true)}>
                             <span>Create New</span>
                         </PrimaryButton>
                     </div>
@@ -109,4 +114,4 @@ export default function NavPanel({
             </div>
         </>
     );
-};
+}

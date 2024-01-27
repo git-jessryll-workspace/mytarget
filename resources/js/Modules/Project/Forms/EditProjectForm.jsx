@@ -12,6 +12,7 @@ export default function EditProjectForm({
     updateList,
     setShowEdit,
     project,
+    skipClientSelect = false,
 }) {
     const {
         data,
@@ -80,21 +81,23 @@ export default function EditProjectForm({
                 <div></div>
             </div>
             <form className="space-y-4 pt-4" onSubmit={handleSubmit}>
-                <div className="space-y-2">
-                    <InputLabel value={"Client"} />
-                    <div>
-                        <ComboboxSelect
-                            items={clientOptions}
-                            keySearch={"name"}
-                            cbSelected={(dataSelected) =>
-                                setData("client_id", dataSelected?.id)
-                            }
-                            selectedItem={clientOptions.find(
-                                (item) => item.id === data?.client_id
-                            )}
-                        />
+                {skipClientSelect && (
+                    <div className="space-y-2">
+                        <InputLabel value={"Client"} />
+                        <div>
+                            <ComboboxSelect
+                                items={clientOptions}
+                                keySearch={"name"}
+                                cbSelected={(dataSelected) =>
+                                    setData("client_id", dataSelected?.id)
+                                }
+                                selectedItem={clientOptions.find(
+                                    (item) => item.id === data?.client_id
+                                )}
+                            />
+                        </div>
                     </div>
-                </div>
+                )}
                 <div className="space-y-2">
                     <InputLabel value={"Project name"} />
                     <div>

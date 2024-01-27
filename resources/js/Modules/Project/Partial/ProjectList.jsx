@@ -11,7 +11,7 @@ const ProjectList = ({ projects, updateList }) => {
     const [showEdit, setShowEdit] = useState(false);
 
     const projectListData = projects.map((project) => ({
-        id: project.id,
+        id: `#${project.id}`,
         project_name: project.project_name,
         client: project.client?.name,
         status: project.active === 1 ? "Active" : "Inactive",
