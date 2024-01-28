@@ -1,18 +1,9 @@
 import { useState, useEffect } from "react";
 import { Head } from "@inertiajs/react";
 
-import DropdownActiontable from "@/Components/DropdownActiontable";
-import Modal from "@/Components/Modal";
-import TableList from "@/Components/TableList";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import {
-    CreateProjectForm,
-    DeleteProjectForm,
-    EditProjectForm,
-} from "@/Modules/Project/Forms";
 import { ChevronRightIcon, QueueListIcon } from "@/icons";
-import NavPanel from "@/Components/partials/NavPanel";
-import { dateFormat } from "@/utils/date";
+import ClientProjectList from "@/Modules/Client/Partial/ClientProjectList";
 
 export default function Show({ auth, client, projects }) {
     const [panelNav, setPanelNav] = useState([
@@ -32,66 +23,13 @@ export default function Show({ auth, client, projects }) {
             current: false,
         },
     ]);
-    const [selectedProject, setSelectedProject] = useState(null);
-    const [showEditProject, setShowEditProject] = useState(false);
-    const [showDeleteProject, setShowDeleteProject] = useState(false);
-    const [projectList, setProjectList] = useState([]);
-
     const currentTab = panelNav.find((tab) => tab.current);
 
-    const projectListData = projectList.map((project) => ({
-        id: `#${project.id}`,
-        project_name: project.project_name,
-        updated_date: dateFormat(project.updated_at),
-        status: project.active === 1 ? "Active" : "Inactive",
-        action: (
-            <DropdownActiontable
-                actionObject={{
-                    edit: {
-                        action: () => {
-                            setSelectedProject(project);
-                            setShowEditProject(true);
-                        },
-                        label: "Edit",
-                    },
-                    delete: {
-                        action: () => {
-                            setSelectedProject(project);
-                            setShowDeleteProject(true);
-                        },
-                        label: "Delete",
-                    },
-                }}
-            />
-        ),
-    }));
-
-    const updateProjectList = (projectsData) => {
-        setProjectList(projectsData.data);
-    };
-
-    useEffect(() => {
-        setProjectList(projects.data);
-    }, []);
 
     return (
         <>
             <Head title={client.name} />
-            <Modal show={showEditProject} maxWidth="md">
-                <EditProjectForm
-                    updateList={updateProjectList}
-                    project={selectedProject}
-                    setShowEdit={setShowEditProject}
-                    skipClientSelect={true}
-                />
-            </Modal>
-            <Modal show={showDeleteProject} maxWidth="md">
-                <DeleteProjectForm
-                    updateList={updateProjectList}
-                    projectId={selectedProject?.id}
-                    setShowDelete={setShowDeleteProject}
-                />
-            </Modal>
+
             <Authenticated
                 user={auth.user}
                 header={
@@ -144,28 +82,7 @@ export default function Show({ auth, client, projects }) {
                         </nav>
                     </div>
                 </div>
-                {currentTab.code === "projects" && (
-                    <div className="pt-6">
-                        <NavPanel
-                            keyProps={"projects"}
-                            updateList={updateProjectList}
-                            data={projects}
-                            CreateForm={CreateProjectForm}
-                        />
-                        <div className="pt-4">
-                            <TableList
-                                theadObject={{
-                                    id: "#",
-                                    project_name: "Project Name",
-                                    updated_date: "Updated Date",
-                                    status: "Status",
-                                    action: "",
-                                }}
-                                items={projectListData}
-                            />
-                        </div>
-                    </div>
-                )}
+                {currentTab.code === "projects" && <ClientProjectList />}
             </Authenticated>
         </>
     );

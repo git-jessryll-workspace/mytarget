@@ -6,8 +6,10 @@ namespace Database\Seeders;
 
 use App\Models\Client;
 use App\Models\ClientProject;
+use App\Models\Contact;
 use App\Models\Service;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,5 +23,17 @@ class DatabaseSeeder extends Seeder
         Client::factory(20)->create();
         Service::factory(20)->create();
         ClientProject::factory(20)->create();
+        Contact::factory(20)->create();
+        $clientContactsData = [];
+        DB::table('contacts')->get()->each(function ($contact) use (&$clientContactsData) {
+            $clientContactsData[] = [
+                'contact_id' => $contact->id,
+                'client_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        });
+
+        DB::table('client_contacts')->insert($clientContactsData);
     }
 }

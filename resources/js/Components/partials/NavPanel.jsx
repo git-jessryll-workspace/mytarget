@@ -3,7 +3,7 @@ import Modal from "../Modal";
 import TextInput from "../TextInput";
 import PrimaryButton from "../PrimaryButton";
 import XCircleIcon from "@/icons/XCircleIcon";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/icons";
 
 export default function NavPanel({
@@ -13,7 +13,11 @@ export default function NavPanel({
     CreateForm,
     search_query,
     disableSearch = false,
+    routeControl = null,
+    search_query_key = null,
 }) {
+    const { primaryId } = usePage().props;
+    const { url } = usePage();
     const [search, setSearch] = useState(search_query || "");
     const [showCreate, setShowCreate] = useState(false);
     const { get: getFn } = useForm({});
@@ -39,19 +43,28 @@ export default function NavPanel({
                                     }
                                     onKeyPress={(event) => {
                                         if (event.key === "Enter") {
-                                            getFn(
-                                                route(`${keyProps}.index`, {
-                                                    search_query: search,
-                                                }),
-                                                {
-                                                    onSuccess: (res) => {
-                                                        setSearch(search);
-                                                        updateList(
-                                                            res.props[keyProps]
-                                                        );
+                                            let params = {
+                                                search_query: search,
+                                            };
+                                            let routeName = `${keyProps}.index`;
+                                            if (routeControl) {
+                                                routeName = routeControl;
+                                                params = [
+                                                    { id: primaryId },
+                                                    {
+                                                        [search_query_key]:
+                                                            search,
                                                     },
-                                                }
-                                            );
+                                                ];
+                                            }
+                                            getFn(route(routeName, params), {
+                                                onSuccess: (res) => {
+                                                    setSearch(search);
+                                                    updateList(
+                                                        res.props[keyProps]
+                                                    );
+                                                },
+                                            });
                                         }
                                     }}
                                 />
@@ -59,19 +72,25 @@ export default function NavPanel({
                                     <div
                                         className="absolute right-2 cursor-pointer"
                                         onClick={() => {
-                                            getFn(
-                                                route(`${keyProps}.index`, {
-                                                    search_query: "",
-                                                }),
-                                                {
-                                                    onSuccess: (res) => {
-                                                        updateList(
-                                                            res.props[keyProps]
-                                                        );
-                                                        setSearch("");
-                                                    },
-                                                }
-                                            );
+                                            let routeName = `${keyProps}.index`;
+                                            let params = {
+                                                search_query: "",
+                                            };
+                                            if (routeControl) {
+                                                routeName = routeControl;
+                                                params = {
+                                                    id: primaryId,
+                                                    [search_query_key]: "",
+                                                };
+                                            }
+                                            getFn(route(routeName, params), {
+                                                onSuccess: (res) => {
+                                                    updateList(
+                                                        res.props[keyProps]
+                                                    );
+                                                    setSearch("");
+                                                },
+                                            });
                                         }}
                                     >
                                         <XCircleIcon className="w-5 h-5 text-gray-600/100 hover:text-gray-700 dark:hover:text-white" />

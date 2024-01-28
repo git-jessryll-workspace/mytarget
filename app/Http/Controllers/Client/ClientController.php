@@ -19,8 +19,10 @@ class ClientController extends Controller
             $search = $request->get('search_query');
             $query->where('name', 'LIKE', "%{$search}%");
         }
+        $clients = $query->orderBy('updated_at', 'desc')->paginate(50);
+        $clients->appends(['search_query' => $request->get('search_query') ?? '']);
         return Inertia::render('Client', [
-            'clients' => $query->orderBy('updated_at', 'desc')->paginate(50),
+            'clients' => $clients,
             'search_query' => $request->get('search_query') ?? ''
         ]);
     }
