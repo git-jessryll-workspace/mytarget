@@ -7,6 +7,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import TextInput from "@/Components/TextInput";
 import ComboboxSelect from "@/Components/ComboboxSelect";
+import ErrorInput from "@/Components/ErrorInput";
 
 export default function EditProjectForm({
     updateList,
@@ -96,6 +97,7 @@ export default function EditProjectForm({
                                 )}
                             />
                         </div>
+                        <ErrorInput errors={errors} errorKey="client_id" />
                     </div>
                 )}
                 <div className="space-y-2">
@@ -111,6 +113,7 @@ export default function EditProjectForm({
                             }
                         />
                     </div>
+                    <ErrorInput errors={errors} errorKey="project_name" />
                 </div>
                 <div className="space-y-2">
                     <InputLabel value={"Description"} />
@@ -124,6 +127,7 @@ export default function EditProjectForm({
                             placeholder="Short description on this client"
                         ></textarea>
                     </div>
+                    <ErrorInput errors={errors} errorKey="description" />
                 </div>
 
                 <div className="flex justify-end">

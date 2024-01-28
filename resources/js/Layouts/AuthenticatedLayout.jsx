@@ -7,6 +7,7 @@ import {
     HomeIcon,
     QueueListIcon,
     UserGroupIcon,
+    UsersIcon,
     ViewFinderCircleIcon,
 } from "@/icons";
 import RectangleStackIcon from "@/icons/RectangleStackIcon";
@@ -25,7 +26,6 @@ export default function Authenticated({ user, header, children }) {
             name: "Clients",
             icon: UserGroupIcon,
             to: "/clients",
-
         },
         {
             name: "Projects",
@@ -36,6 +36,11 @@ export default function Authenticated({ user, header, children }) {
             name: "Tasks",
             icon: QueueListIcon,
             to: "/tasks",
+        },
+        {
+            name: "Contacts",
+            icon: UsersIcon,
+            to: "/contacts",
         },
     ]);
 
@@ -70,7 +75,13 @@ export default function Authenticated({ user, header, children }) {
                                     <Link
                                         href={item.to}
                                         key={item.name}
-                                        className={`flex mx-3 px-3 cursor-pointer text-sm items-center h-10 hover:rounded-lg hover:text-gray-100 dark:hover:text-gray-300 hover:font-bold ${window.location.pathname.startsWith(item.to) ? "bg-teal-600 rounded-lg text-gray-100 dark:text-gray-300 font-bold" : "text-gray-500 dark:text-gray-300 "}`}
+                                        className={`flex mx-3 px-3 cursor-pointer text-sm items-center h-10 hover:rounded-lg hover:text-gray-100 dark:hover:text-gray-300 hover:font-bold ${
+                                            window.location.pathname.startsWith(
+                                                item.to
+                                            )
+                                                ? "bg-teal-600 rounded-lg text-gray-100 dark:text-gray-300 font-bold"
+                                                : "text-gray-500 dark:text-gray-300 "
+                                        }`}
                                     >
                                         <item.icon
                                             className={`${

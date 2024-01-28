@@ -8,7 +8,6 @@ export default function DeleteProjectForm({
     setShowDelete,
     updateList,
 }) {
-    console.log(projectId)
     const { delete: deleteMethod } = useForm({});
     const handleSubmit = (event) => {
         event.preventDefault();

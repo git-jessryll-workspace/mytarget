@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import axios from "axios";
 
 import InputLabel from "@/Components/InputLabel";
@@ -7,8 +7,10 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import TextInput from "@/Components/TextInput";
 import ComboboxSelect from "@/Components/ComboboxSelect";
+import ErrorInput from "@/Components/ErrorInput";
 
 export default function CreateProjectForm({ updateList, setShowCreate }) {
+    const client = usePage().props?.client;
     const {
         data,
         setData,
@@ -20,17 +22,15 @@ export default function CreateProjectForm({ updateList, setShowCreate }) {
         project_name: "",
         description: "",
         active: true,
-        client_id: null,
+        client_id: client?.id || null,
     });
     const [clientOptions, setClientOptions] = useState([]);
 
     useEffect(() => {
         axios.get(route("utils.clients.select")).then((res) => {
-            console.log(res.data)
+            console.log(res.data);
             if (res.status === 200) {
-                setClientOptions(
-                    res.data.clients
-                );
+                setClientOptions(res.data.clients);
             }
         });
     }, []);
@@ -40,8 +40,8 @@ export default function CreateProjectForm({ updateList, setShowCreate }) {
 
         await postFn(route("projects.store"), {
             onSuccess: (res) => {
-                updateList(res.props.projects)
-                setShowCreate(false)
+                updateList(res.props.projects);
+                setShowCreate(false);
                 reset();
             },
         });
@@ -57,18 +57,21 @@ export default function CreateProjectForm({ updateList, setShowCreate }) {
                 <div></div>
             </div>
             <form className="space-y-4 pt-4" onSubmit={handleSubmit}>
-                <div className="space-y-2">
-                    <InputLabel value={"Client"} />
-                    <div>
-                        <ComboboxSelect
-                            items={clientOptions}
-                            keySearch={"name"}
-                            cbSelected={(dataSelected) =>
-                                setData("client_id", dataSelected?.id)
-                            }
-                        />
+                {!client && (
+                    <div className="space-y-2">
+                        <InputLabel value={"Client"} />
+                        <div>
+                            <ComboboxSelect
+                                items={clientOptions}
+                                keySearch={"name"}
+                                cbSelected={(dataSelected) =>
+                                    setData("client_id", dataSelected?.id)
+                                }
+                            />
+                        </div>
+                        <ErrorInput errors={errors} errorKey="client_id" />
                     </div>
-                </div>
+                )}
                 <div className="space-y-2">
                     <InputLabel value={"Project name"} />
                     <div>
@@ -82,6 +85,7 @@ export default function CreateProjectForm({ updateList, setShowCreate }) {
                             }
                         />
                     </div>
+                    <ErrorInput errors={errors} errorKey={"project_name"} />
                 </div>
                 <div className="space-y-2">
                     <InputLabel value={"Description"} />
@@ -95,6 +99,7 @@ export default function CreateProjectForm({ updateList, setShowCreate }) {
                             placeholder="Short description on this client"
                         ></textarea>
                     </div>
+                    <ErrorInput errors={errors} errorKey={"description"}/>
                 </div>
 
                 <div className="flex justify-end">

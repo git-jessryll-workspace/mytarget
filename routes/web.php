@@ -6,6 +6,10 @@ use App\Http\Controllers\Client\CreateClientController;
 use App\Http\Controllers\Client\DeleteClientController;
 use App\Http\Controllers\Client\ShowClientController;
 use App\Http\Controllers\Client\UpdateClientController;
+use App\Http\Controllers\Contact\ContactController;
+use App\Http\Controllers\Contact\CreateContactController;
+use App\Http\Controllers\Contact\DeleteContactController;
+use App\Http\Controllers\Contact\UpdateContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Project\CreateProjectController;
 use App\Http\Controllers\Project\DeleteProjectController;
@@ -56,6 +60,15 @@ Route::middleware('auth')->group(function () {
         Route::prefix('{clientProject}')->group(function () {
             Route::put('/', UpdateProjectController::class)->name('projects.update');
             Route::delete('/', DeleteProjectController::class)->name('projects.destroy');
+        });
+    });
+
+    Route::prefix('contacts')->group(function() {
+        Route::get('/', ContactController::class)->name('contacts.index');
+        Route::post('/', CreateContactController::class)->name('contacts.store');
+        Route::prefix('{contact}')->group(function() {
+            Route::put('/', UpdateContactController::class)->name('contacts.update');
+            Route::delete('/', DeleteContactController::class)->name('contacts.destroy');
         });
     });
 });

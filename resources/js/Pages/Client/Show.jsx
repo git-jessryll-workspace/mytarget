@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Head } from "@inertiajs/react";
 
 import DropdownActiontable from "@/Components/DropdownActiontable";
 import Modal from "@/Components/Modal";
@@ -75,6 +76,7 @@ export default function Show({ auth, client, projects }) {
 
     return (
         <>
+            <Head title={client.name} />
             <Modal show={showEditProject} maxWidth="md">
                 <EditProjectForm
                     updateList={updateProjectList}

@@ -15,11 +15,13 @@ class ClientSelectController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $clients = DB::table('clients')
+        $clients = Cache::remember(ClientConfig::querySelectionListKey(), 60, function () {
+            return DB::table('clients')
                 ->select(['clients.name', 'clients.id', 'clients.active'])
                 ->where('user_id', auth()->id())
                 ->get();
-        
+        });
+
         return response()->json(['clients' => $clients]);
     }
 }

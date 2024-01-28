@@ -4,6 +4,7 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import TextInput from "@/Components/TextInput";
+import ErrorInput from "@/Components/ErrorInput";
 
 const CreateClientForm = ({ updateList, setShowCreate }) => {
     const {
@@ -54,9 +55,7 @@ const CreateClientForm = ({ updateList, setShowCreate }) => {
                             }
                         />
                     </div>
-                    {errors.name && (
-                        <p className="text-sm text-error">{errors.name}</p>
-                    )}
+                    <ErrorInput errors={errors} errorKey="name" />
                 </div>
                 <div className="space-y-2">
                     <InputLabel value="Position" />
