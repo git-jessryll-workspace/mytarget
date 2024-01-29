@@ -78,10 +78,18 @@ export default function NavPanel({
                                             };
                                             if (routeControl) {
                                                 routeName = routeControl;
-                                                params = {
-                                                    id: primaryId,
-                                                    [search_query_key]: "",
-                                                };
+                                                params = [
+                                                    {
+                                                        id: primaryId,
+                                                    },
+                                                    {
+                                                        [search_query_key]: "",
+                                                    },
+                                                    {
+                                                        current_search_tab:
+                                                            search_query_key,
+                                                    },
+                                                ];
                                             }
                                             getFn(route(routeName, params), {
                                                 onSuccess: (res) => {

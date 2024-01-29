@@ -18,9 +18,11 @@ class ShowClientController extends Controller
     {
         $search_query_project = $request->get('search_query_project') ?? '';
         $search_query_contact = $request->get('search_query_contact') ?? '';
+        // return response()->json($request->all());
 
         $queryContact = ClientContact::query()->select([
             'client_contacts.client_id',
+            'client_contacts.contact_id',
             'contacts.id',
             'contacts.name',
             'contacts.email',
@@ -46,16 +48,25 @@ class ShowClientController extends Controller
         $projects = $queryProject->orderBy('active', 'desc')
             ->orderBy('updated_at', 'desc')
             ->paginate(50);
-        $projects->appends(['search_query_project' => $search_query_project]);
-
         $contacts = $queryContact->orderBy('contacts.name', 'desc')->paginate(50);
-        $contacts->appends(['search_query_contact' => $search_query_contact]);
+
+        $projects->appends([
+            'search_query_project' => $search_query_project,
+            'current_search_tab' => $request->get('current_search_tab')
+        ]);
+
+        $contacts->appends([
+            'search_query_contact' => $search_query_contact,
+            'current_search_tab' => $request->get('current_search_tab')
+        ]);
+
         return Inertia::render('Client/Show', [
             'client' => $client,
             'projects' => $projects,
             'contacts' => $contacts,
             'search_query_project' => $search_query_project,
             'search_query_contact' => $search_query_contact,
+            'current_search_tab' => $request->get('current_search_tab') ?? "",
             'primaryId' => $client->id,
             'request_all' => $request->all()
         ]);

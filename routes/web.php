@@ -23,4 +23,5 @@ require __DIR__ . '/web/profile.route.php';
 require __DIR__ . '/web/clients.route.php';
 require __DIR__ . '/web/projects.route.php';
 require __DIR__ . '/web/contacts.route.php';
+require __DIR__ . '/web/client_contacts.route.php';
 require __DIR__ . '/web/utils.route.php';

@@ -1,11 +1,18 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Head } from "@inertiajs/react";
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { ChevronRightIcon, QueueListIcon } from "@/icons";
 import ClientProjectList from "@/Modules/Client/Partial/ClientProjectList";
+import ClientContactList from "@/Modules/Client/Partial/ClientContactList";
 
-export default function Show({ auth, client, projects }) {
+export default function Show({
+    auth,
+    client,
+    search_query_project,
+    search_query_contact,
+    current_search_tab,
+}) {
     const [panelNav, setPanelNav] = useState([
         {
             name: "Tasks",
@@ -25,6 +32,48 @@ export default function Show({ auth, client, projects }) {
     ]);
     const currentTab = panelNav.find((tab) => tab.current);
 
+    useEffect(() => {
+        if (search_query_project !== "") {
+            setPanelNav((panelNav) => {
+                return panelNav.map((item) => {
+                    return {
+                        ...item,
+                        current: item.code === "projects",
+                    };
+                });
+            });
+        }
+
+        if (search_query_contact !== "") {
+            setPanelNav((panelNav) => {
+                return panelNav.map((item) => {
+                    return {
+                        ...item,
+                        current: item.code === "contacts",
+                    };
+                });
+            });
+        }
+        if (current_search_tab) {
+            setPanelNav((panelNav) => {
+                return panelNav.map((item) => {
+                    if (current_search_tab === "search_query_project") {
+                        return {
+                            ...item,
+                            current: item.code === "projects",
+                        };
+                    }
+                    if (current_search_tab === "search_query_contact") {
+                        return {
+                            ...item,
+                            current: item.code === "contacts",
+                        };
+                    }
+                    return item;
+                });
+            });
+        }
+    }, []);
 
     return (
         <>
@@ -68,8 +117,16 @@ export default function Show({ auth, client, projects }) {
                         >
                             {panelNav.map((tab) => (
                                 <a
-                                    href="#"
+                                    href={`#`}
                                     key={tab.code}
+                                    onClick={() =>
+                                        setPanelNav((panelNav) => {
+                                            return panelNav.map((i) => ({
+                                                ...i,
+                                                current: tab.code === i.code,
+                                            }));
+                                        })
+                                    }
                                     className={`${
                                         tab.current
                                             ? "border-teal-600 text-gray-300 font-bold"
@@ -83,6 +140,7 @@ export default function Show({ auth, client, projects }) {
                     </div>
                 </div>
                 {currentTab.code === "projects" && <ClientProjectList />}
+                {currentTab.code === "contacts" && <ClientContactList />}
             </Authenticated>
         </>
     );
