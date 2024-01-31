@@ -23,6 +23,11 @@ export default function Authenticated({ user, header, children }) {
             to: "/dashboard",
         },
         {
+            name: "Tasks",
+            icon: QueueListIcon,
+            to: "/tasks",
+        },
+        {
             name: "Clients",
             icon: UserGroupIcon,
             to: "/clients",
@@ -31,11 +36,6 @@ export default function Authenticated({ user, header, children }) {
             name: "Projects",
             icon: RectangleStackIcon,
             to: "/projects",
-        },
-        {
-            name: "Tasks",
-            icon: QueueListIcon,
-            to: "/tasks",
         },
         {
             name: "Contacts",

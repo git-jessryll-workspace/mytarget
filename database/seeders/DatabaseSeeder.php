@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\ClientProject;
 use App\Models\Contact;
 use App\Models\Service;
+use App\Models\Task;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -35,5 +36,26 @@ class DatabaseSeeder extends Seeder
         });
 
         DB::table('client_contacts')->insert($clientContactsData);
+
+        $boardNames = [
+            'New',
+            'Pending',
+            'Inprogress',
+            'Done',
+        ];
+        $counter = 0;
+        foreach($boardNames as $boardName) {
+            DB::table('boards')->insertGetId([
+                'name' => $boardName,
+                'sort' => $counter,
+                'client_id' => 1,
+                'client_project_id' => 5,
+                'is_hidden' => false,
+                'color' => 'transparent'
+            ]);
+            $counter++;
+        }
+
+        Task::factory(30)->create();
     }
 }

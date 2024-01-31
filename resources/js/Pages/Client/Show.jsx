@@ -5,75 +5,40 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { ChevronRightIcon, QueueListIcon } from "@/icons";
 import ClientProjectList from "@/Modules/Client/Partial/ClientProjectList";
 import ClientContactList from "@/Modules/Client/Partial/ClientContactList";
+import ClientTaskList from "@/Modules/Client/Partial/ClientTaskList";
 
-export default function Show({
-    auth,
-    client,
-    search_query_project,
-    search_query_contact,
-    current_search_tab,
-}) {
-    const [panelNav, setPanelNav] = useState([
+export default function Show({ auth, client }) {
+    const [panelTabs, setPanelTabs] = useState([
         {
             name: "Tasks",
-            code: "tasks",
-            current: false,
-        },
-        {
-            name: "Projects",
-            code: "projects",
+            code: "task",
             current: true,
         },
         {
+            name: "Projects",
+            code: "project",
+            current: false,
+        },
+        {
             name: "Contacts",
-            code: "contacts",
+            code: "contact",
             current: false,
         },
     ]);
-    const currentTab = panelNav.find((tab) => tab.current);
+    
 
     useEffect(() => {
-        if (search_query_project !== "") {
-            setPanelNav((panelNav) => {
-                return panelNav.map((item) => {
-                    return {
-                        ...item,
-                        current: item.code === "projects",
-                    };
-                });
-            });
-        }
+        const queryParams = new URLSearchParams(window.location.search);
 
-        if (search_query_contact !== "") {
-            setPanelNav((panelNav) => {
-                return panelNav.map((item) => {
-                    return {
-                        ...item,
-                        current: item.code === "contacts",
-                    };
-                });
-            });
-        }
-        if (current_search_tab) {
-            setPanelNav((panelNav) => {
-                return panelNav.map((item) => {
-                    if (current_search_tab === "search_query_project") {
-                        return {
-                            ...item,
-                            current: item.code === "projects",
-                        };
-                    }
-                    if (current_search_tab === "search_query_contact") {
-                        return {
-                            ...item,
-                            current: item.code === "contacts",
-                        };
-                    }
-                    return item;
-                });
-            });
-        }
+        setPanelTabs((prevPanelTabs) =>
+            prevPanelTabs.map((tab) => ({
+                ...tab,
+                current: queryParams.has(`search_query_${tab.code}`),
+            }))
+        );
     }, []);
+
+    const currentTab = panelTabs.find((tab) => tab.current);
 
     return (
         <>
@@ -115,13 +80,13 @@ export default function Show({
                             className="-mb-px flex space-x-3"
                             aria-label="Tabs"
                         >
-                            {panelNav.map((tab) => (
+                            {panelTabs.map((tab) => (
                                 <a
                                     href={`#`}
                                     key={tab.code}
                                     onClick={() =>
-                                        setPanelNav((panelNav) => {
-                                            return panelNav.map((i) => ({
+                                        setPanelTabs((prevPanelTabs) => {
+                                            return prevPanelTabs.map((i) => ({
                                                 ...i,
                                                 current: tab.code === i.code,
                                             }));
@@ -139,8 +104,9 @@ export default function Show({
                         </nav>
                     </div>
                 </div>
-                {currentTab.code === "projects" && <ClientProjectList />}
-                {currentTab.code === "contacts" && <ClientContactList />}
+                {currentTab?.code === "project" && <ClientProjectList />}
+                {currentTab?.code === "contact" && <ClientContactList />}
+                {currentTab?.code === "task" && <ClientTaskList />}
             </Authenticated>
         </>
     );

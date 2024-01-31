@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ClientProject;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,15 @@ class TaskFactory extends Factory
      */
     public function definition(): array
     {
+        $query = ClientProject::query()->where('client_id', 1)->first();
         return [
-            //
+            'name' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'is_archived' => false,
+            'priority_level' => 3,
+            'client_id' => 1,
+            'client_project_id' => $query->id,
+            'board_id' => $this->faker->numberBetween(1, 4)
         ];
     }
 }

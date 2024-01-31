@@ -1,42 +1,45 @@
 import { memo, useState } from "react";
+import { Link, useForm, usePage } from "@inertiajs/react";
+
 import Modal from "../Modal";
 import TextInput from "../TextInput";
 import PrimaryButton from "../PrimaryButton";
 import XCircleIcon from "@/icons/XCircleIcon";
-import { Link, useForm, usePage } from "@inertiajs/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/icons";
 
-export default function NavPanel({
+export default memo(function NavPanel({
     keyProps,
     updateList,
     data,
-    CreateForm,
+    CreateForm = null,
     search_query,
+    disableCreate = false,
     disableSearch = false,
     routeControl = null,
     search_query_key = null,
 }) {
     const { primaryId } = usePage().props;
-    const { url } = usePage();
     const [search, setSearch] = useState(search_query || "");
     const [showCreate, setShowCreate] = useState(false);
     const { get: getFn } = useForm({});
 
     return (
         <>
-            <Modal show={showCreate} maxWidth="md">
-                <CreateForm
-                    updateList={updateList}
-                    setShowCreate={setShowCreate}
-                />
-            </Modal>
+            {!disableCreate && (
+                <Modal show={showCreate} maxWidth="md">
+                    <CreateForm
+                        updateList={updateList}
+                        setShowCreate={setShowCreate}
+                    />
+                </Modal>
+            )}
             <div className="flex justify-end lg:justify-between items-center">
                 <div className="w-full lg:w-[60%] hidden lg:flex space-x-3 items-center">
                     <div className="w-full relative flex items-center">
                         {!disableSearch && (
                             <>
                                 <TextInput
-                                    placeholder="Search client name"
+                                    placeholder="Search"
                                     value={search}
                                     onChange={(event) =>
                                         setSearch(event.target.value)
@@ -108,9 +111,11 @@ export default function NavPanel({
                         )}
                     </div>
                     <div className="w-auto lg:w-[30%]">
-                        <PrimaryButton onClick={() => setShowCreate(true)}>
-                            <span>Create New</span>
-                        </PrimaryButton>
+                        {!disableCreate && (
+                            <PrimaryButton onClick={() => setShowCreate(true)}>
+                                <span>Create New</span>
+                            </PrimaryButton>
+                        )}
                     </div>
                 </div>
                 <div className="flex space-x-3 items-center justify-end">
@@ -141,4 +146,4 @@ export default function NavPanel({
             </div>
         </>
     );
-}
+});
