@@ -29,13 +29,15 @@ export default function Show({ auth, client }) {
 
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
-
-        setPanelTabs((prevPanelTabs) =>
-            prevPanelTabs.map((tab) => ({
-                ...tab,
-                current: queryParams.has(`search_query_${tab.code}`),
-            }))
-        );
+        console.log(queryParams.size)
+        if (queryParams.size !== 0) {
+            setPanelTabs((prevPanelTabs) =>
+                prevPanelTabs.map((tab) => ({
+                    ...tab,
+                    current: queryParams.has(`search_query_${tab.code}`),
+                }))
+            );
+        }
     }, []);
 
     const currentTab = panelTabs.find((tab) => tab.current);
@@ -84,7 +86,8 @@ export default function Show({ auth, client }) {
                                 <a
                                     href={`#`}
                                     key={tab.code}
-                                    onClick={() =>
+                                    onClick={(event) => {
+                                        event.preventDefault();
                                         setPanelTabs((prevPanelTabs) => {
                                             return prevPanelTabs.map((i) => ({
                                                 ...i,
@@ -92,9 +95,10 @@ export default function Show({ auth, client }) {
                                             }));
                                         })
                                     }
+                                    }
                                     className={`${
                                         tab.current
-                                            ? "border-teal-600 text-gray-300 font-bold"
+                                            ? "border-teal-600 text-gray-600 dark:text-gray-300 font-bold"
                                             : "border-transparent hover:border-teal-600 hover:text-gray-300"
                                     } group inline-flex items-center border-b-2 py-2 px-1 text-sm font-medium`}
                                 >

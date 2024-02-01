@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientProject\ShowProjectController;
 use App\Http\Controllers\Project\ClientProjectController;
 use App\Http\Controllers\Project\CreateProjectController;
 use App\Http\Controllers\Project\DeleteProjectController;
@@ -11,6 +12,7 @@ Route::prefix('projects')->middleware('auth')->group(function () {
     Route::get('/', ProjectController::class)->name('projects.index');
     Route::post('/', CreateProjectController::class)->name('projects.store');
     Route::prefix('{clientProject}')->group(function () {
+        Route::get('/', ShowProjectController::class)->name('projects.show');
         Route::put('/', UpdateProjectController::class)->name('projects.update');
         Route::delete('/', DeleteProjectController::class)->name('projects.destroy');
     });

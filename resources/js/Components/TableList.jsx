@@ -12,7 +12,7 @@ const TableList = ({ theadObject, items, uniqueKey = "id" }) => {
             </thead>
             <tbody>
                 {items.map((item) => (
-                    <tr className="hover" key={item[uniqueKey]}>
+                    <tr className="hover font-semibold" key={item[uniqueKey]}>
                         {Object.entries(item).map(([key, value]) => (
                             <td key={key}>{value}</td>
                         ))}

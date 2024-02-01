@@ -25,6 +25,12 @@ const ProjectList = ({ projects, updateList }) => {
                         },
                         label: "Edit",
                     },
+                    view: {
+                        action: () => {
+                            window.location.href = route('projects.show', project.id)
+                        },
+                        label: "View"
+                    },
                     delete: {
                         action: () => {
                             setSelected(project);

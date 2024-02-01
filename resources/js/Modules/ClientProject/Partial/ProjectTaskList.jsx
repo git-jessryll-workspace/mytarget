@@ -1,19 +1,16 @@
 import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-import Modal from "@/Components/Modal";
-import { ShowTaskView } from "../Forms";
 import NavPanel from "@/Components/partials/NavPanel";
-import TableList from "@/Components/TableList";
 import { dateFormat } from "@/utils/date";
 import DropdownActiontable from "@/Components/DropdownActiontable";
+import TableList from "@/Components/TableList";
 
-const ClientTaskList = () => {
+const ProjectTaskList = () => {
     const { tasks, search_query_task } = usePage().props;
 
-    const [taskList, setTaskList] = useState([]);
     const [showView, setShowView] = useState(false);
-    const [selected, setSelected] = useState(null);
+    const [taskList, setTaskList] = useState([]);
 
     useEffect(() => {
         setTaskList(tasks.data);
@@ -46,15 +43,15 @@ const ClientTaskList = () => {
         id: `#${task.acronym}-${task.counter}`,
         name: task.name,
         priority_level: priorityWrap[task.priority_level],
-        project_name: task.project_name,
         updated_at: dateFormat(task.updated_at),
         action: (
             <DropdownActiontable
                 actionObject={{
                     view: {
                         action: () => {
-                            setSelected(task);
-                            setShowView(true);
+                            window.location.href = route("tasks.show", {
+                                id: task.id,
+                            });
                         },
                         label: "View",
                     },
@@ -65,27 +62,21 @@ const ClientTaskList = () => {
 
     return (
         <>
-            <Modal show={showView}>
-                <ShowTaskView task={selected} setShow={setShowView} />
-            </Modal>
-            <div className="pt-6">
-                <NavPanel
-                    keyProps={"tasks"}
-                    updateList={updateList}
-                    data={tasks}
-                    disableCreate={true}
-                    search_query={search_query_task}
-                    routeControl={"clients.show"}
-                    search_query_key={"search_query_task"}
-                />
-            </div>
-            <div className="h-[67dvh] overflow-auto -mr-5 pr-3 mt-3">
+            <NavPanel
+                keyProps={"tasks"}
+                updateList={updateList}
+                data={tasks}
+                disableCreate={true}
+                search_query={search_query_task}
+                routeControl={"projects.show"}
+                search_query_key={"search_query_task"}
+            />
+            <div className="h-[calc(100dvh-200px)] overflow-auto -mr-5 pr-3">
                 <TableList
                     theadObject={{
                         acronym_id: "#",
                         name: "Name",
                         priority_level: "Priority Level",
-                        project_name: "Project Name",
                         updated_at: "Date Updated",
                         action: "",
                     }}
@@ -96,4 +87,4 @@ const ClientTaskList = () => {
     );
 };
 
-export default ClientTaskList;
+export default ProjectTaskList;
