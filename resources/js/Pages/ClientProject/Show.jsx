@@ -72,9 +72,6 @@ const Show = ({ auth, project_client }) => {
                                         >
                                             {page.name}
                                         </a>
-                                        <div>
-                                            <PencilIcon className="h-4 w-4 ml-2 cursor-pointer hover:text-gray-700" />
-                                        </div>
                                     </div>
                                 </li>
                             ))}

@@ -20,7 +20,7 @@ class ClientProjectFactory extends Factory
     {
         return [
             'project_name' => $this->faker->windowsPlatformToken,
-            'description' => $this->faker->word,
+            'description' => $this->faker->paragraph,
             'active' => $this->faker->numberBetween(0, 1),
             'client_id' => $this->faker->numberBetween(1, 20)
         ];

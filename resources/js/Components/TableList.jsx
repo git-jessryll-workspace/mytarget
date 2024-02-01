@@ -11,6 +11,13 @@ const TableList = ({ theadObject, items, uniqueKey = "id" }) => {
                 </tr>
             </thead>
             <tbody>
+                {items.length === 0 && (
+                    <tr>
+                        <td colSpan={Object.entries(theadObject).length} className="text-center">
+                            <h3>No data available</h3>
+                        </td>
+                    </tr>
+                )}
                 {items.map((item) => (
                     <tr className="hover font-semibold" key={item[uniqueKey]}>
                         {Object.entries(item).map(([key, value]) => (
