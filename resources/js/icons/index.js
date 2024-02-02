@@ -16,6 +16,8 @@ import RectangleStackIcon from "./RectangleStackIcon";
 import UsersIcon from "./UsersIcon";
 import PencilIcon from "./PencilIcon";
 import ChevronDownIcon from "./ChevronDownIcon";
+import CheckCircleIcon from "./CheckCircleIcon";
+import CheckCircleSolidIcon from "./CheckCircleSolidIcon";
 
 export {
     HomeIcon,
@@ -35,5 +37,7 @@ export {
     RectangleStackIcon,
     UsersIcon,
     PencilIcon,
-    ChevronDownIcon
+    ChevronDownIcon,
+    CheckCircleIcon,
+    CheckCircleSolidIcon
 };
