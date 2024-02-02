@@ -1,22 +1,24 @@
-import InputLabel from "@/Components/InputLabel";
+
+import { useState } from "react";
+import { Head } from "@inertiajs/react";
+
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import Details from "@/Modules/ClientProject/Partial/Details";
 import ProjectTaskList from "@/Modules/ClientProject/Partial/ProjectTaskList";
-import { ChevronRightIcon, PencilIcon, RectangleStackIcon } from "@/icons";
-import { Head } from "@inertiajs/react";
-import { useState } from "react";
+import { RectangleStackIcon } from "@/icons";
 
 const Show = ({ auth, project_client }) => {
+    
     const [panelTabs, setPanelTabs] = useState([
-        {
-            name: "Details",
-            code: "detail",
-            current: false,
-        },
         {
             name: "Tasks",
             code: "task",
             current: true,
+        },
+        {
+            name: "Settings",
+            code: "detail",
+            current: false,
         },
     ]);
     const pages = [
@@ -111,7 +113,7 @@ const Show = ({ auth, project_client }) => {
                     </div>
                 </div>
                 {currentTab?.code === "task" && <ProjectTaskList />}
-                {currentTab?.code === "detail" && <Details/>}
+                {currentTab?.code === "detail" && <Details />}
             </Authenticated>
         </>
     );

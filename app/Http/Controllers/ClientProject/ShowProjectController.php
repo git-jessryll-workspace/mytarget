@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ClientProject;
 
 use App\Http\Controllers\Controller;
+use App\Models\Acronym;
 use App\Models\ClientProject;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -16,6 +17,9 @@ class ShowProjectController extends Controller
     public function __invoke(ClientProject $clientProject, Request $request)
     {
         $search_query_task = $request->get('search_query_task') ?? "";
+        $client = $clientProject->client;
+        $acronym = Acronym::query()->where('client_project_id', $clientProject->id)->first();
+        
         $queryTask = Task::query()
             ->select([
                 'tasks.id',
@@ -52,6 +56,8 @@ class ShowProjectController extends Controller
 
         return Inertia::render('ClientProject/Show', [
             'tasks' => $tasks,
+            'client' => $client,
+            'acronym' => $acronym,
             'project_client' => $clientProject,
             'search_query_task' => $search_query_task,
             'current_search_tab' => $request->get('current_search_tab') ?? "",
