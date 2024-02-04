@@ -24,7 +24,8 @@ const timeline = [
     },
     {
         id: 3,
-        content: "Completed phone screening with",
+        content:
+            "Completed phone screening with asd lasd asd;qw qwe; lasdj ;alsj ;qwej w;eq wasdasdasjd qw;lekjqw kasdj qwej ;alska jhqiweh kasdla shdlqwe lasdk qwjelaksdjaskd jasd;asdalsdkjweqwlk",
         target: "Martha Gardner",
         href: "#",
         date: "Sep 28",
@@ -58,7 +59,7 @@ function classNames(...classes) {
 }
 const ActivityNote = () => {
     return (
-        <section className="border dark:border-gray-700 bg-gray-900 p-6 rounded-md">
+        <section className="border dark:border-gray-700 bg-gray-50 shadow-sm dark:shadow-none dark:bg-gray-900 p-6 rounded-md">
             <div>
                 <h5 className="text-sm font-semibold">Activity Notes</h5>
             </div>
@@ -73,18 +74,17 @@ const ActivityNote = () => {
                                         aria-hidden="true"
                                     />
                                 ) : null}
-                                <div className="relative flex space-x-3 pt-4">
+                                <div className="relative flex space-x-3 pt-1">
                                     <div>
                                         <span
-                                            className={classNames(
-                                                event.iconBackground,
-                                                "h-8 w-8 rounded-full flex items-center justify-center ring-1 ring-transparent"
-                                            )}
+                                            className={
+                                                "h-3 w-3 mt-2.5 ml-2.5 rounded-full flex items-center justify-center ring-1 ring-transparent bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-300"
+                                            }
                                         >
-                                            <event.icon
+                                            {/* <event.icon
                                                 className="h-5 w-5 text-white"
                                                 aria-hidden="true"
-                                            />
+                                            /> */}
                                         </span>
                                     </div>
                                     <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
@@ -114,7 +114,7 @@ const ActivityNote = () => {
             <div className="mt-10 pb-1">
                 <div className=" border border-gray-300 dark:border-gray-700 focus:ring-gray-800 focus:outline-none focus:ring-1 focus:border-gray-600 rounded-md  bg-[var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))]">
                     <textarea
-                    rows={4}
+                        rows={3}
                         className="bg-transparent textarea w-full outline-none border-none resize-none focus:outline-none focus:border-none focus:ring-0"
                         placeholder="Short description"
                     ></textarea>

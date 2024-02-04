@@ -1,5 +1,3 @@
-import InputLabel from "@/Components/InputLabel";
-import TextInput from "@/Components/TextInput";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import ActivityNote from "@/Modules/Task/Partial/ActivityNote";
 import UpdateTaskForm from "@/Modules/Task/Partial/UpdateTaskForm";
@@ -68,11 +66,11 @@ export default function Show({ task, auth }) {
             }
         >
             <div className="h-[calc(100dvh-100px)] overflow-y-auto -mr-5">
-                <div className="grid grid-cols-2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                     <div className="space-y-5 px-1">
                         <UpdateTaskForm />
                     </div>
-                    <div className="px-1 mr-4">
+                    <div className="px-1 mr-0 lg:mr-4">
                         <ActivityNote />
                     </div>
                 </div>
