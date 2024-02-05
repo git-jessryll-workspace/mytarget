@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id')->index();
             $table->unsignedBigInteger('client_project_id')->index();
             $table->unsignedBigInteger('board_id')->index();
+            $table->integer('task_status')->default(0)->index();
+            $table->date('due_date')->index()->nullable();
             $table->timestamps();
             $table->foreign('client_project_id')->references('id')->on('client_projects');
             $table->foreign('client_id')->references('id')->on("clients");

@@ -16,7 +16,9 @@ class Task extends Model
         'priority_level',
         'client_id',
         'client_project_id',
-        'board_id'
+        'board_id',
+        'task_staus',
+        'due_date',
     ];
 
     public function client()

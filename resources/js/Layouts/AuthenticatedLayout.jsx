@@ -106,10 +106,10 @@ export default function Authenticated({ user, header, children }) {
                     </div>
                 </div>
                 <main className="h-full w-full ml-0 lg:ml-3 bg-gray-100 dark:bg-gray-800 border p-1 border-gray-300 rounded-lg shadow-lg">
-                    <nav className="border-b border-gray-300 dark:border-gray-600">
-                        <div className="flex justify-between items-center h-12 px-6">
-                            <div>{header || null}</div>
-                            <div className="flex lg:hidden sm:items-center">
+                    {header && (
+                        <nav className="border-b border-gray-300 dark:border-gray-600 p-3">
+                            {header || null}
+                            {/* <div className="flex lg:hidden sm:items-center">
                                 <div className="ms-3 relative flex items-center">
                                     <Dropdown>
                                         <Dropdown.Trigger>
@@ -152,9 +152,9 @@ export default function Authenticated({ user, header, children }) {
                                         </Dropdown.Content>
                                     </Dropdown>
                                 </div>
-                            </div>
-                        </div>
-                    </nav>
+                            </div> */}
+                        </nav>
+                    )}
                     <div className="p-6">{children}</div>
                 </main>
                 <div className="w-[4%] hidden lg:flex lg:justify-center">

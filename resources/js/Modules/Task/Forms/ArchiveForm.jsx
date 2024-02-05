@@ -37,7 +37,7 @@ const ArchivedForm = ({ setShow }) => {
                             Cancel
                         </SecondaryButton>
                         <DangerButton type="submit">
-                            Yes, archived this task
+                            Yes
                         </DangerButton>
                     </div>
                 </div>

@@ -44,12 +44,13 @@ class DatabaseSeeder extends Seeder
             'Done',
         ];
         $counter = 0;
+        $clientProject = DB::table('client_projects')->where('client_id', 1)->first();
         foreach($boardNames as $boardName) {
             DB::table('boards')->insertGetId([
                 'name' => $boardName,
                 'sort' => $counter,
                 'client_id' => 1,
-                'client_project_id' => 5,
+                'client_project_id' => $clientProject->id,
                 'is_hidden' => false,
                 'color' => 'transparent'
             ]);
