@@ -2,12 +2,17 @@ import { memo } from "react";
 import Dropdown from "./Dropdown";
 import EllipsisVerticalIcon from "@/icons/EllipsisVerticalIcon";
 
-export default memo(function DropdownActionTable({ actionObject }) {
+export default memo(function DropdownActionTable({
+    actionObject,
+    childIcon = false,
+}) {
     return (
         <div className="flex justify-center">
             <Dropdown>
                 <Dropdown.Trigger>
-                    <EllipsisVerticalIcon className="cursor-pointer h-6 w-6" />
+                    {childIcon || (
+                        <EllipsisVerticalIcon className="cursor-pointer h-6 w-6" />
+                    )}
                 </Dropdown.Trigger>
                 <Dropdown.Content>
                     {Object.entries(actionObject).map(([key, data]) => (

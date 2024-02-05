@@ -64,7 +64,7 @@ const ActivityNote = () => {
                 <h5 className="text-sm font-semibold">Activity Notes</h5>
             </div>
             <div className="flow-root pt-4">
-                <ul role="list" className="-mb-8">
+                <ul role="list" className="">
                     {timeline.map((event, eventIdx) => (
                         <li key={event.id}>
                             <div className="relative pb-5">
@@ -110,18 +110,6 @@ const ActivityNote = () => {
                         </li>
                     ))}
                 </ul>
-            </div>
-            <div className="mt-10 pb-1">
-                <div className=" border border-gray-300 dark:border-gray-700 focus:ring-gray-800 focus:outline-none focus:ring-1 focus:border-gray-600 rounded-md  bg-[var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))]">
-                    <textarea
-                        rows={3}
-                        className="bg-transparent textarea w-full outline-none border-none resize-none focus:outline-none focus:border-none focus:ring-0"
-                        placeholder="Short description"
-                    ></textarea>
-                    <div className="flex px-3 justify-end pb-3.5">
-                        <PrimaryButton>Submit</PrimaryButton>
-                    </div>
-                </div>
             </div>
         </section>
     );

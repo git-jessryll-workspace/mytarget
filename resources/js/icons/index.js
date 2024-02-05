@@ -18,6 +18,7 @@ import PencilIcon from "./PencilIcon";
 import ChevronDownIcon from "./ChevronDownIcon";
 import CheckCircleIcon from "./CheckCircleIcon";
 import CheckCircleSolidIcon from "./CheckCircleSolidIcon";
+import EllipsisCircle from "./EllipsisCircle";
 
 export {
     HomeIcon,
@@ -39,5 +40,6 @@ export {
     PencilIcon,
     ChevronDownIcon,
     CheckCircleIcon,
-    CheckCircleSolidIcon
+    CheckCircleSolidIcon,
+    EllipsisCircle
 };

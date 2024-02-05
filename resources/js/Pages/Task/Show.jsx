@@ -1,7 +1,8 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import ActivityNote from "@/Modules/Task/Partial/ActivityNote";
-import UpdateTaskForm from "@/Modules/Task/Partial/UpdateTaskForm";
+import Details from "@/Modules/Task/Partial/Details";
 import { RectangleStackIcon } from "@/icons";
+import { Head } from "@inertiajs/react";
 
 export default function Show({ task, auth }) {
     const { client_project, acronym, client } = task;
@@ -65,10 +66,11 @@ export default function Show({ task, auth }) {
                 </nav>
             }
         >
+            <Head title={task.name} />
             <div className="h-[calc(100dvh-100px)] overflow-y-auto -mr-5">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                     <div className="space-y-5 px-1">
-                        <UpdateTaskForm />
+                        <Details />
                     </div>
                     <div className="px-1 mr-0 lg:mr-4">
                         <ActivityNote />

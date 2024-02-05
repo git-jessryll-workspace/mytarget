@@ -7,6 +7,8 @@ import { dateFormat } from "@/utils/date";
 import { useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import ArchiveForm from "../Forms/ArchiveForm";
+import DropdownActiontable from "@/Components/DropdownActiontable";
+import { EllipsisCircle } from "@/icons";
 
 const UpdateTaskForm = () => {
     const { task, boards } = usePage().props;
@@ -49,22 +51,37 @@ const UpdateTaskForm = () => {
 
     return (
         <>
-            
-            <section className="border dark:border-gray-700 shadow-sm dark:shadow-none bg-gray-50 dark:bg-gray-900 p-6 rounded-md">
+            <section className="">
                 <header className="flex justify-between items-center">
                     <div>
-                        <h6 className="text-xs">
-                            {client_project.project_name}
-                        </h6>
                         <h3 className="text-xl font-bold">
                             #{`${acronym.acronym}-${acronym.counter}`}
                         </h3>
-                    </div>
-                    <div className="">
-                        <h6 className="text-xs text-right">Updated At</h6>
-                        <h6 className="text-sm font-semibold">
+                        <h6 className="text-xs flex items-center">
+                            {client_project.project_name}
+                            <svg
+                                viewBox="0 0 2 2"
+                                className="h-1 w-1 fill-current mx-1"
+                            >
+                                <circle cx={1} cy={1} r={1} />
+                            </svg>
                             {dateFormat(task.updated_at)}
                         </h6>
+                    </div>
+                    <div className="">
+                        <DropdownActiontable
+                            actionObject={{
+                                view: {
+                                    action: () => {
+                                        setShowArchived(true)
+                                    },
+                                    label: "Archive",
+                                },
+                            }}
+                            childIcon={
+                                <EllipsisCircle className="cursor-pointer rotate-90 h-6 w-6" />
+                            }
+                        />
                     </div>
                 </header>
 
@@ -138,12 +155,7 @@ const UpdateTaskForm = () => {
                             ></textarea>
                         </div>
                     </div>
-                    <div className="border-t border-gray-400 dark:border-700 flex justify-between pt-4">
-                        <div>
-                            <DangerButton type="button" onClick={() => setShowArchived(true)}>
-                                Move to archived
-                            </DangerButton>
-                        </div>
+                    <div className="border-t border-gray-400 dark:border-gray-700 flex justify-end pt-4">
                         <div className="">
                             <PrimaryButton type="submit">Save</PrimaryButton>
                         </div>
