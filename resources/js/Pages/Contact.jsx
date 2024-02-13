@@ -35,7 +35,7 @@ export default function Contact({ auth, contacts, search_query }) {
                 data={contacts}
                 CreateForm={CreateContactForm}
             />
-            <div className="h-[78dvh] overflow-y-auto -mr-5 pr-3 mt-3 overflow-x-auto">
+            <div className="h-[calc(100dvh-220px)] overflow-auto -mr-5 pr-3 mt-3">
                 <ContactList contacts={contactList} updateList={updateList} />
             </div>
         </Authenticated>

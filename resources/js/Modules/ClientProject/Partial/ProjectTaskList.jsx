@@ -71,7 +71,7 @@ const ProjectTaskList = () => {
                 routeControl={"projects.show"}
                 search_query_key={"search_query_task"}
             />
-            <div className="h-[calc(100dvh-200px)] overflow-auto -mr-5 pr-3">
+            <div className="h-[calc(100dvh-240px)] overflow-auto -mr-5 pr-3">
                 <TableList
                     theadObject={{
                         acronym_id: "#",

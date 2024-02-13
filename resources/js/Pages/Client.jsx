@@ -42,7 +42,7 @@ export default function Client({ auth, clients, search_query }) {
                     CreateForm={CreateClientForm}
                 />
 
-                <div className="h-[78dvh] overflow-y-auto -mr-5 pr-3 mt-3 overflow-x-auto ">
+                <div className="h-[calc(100dvh-220px)] overflow-y-auto -mr-5 pr-3 mt-3 overflow-x-auto ">
                     <ClientList
                         clients={clientList}
                         updateClientList={updateClientList}

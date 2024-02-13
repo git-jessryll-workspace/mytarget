@@ -5,19 +5,27 @@ import TaskActivity from "./TaskActivity";
 import { dateFormat } from "@/utils/date";
 
 const Details = () => {
-    const { task } = usePage().props;
+    const { task, time_log_object } = usePage().props;
     const { board, client_project, client } = task;
     return (
-        <div className="p-4">
+        <div className="">
             <div>
                 <div className="flex justify-between">
-                    <div>
+                    <div className="w-full md:w-auto">
                         <h5 className="text-sm font-bold">{client.name}</h5>
                         <h3 className="text-teal-600 font-bold text-xl text-balance">
                             {task.name}
                         </h3>
+                        <div className="text-left flex items-center space-x-2">
+                            <dt className="text-xs font-bold text-gray-400">Due Date</dt>
+                            <dd className="text-sm font-semibold">
+                                <time time={task.created_at}>
+                                    {dateFormat(task.created_at)}
+                                </time>
+                            </dd>
+                        </div>
                     </div>
-                    <div className="flex justify-end w-[20%]">
+                    <div className="hidden md:flex justify-end w-0 md:w-[20%]">
                         <div className="text-right">
                             <dt className="text-xs font-bold text-gray-400">Due Date</dt>
                             <dd className="text-sm font-semibold">
@@ -28,12 +36,11 @@ const Details = () => {
                         </div>
                     </div>
                 </div>
-                <h5 className="text-gray-400 font-semibold">{client_project.project_name}</h5>
             </div>
             <div className="pt-6">
                 <p className="text-balance">{task.description}</p>
             </div>
-            <div className="flex items-center space-x-6 justify-start pt-5">
+            <div className="flex md:hidden items-center space-x-6 justify-start pt-5">
                 <div className="flex items-center">
                     <div className="space-y-2">
                         <dd className="text-xs font-bold antialiased">
@@ -55,7 +62,7 @@ const Details = () => {
                 <div className="flex items-center">
                     <div className="space-y-2">
                         <dd className="text-xs font-bold antialiased">Time Spent</dd>
-                        <dt className="font-bold">12h</dt>
+                        <dt className="font-bold">{`${time_log_object.weeks}w ${time_log_object.days}d ${time_log_object.hours}h ${time_log_object.minutes}m`}</dt>
                     </div>
                 </div>
                 {task.is_archived === 1 && (

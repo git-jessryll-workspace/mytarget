@@ -79,7 +79,7 @@ const ClientTaskList = () => {
                     search_query_key={"search_query_task"}
                 />
             </div>
-            <div className="h-[67dvh] overflow-auto -mr-5 pr-3 mt-3">
+            <div className="h-[calc(100dvh-290px)] overflow-auto -mr-5 pr-3 mt-3">
                 <TableList
                     theadObject={{
                         acronym_id: "#",

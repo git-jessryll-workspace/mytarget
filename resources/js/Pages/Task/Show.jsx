@@ -1,15 +1,16 @@
 import DropdownActiontable from "@/Components/DropdownActiontable";
 import Modal from "@/Components/Modal";
+import PriorityLevel from "@/Components/PriorityLevel";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { ArchiveForm } from "@/Modules/Task/Forms";
-import ActivityNote from "@/Modules/Task/Partial/ActivityNote";
 import Details from "@/Modules/Task/Partial/Details";
 import { EllipsisVerticalIcon, RectangleStackIcon } from "@/icons";
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function Show({ task, auth }) {
-    const { client_project, acronym, client } = task;
+export default function Show({ task, auth, time_log_object }) {
+    console.log(time_log_object)
+    const { client_project, acronym, board } = task;
     const pages = [
         {
             name: client_project.project_name,
@@ -59,7 +60,11 @@ export default function Show({ task, auth }) {
                                         </svg>
                                         <a
                                             href={page.href}
-                                            className={`ml-4 text-sm antialiased ${page.current ? "text-teal-600 font-bold" : "text-gray-400 font-medium hover:text-gray-700"}`}
+                                            className={`ml-4 text-sm antialiased ${
+                                                page.current
+                                                    ? "text-teal-600 font-bold"
+                                                    : "text-gray-400 font-medium hover:text-gray-700"
+                                            }`}
                                             aria-current={
                                                 page.current
                                                     ? "page"
@@ -92,13 +97,49 @@ export default function Show({ task, auth }) {
             }
         >
             <Head title={task.name} />
-            <div className="h-[calc(100dvh-130px)] overflow-y-auto -mr-5">
-                <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-x-10">
+            <div className="h-[calc(100dvh-160px)] overflow-y-auto -mr-5">
+                <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-x-6 2xl:gap-x-20">
                     <div className="space-y-5 px-1 col-span-2 mr-4">
                         <Details />
                     </div>
-                    <div className="px-1 mr-0 lg:mr-4">
-                        <ActivityNote />
+                    <div className="px-1 mr-0 lg:mr-4 2xl:ml-20">
+                        <div className="border border-gray-300 rounded-md bg-transparent dark:bg-gray-900 shadow-sm dark:shadow-none hidden lg:block">
+                            <div className="border-b border-gray-200 px-4 py-3 sm:px-4 rounded-t-md">
+                                <h3 className="text-base font-semibold leading-6 text-gray-900 dark:text-gray-300">
+                                    Task Status
+                                </h3>
+                            </div>
+                            <table className="table table-md">
+                                <tbody>
+                                    <tr>
+                                        <td className="text-sm font-bold">
+                                            Priority Level
+                                        </td>
+                                        <td className="text-right">
+                                            <PriorityLevel
+                                                level={task.priority_level}
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-sm font-bold">
+                                            Task Board
+                                        </td>
+                                        <td className="font-bold text-sm text-right">
+                                            {board.name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-sm font-bold">
+                                            Time Spent
+                                        </td>
+                                        <td className="font-bold text-right">
+                                            {`${time_log_object.weeks}w ${time_log_object.days}d ${time_log_object.hours}h ${time_log_object.minutes}m`}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

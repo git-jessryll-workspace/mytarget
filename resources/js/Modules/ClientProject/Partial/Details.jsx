@@ -36,7 +36,7 @@ const Details = () => {
     });
 
     return (
-        <div className="h-[calc(100dvh-170px)] overflow-y-auto -mr-5">
+        <div className="h-[calc(100dvh-200px)] overflow-y-auto -mr-5">
             <div className="max-w-7xl w-3/4 mx-auto space-y-5 px-1">
                 <section className="border dark:border-gray-700 bg-gray-900 p-6 rounded-md grid grid-cols-1 md:grid-cols-2">
                     <header className="pt-2">

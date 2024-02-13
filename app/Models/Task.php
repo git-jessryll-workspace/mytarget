@@ -17,7 +17,7 @@ class Task extends Model
         'client_id',
         'client_project_id',
         'board_id',
-        'task_staus',
+        'task_status',
         'due_date',
     ];
 
@@ -39,5 +39,10 @@ class Task extends Model
     public function acronym()
     {
         return $this->hasOne(Acronym::class, 'task_id');
+    }
+
+    public function timeLogs()
+    {
+        return $this->hasMany(TaskTimeLog::class);
     }
 }
