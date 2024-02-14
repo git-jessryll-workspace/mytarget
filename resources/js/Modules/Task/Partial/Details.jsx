@@ -1,7 +1,6 @@
 import PriorityLevel from "@/Components/PriorityLevel";
 import { usePage } from "@inertiajs/react";
-import { memo, useState } from "react";
-import TaskActivity from "./TaskActivity";
+import { memo } from "react";
 import { dateFormat } from "@/utils/date";
 
 const Details = () => {
@@ -16,7 +15,7 @@ const Details = () => {
                         <h3 className="text-teal-600 font-bold text-xl text-balance">
                             {task.name}
                         </h3>
-                        <div className="text-left flex items-center space-x-2">
+                        <div className="text-left flex items-center space-x-2 lg:hidden">
                             <dt className="text-xs font-bold text-gray-400">Due Date</dt>
                             <dd className="text-sm font-semibold">
                                 <time time={task.created_at}>
@@ -75,9 +74,6 @@ const Details = () => {
                         </dt>
                     </div>
                 )}
-            </div>
-            <div className="pt-10">
-                <TaskActivity />
             </div>
         </div>
     );

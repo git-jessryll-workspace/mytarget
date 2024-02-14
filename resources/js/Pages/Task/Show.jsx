@@ -4,13 +4,14 @@ import PriorityLevel from "@/Components/PriorityLevel";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { ArchiveForm } from "@/Modules/Task/Forms";
 import Details from "@/Modules/Task/Partial/Details";
+import TaskActivity from "@/Modules/Task/Partial/TaskActivity";
 import { EllipsisVerticalIcon, RectangleStackIcon } from "@/icons";
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function Show({ task, auth, time_log_object }) {
-    console.log(time_log_object)
     const { client_project, acronym, board } = task;
+    const [showAddTimeLog, setShowAddTimeLog] = useState(false);
     const pages = [
         {
             name: client_project.project_name,
@@ -81,6 +82,10 @@ export default function Show({ task, auth, time_log_object }) {
                     <div>
                         <DropdownActiontable
                             actionObject={{
+                                addTimeLog: {
+                                    action: () => setShowAddTimeLog(true),
+                                    label: "Add Time Log",
+                                },
                                 view: {
                                     action: () => {
                                         setShowArchived(true);
@@ -142,9 +147,17 @@ export default function Show({ task, auth, time_log_object }) {
                         </div>
                     </div>
                 </div>
+                <div className="grid grid-cols-1 lg:gap-x-6 2xl:gap-x-20 mr-4">
+                    <TaskActivity />
+                </div>
             </div>
             <Modal show={showArchived} maxWidth="lg">
                 <ArchiveForm setShow={setShowArchived} />
+            </Modal>
+            <Modal show={showAddTimeLog}>
+                <div>
+                    Show add time log
+                </div>
             </Modal>
         </Authenticated>
     );

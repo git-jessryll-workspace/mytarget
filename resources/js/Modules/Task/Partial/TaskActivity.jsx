@@ -4,11 +4,11 @@ const TaskActivity = () => {
     const { all_time_logs } = usePage().props;
 
     return (
-        <section className="">
+        <section className="pt-8">
             <div className="pb-2">
-                <h5 className="text-sm font-semibold">Time Logs</h5>
+                <h5 className="text-sm leading-6 font-semibold">Time Logs</h5>
             </div>
-            <div className="flow-root h-[calc(100dvh-380px)] overflow-y-auto">
+            <div className="flow-root h-[calc(100dvh-420px)] overflow-y-auto pr-4">
                 <ul role="list" className="">
                     {all_time_logs.map((event, eventIdx) => (
                         <li key={event.id}>
