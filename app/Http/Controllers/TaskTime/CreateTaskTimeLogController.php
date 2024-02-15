@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\TaskTime;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskTime\CreateTaskTimeLogRequest;
 use App\Models\ClientProject;
 use App\Models\TaskTimeLog;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class CreateTaskTimeLogController extends Controller
@@ -13,7 +13,7 @@ class CreateTaskTimeLogController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke(CreateTaskTimeLogRequest $request)
     {
         $clientProject = ClientProject::query()->where('id', $request->validated('client_project_id'))->first();
         if (!$clientProject) {

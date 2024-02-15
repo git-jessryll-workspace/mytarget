@@ -26,6 +26,7 @@ class CreateTaskTimeLogRequest extends FormRequest
             'client_project_id' => 'required',
             'body' => 'nullable',
             'time_log' => 'required',
+            'created_at' => 'nullable'
         ];
     }
 }

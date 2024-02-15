@@ -173,7 +173,7 @@ export default function Authenticated({ user, header, children }) {
                 <div
                     className={`hidden lg:block w-0 lg:w-[20%] h-full pt-3 transition-all`}
                 >
-                    <div className="flex items-center pb-2 border-b border-gray-300 dark:border-gray-300 mx-6">
+                    <div className="flex items-center pb-2 mx-6">
                         <div className={`mr-3 -ml-2`}>
                             <ViewFinderCircleIcon
                                 className={

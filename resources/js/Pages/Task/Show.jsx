@@ -2,7 +2,7 @@ import DropdownActiontable from "@/Components/DropdownActiontable";
 import Modal from "@/Components/Modal";
 import PriorityLevel from "@/Components/PriorityLevel";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { ArchiveForm } from "@/Modules/Task/Forms";
+import { ArchiveForm, AddTimeLogForm } from "@/Modules/Task/Forms";
 import Details from "@/Modules/Task/Partial/Details";
 import TaskActivity from "@/Modules/Task/Partial/TaskActivity";
 import { EllipsisVerticalIcon, RectangleStackIcon } from "@/icons";
@@ -154,10 +154,8 @@ export default function Show({ task, auth, time_log_object }) {
             <Modal show={showArchived} maxWidth="lg">
                 <ArchiveForm setShow={setShowArchived} />
             </Modal>
-            <Modal show={showAddTimeLog}>
-                <div>
-                    Show add time log
-                </div>
+            <Modal show={showAddTimeLog} maxWidth="sm">
+                <AddTimeLogForm setShowAddTimeLog={setShowAddTimeLog}/>
             </Modal>
         </Authenticated>
     );
