@@ -4,10 +4,10 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import TextInput from "@/Components/TextInput";
 import { useForm, usePage } from "@inertiajs/react";
-import { memo } from "react";
+import { memo, useState } from "react";
 
 export default memo(function AddTimeLogForm({ setShowAddTimeLog }) {
-    const {task} = usePage().props;
+    const { task } = usePage().props;
     const {
         data,
         setData,
@@ -18,19 +18,38 @@ export default memo(function AddTimeLogForm({ setShowAddTimeLog }) {
         time_log: "",
         created_at: null,
         body: "",
-        task_id: task.id
+        task_id: task.id,
+        client_project_id: task.client_project_id,
     });
+    const [timeValidate, setTimeValidate] = useState(null);
     const handleSubmit = async (event) => {
         event.preventDefault();
         postFn(
             route("task_time_logs.store", {
                 onSuccess: (res) => {
-                    setShowAddTimeLog(false);
-                    reset();
+                    reset(); 
                 },
+                onError: (err) => {console.error(err)}
             })
         );
+        setShowAddTimeLog(false);
     };
+
+    function validateTimeFormat(input) {
+        // Define the regular expression pattern for the required format
+        const pattern = /^(\d+h)?(\s*\d+m)?$/;
+
+        // Check if the input matches the pattern
+        if (pattern.test(input)) {
+            console.log("Valid time format!");
+            return true;
+        } else {
+            console.log(
+                "Invalid time format. Please use the format 'h hours m minutes', e.g., 3h 5m."
+            );
+            return false;
+        }
+    }
     return (
         <>
             <div className="">
@@ -42,12 +61,20 @@ export default memo(function AddTimeLogForm({ setShowAddTimeLog }) {
                     <div className="space-y-1">
                         <TextInput
                             value={data.time_log}
-                            onChange={(e) =>
-                                setData("time_log", e.target.value)
-                            }
+                            onChange={(e) => {
+                                setData("time_log", e.target.value);
+                                if (!validateTimeFormat(e.target.value)) {
+                                    setTimeValidate("invalid");
+                                } else {
+                                    setTimeValidate(null);
+                                }
+                            }}
                         />
                         <ErrorInput errors={errors} errorKey={"time_log"} />
-                        <p className="text-xs italic">
+                            {
+                                timeValidate && <p className="text-error text-xs">Invalid input time log</p>
+                            }
+                        <p className="text-xs italic">  
                             Required format h=hour m=minutes. example 3h 5m
                             equevalent of 3hours and 5minutes.
                         </p>
@@ -78,7 +105,7 @@ export default memo(function AddTimeLogForm({ setShowAddTimeLog }) {
                         >
                             Cancel
                         </SecondaryButton>
-                        <PrimaryButton>Save</PrimaryButton>
+                        <PrimaryButton disabled={timeValidate}>Save</PrimaryButton>
                     </div>
                 </div>
             </form>

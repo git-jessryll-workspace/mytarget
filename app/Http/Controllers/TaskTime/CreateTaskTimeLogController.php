@@ -25,6 +25,7 @@ class CreateTaskTimeLogController extends Controller
             'client_project_id' => $request->validated('client_project_id'),
             'body' => $request->validated('body'),
             'time_log' => $request->validated('time_log'),
+            'created_at' => $request->validated('created_at') ?? now(),
         ];
 
         $taskTimeLog = TaskTimeLog::query()->create($data);

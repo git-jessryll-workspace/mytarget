@@ -194,7 +194,7 @@ export default function Authenticated({ user, header, children }) {
                                 Main
                             </span>
                         </div>
-                        <div className="pt-1">
+                        <div className="pt-1 relative h-[80dvh]">
                             <ul className={`space-y-0.5`}>
                                 {navigation.map((item) => (
                                     <Link
@@ -227,13 +227,15 @@ export default function Authenticated({ user, header, children }) {
                                     </Link>
                                 ))}
                             </ul>
+                            <div className="absolute bottom-2">
+                                {user.name}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="w-full lg:w-[80%]">
                     <nav className="flex justify-between items-center pb-3 pt-1 pr-2">
-                        <div className="w-full md:w-1/2 flex items-center 2
-                        xl:space-x-3">
+                        <div className="w-full md:w-1/2 flex items-center ">
                             <div className="ml-2 block lg:hidden">
                                 <div
                                     className="cursor-pointer hover:text-gray-900 dark:hover:text-gray-300"
@@ -245,12 +247,6 @@ export default function Authenticated({ user, header, children }) {
                                 </div>
                             </div>
                             <div className="flex relative items-center w-full">
-                                <TextInput placeholder="Search" className="w-full"/>
-                                <div className="absolute right-2">
-                                    <MagnifyingGlassIcon
-                                        className={"w-6 h-6 text-gray-500"}
-                                    />
-                                </div>
                             </div>
                         </div>
                         <div className="w-[20%] flex justify-end">
@@ -294,50 +290,6 @@ export default function Authenticated({ user, header, children }) {
                         {header && (
                             <div className="border-b border-gray-300 dark:border-gray-600 p-3">
                                 {header || null}
-                                {/* <div className="flex lg:hidden sm:items-center">
-                                <div className="ms-3 relative flex items-center">
-                                    <Dropdown>
-                                        <Dropdown.Trigger>
-                                            <span className="inline-flex rounded-md items-center">
-                                                <button
-                                                    type="button"
-                                                    className="inline-flex items-center py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-300 hover:text-gray-400 focus:outline-none transition ease-in-out duration-150"
-                                                >
-                                                    {user.name}
-
-                                                    <svg
-                                                        className="ms-2 -me-0.5 h-4 w-4"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 20 20"
-                                                        fill="currentColor"
-                                                    >
-                                                        <path
-                                                            fillRule="evenodd"
-                                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                            clipRule="evenodd"
-                                                        />
-                                                    </svg>
-                                                </button>
-                                            </span>
-                                        </Dropdown.Trigger>
-
-                                        <Dropdown.Content>
-                                            <Dropdown.Link
-                                                href={route("profile.edit")}
-                                            >
-                                                Profile
-                                            </Dropdown.Link>
-                                            <Dropdown.Link
-                                                href={route("logout")}
-                                                method="post"
-                                                as="button"
-                                            >
-                                                Log Out
-                                            </Dropdown.Link>
-                                        </Dropdown.Content>
-                                    </Dropdown>
-                                </div>
-                            </div> */}
                             </div>
                         )}
                         <div className="p-6">{children}</div>
