@@ -52,7 +52,7 @@ export default function ClientProject({ auth, projects, search_query }) {
                 CreateForm={CreateProjectForm}
             />
 
-            <div className="h-[calc(100dvh-220px)] overflow-auto -mr-5 pr-3 mt-3">
+            <div className="h-[calc(100dvh-180px)] overflow-auto -mr-5 pr-3 mt-3">
                 <ProjectList
                     projects={projectList}
                     updateList={updateClientList}

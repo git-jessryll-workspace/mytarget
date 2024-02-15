@@ -1,26 +1,25 @@
 import { useState, Fragment } from "react";
 import Dropdown from "@/Components/Dropdown";
-import { Dialog, Menu, Transition } from "@headlessui/react";
-import { Link } from "@inertiajs/react";
+import { Dialog, Transition } from "@headlessui/react";
+import { Link, useForm } from "@inertiajs/react";
 import {
     Bars3Icon,
     BellIcon,
     Cog6Tooth,
     HomeIcon,
-    MagnifyingGlassIcon,
     QueueListIcon,
     UserGroupIcon,
     UsersIcon,
-    ViewFinderCircleIcon,
 } from "@/icons";
 import RectangleStackIcon from "@/icons/RectangleStackIcon";
 import XCircleIcon from "@/icons/XCircleIcon";
-import TextInput from "@/Components/TextInput";
+import DropdownActiontable from "@/Components/DropdownActiontable";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(true);
     const [showNav, setShowNav] = useState(false);
+    const { post: postMethod, reset } = useForm({});
 
     const [navigation, setNavigation] = useState([
         {
@@ -107,18 +106,54 @@ export default function Authenticated({ user, header, children }) {
                                     </div>
                                 </Transition.Child>
                                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-50 dark:bg-gray-700 py-4">
-                                    <div className="flex items-center pb-2 border-b border-gray-300 dark:border-gray-300 mx-6">
-                                        <div className={`mr-3 -ml-2`}>
-                                            <ViewFinderCircleIcon
-                                                className={
-                                                    "h-11 text-gray-800 dark:text-gray-300"
-                                                }
-                                            />
-                                        </div>
-                                        <div>
-                                            <h1 className="text-xl leading-6 font-bold antialiased text-gray-800 dark:text-gray-300">
-                                                MyTarget
-                                            </h1>
+                                    <div className="px-3">
+                                        <div className="dark:bg-transparent p-2 rounded-lg flex justify-between">
+                                            <div className="flex space-x-2">
+                                                <div className="flex justify-center">
+                                                    <img
+                                                        src={
+                                                            "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_3.png"
+                                                        }
+                                                        className="rounded-full h-10 w-10 select-none cursor-pointer"
+                                                        draggable={false}
+                                                    />
+                                                </div>
+                                                <div className="">
+                                                    <a
+                                                        className="font-bold leading-6 hover:border-b"
+                                                        href="/profile"
+                                                    >
+                                                        {user.name}
+                                                    </a>
+                                                    <p className="text-xs">
+                                                        {user.email}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <DropdownActiontable
+                                                    actionObject={{
+                                                        profile: {
+                                                            action: () => {
+                                                                window.location.href =
+                                                                    "/profile";
+                                                            },
+                                                            label: "Profile Settings",
+                                                        },
+                                                        logout: {
+                                                            action: () => {
+                                                                postMethod(
+                                                                    route(
+                                                                        "logout"
+                                                                    )
+                                                                );
+                                                            },
+
+                                                            label: "Logout",
+                                                        },
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
 
@@ -173,7 +208,7 @@ export default function Authenticated({ user, header, children }) {
                 <div
                     className={`hidden lg:block w-0 lg:w-[20%] h-full pt-3 transition-all`}
                 >
-                    <div className="flex items-center pb-2 mx-6">
+                    {/* <div className="flex items-center pb-2 mx-6">
                         <div className={`mr-3 -ml-2`}>
                             <ViewFinderCircleIcon
                                 className={
@@ -186,6 +221,49 @@ export default function Authenticated({ user, header, children }) {
                                 MyTarget
                             </h1>
                         </div>
+                    </div> */}
+                    <div className="px-3">
+                        <div className="dark:bg-transparent p-2 rounded-lg flex justify-between">
+                            <div className="flex space-x-2">
+                                <div className="flex justify-center">
+                                    <img
+                                        src={
+                                            "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_3.png"
+                                        }
+                                        className="rounded-full h-10 w-10 select-none cursor-pointer"
+                                        draggable={false}
+                                    />
+                                </div>
+                                <div className="">
+                                    <a
+                                        className="font-bold leading-6 hover:border-b"
+                                        href="/profile"
+                                    >
+                                        {user.name}
+                                    </a>
+                                    <p className="text-xs">{user.email}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <DropdownActiontable
+                                    actionObject={{
+                                        profile: {
+                                            action: () => {
+                                                window.location.href =
+                                                    "/profile";
+                                            },
+                                            label: "Profile Settings",
+                                        },
+                                        logout: {
+                                            action: () => {
+                                                postMethod(route("logout"));
+                                            },
+                                            label: "Logout",
+                                        },
+                                    }}
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     <div className="pt-6">
@@ -194,8 +272,8 @@ export default function Authenticated({ user, header, children }) {
                                 Main
                             </span>
                         </div>
-                        <div className="pt-1 relative h-[80dvh]">
-                            <ul className={`space-y-0.5`}>
+                        <div className="pt-1 relative">
+                            <ul className={`space-y-0.5 h-full`}>
                                 {navigation.map((item) => (
                                     <Link
                                         href={item.to}
@@ -227,14 +305,11 @@ export default function Authenticated({ user, header, children }) {
                                     </Link>
                                 ))}
                             </ul>
-                            <div className="absolute bottom-2">
-                                {user.name}
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="w-full lg:w-[80%]">
-                    <nav className="flex justify-between items-center pb-3 pt-1 pr-2">
+                <div className="w-full lg:w-[80%] relative">
+                    <nav className="flex justify-between items-center pb-3 pt-1 pr-2 md:hidden">
                         <div className="w-full md:w-1/2 flex items-center ">
                             <div className="ml-2 block lg:hidden">
                                 <div
@@ -246,10 +321,9 @@ export default function Authenticated({ user, header, children }) {
                                     <Bars3Icon />
                                 </div>
                             </div>
-                            <div className="flex relative items-center w-full">
-                            </div>
+                            <div className="flex relative items-center w-full"></div>
                         </div>
-                        <div className="w-[20%] flex justify-end">
+                        <div className="w-[30%] flex justify-end">
                             <div className="flex space-x-3 items-center">
                                 <div className="cursor-pointer">
                                     <BellIcon />
@@ -286,7 +360,7 @@ export default function Authenticated({ user, header, children }) {
                             </div>
                         </div>
                     </nav>
-                    <main className="h-[calc(100dvh-70px)] w-full bg-gray-100 dark:bg-gray-800 border p-1 border-gray-300 rounded-lg shadow-lg">
+                    <main className="h-[calc(100dvh-20px)] w-full bg-gray-100 dark:bg-gray-800 border p-1 border-gray-300 rounded-lg shadow-lg">
                         {header && (
                             <div className="border-b border-gray-300 dark:border-gray-600 p-3">
                                 {header || null}

@@ -20,7 +20,7 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
             <Head title="Profile" />
 
             <div className="h-[80dvh] overflow-y-auto">
-                <div className="max-w-7xl mx-auto space-y-20 px-1">
+                <div className="max-w-7xl mx-auto space-y-20 px-1 pb-10">
                     <UpdateProfileInformationForm
                         mustVerifyEmail={mustVerifyEmail}
                         status={status}

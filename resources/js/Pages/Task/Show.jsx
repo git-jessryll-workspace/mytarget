@@ -142,7 +142,7 @@ export default function Show({ task, auth, time_log_object }) {
                                             {`${time_log_object.weeks}w ${time_log_object.days}d ${time_log_object.hours}h ${time_log_object.minutes}m`}
                                         </td>
                                     </tr>
-                                    {task.is_archived && (
+                                    {task.is_archived === 1 && (
                                         <tr>
                                             <td className="text-sm font-bold">
                                                 Status
