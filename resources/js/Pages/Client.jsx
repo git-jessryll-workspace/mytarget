@@ -19,6 +19,7 @@ export default function Client({ auth, clients, search_query }) {
     };
     return (
         <>
+            <Head title="Clients" />
             <Authenticated
                 user={auth.user}
                 header={
@@ -33,7 +34,6 @@ export default function Client({ auth, clients, search_query }) {
                     </div>
                 }
             >
-                <Head title="Clients" />
                 <NavPanel
                     search_query={search_query}
                     keyProps="clients"

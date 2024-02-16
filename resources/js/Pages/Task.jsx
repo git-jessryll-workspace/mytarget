@@ -4,31 +4,11 @@ import { Head, Link } from "@inertiajs/react";
 import TextInput from "@/Components/TextInput";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { ChevronLeftIcon, ChevronRightIcon, QueueListIcon } from "@/icons";
+import PriorityLevel from "@/Components/PriorityLevel";
 
-const items = [
-    {
-        id: 1,
-        name: "Cover Photo",
-        project_key: "CMS-2",
-        priority_level: 1,
-        status: "PENDING",
-    },
-];
 
-const priorityWrap = {
-    0: "bg-red-500",
-    1: "bg-yellow-600",
-    2: "bg-green-300"
-};
-
-const priorityLabel = {
-    0: "High",
-    1: "Medium",
-    2: "Low",
-    3: ""
-}
-
-const Task = ({ auth }) => {
+const Task = ({ auth, tasks }) => {
+    
     return (
         <>
             <Head title="Tasks" />
@@ -61,6 +41,7 @@ const Task = ({ auth }) => {
                         <div className="join space-x-1">
                             <div>
                                 <Link
+                                
                                     href={"#"}
                                     className="btn btn-sm bg-teal-600 hover:bg-teal-600/90 text-white"
                                 >
@@ -78,24 +59,27 @@ const Task = ({ auth }) => {
                         </div>
                     </div>
                 </div>
-                <div className="pt-4">
+                <div className="pt-4 h-[calc(100dvh-180px)] -mr-5 pr-3 mt-3 overflow-y-auto">
                     <table className="table table-lg">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Task Name</th>
+                                <th>Project Name</th>
+                                <th>Priority Level</th>
+                                <th></th>
+                            </tr>
+                        </thead>
                         <tbody>
-                            {items.map((item) => (
+                            {tasks.data.map((item) => (
                                 <tr key={item.id} className="text-sm">
-                                    <td>{item.project_key}</td>
+                                    <td>{item.id}</td>
                                     <td>{item.name}</td>
+                                    <td>{item.client_project.project_name}</td>
                                     <td className="flex justify-center">
-                                        <div
-                                            className={`${
-                                                priorityWrap[
-                                                    item.priority_level
-                                                ]
-                                            } border font-bold text-xs px-3 py-1 rounded-full text-gray-300`}
-                                        >
-                                            Test
-                                        </div>
+                                        <PriorityLevel level={item.priority_level}/>
                                     </td>
+                                    <td></td>
                                 </tr>
                             ))}
                         </tbody>
