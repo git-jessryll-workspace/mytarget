@@ -37,7 +37,7 @@ const Task = ({ auth, tasks }) => {
                         </div>
                     </div>
                     <div className="flex space-x-3 items-center justify-end">
-                        <div className="font-bold text-sm">1 - 10 of 10</div>
+                        <div className="font-bold text-sm">{tasks.from} - {tasks.to} of {tasks.total}</div>
                         <div className="join space-x-1">
                             <div>
                                 <Link
