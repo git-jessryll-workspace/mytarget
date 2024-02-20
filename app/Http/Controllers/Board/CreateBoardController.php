@@ -17,7 +17,7 @@ class CreateBoardController extends Controller
     {
         $data = [
             'name' => $request->validated('name'),
-            'sort' => $request->validated('sort'),
+            'sort' => (int)$request->validated('sort') ?? 0,
             'client_id' => $request->validated('client_id'),
             'client_project_id' => $request->validated('client_project_id'),
         ];

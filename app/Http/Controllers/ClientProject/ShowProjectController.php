@@ -42,7 +42,12 @@ class ShowProjectController extends Controller
             ->where('tasks.is_archived', false);
 
         if (!empty($search_query_task)) {
-            $queryTask->where('tasks.name', 'LIKE', "%{$search_query_task}%");
+            $queryTask->where(function ($q) use ($search_query_task) {
+                $q->where('tasks.name', 'LIKE', "%{$search_query_task}%")
+                    ->orWhereHas('acronym', function ($q1) use ($search_query_task){
+                        $q1->whereRaw('CONCAT("#",acronym,"-",counter) LIKE ?', ["%$search_query_task%"]);
+                    });
+            });
         }
 
         $tasks = $queryTask->orderBy('tasks.priority_level', 'desc')

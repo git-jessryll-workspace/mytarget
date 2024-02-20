@@ -23,7 +23,8 @@ class CreateBoardRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'sort' => 'required|integer'
+            'client_id' => 'required',
+            'client_project_id' => 'required',
         ];
     }
 }
