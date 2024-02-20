@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Client;
+namespace App\Http\Requests\Board;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateClientRequest extends FormRequest
+class CreateBoardRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class CreateClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:4',
-            'note' => 'nullable',
-            'date_started' => 'nullable|date',
-            'date_ended' => 'nullable|date',
-            'position' => 'nullable'
+            'name' => 'required',
+            'sort' => 'required|integer'
         ];
     }
 }

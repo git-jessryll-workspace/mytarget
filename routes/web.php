@@ -27,3 +27,4 @@ require __DIR__ . '/web/client_contacts.route.php';
 require __DIR__ . '/web/utils.route.php';
 require __DIR__ . '/web/tasks.route.php';
 require __DIR__ . '/web/task_time_log.route.php';
+require __DIR__ . '/web/boards.route.php';

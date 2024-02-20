@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Client;
+namespace App\Http\Requests\Task;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateClientRequest extends FormRequest
+class CreateTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,14 @@ class CreateClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:4',
-            'note' => 'nullable',
-            'date_started' => 'nullable|date',
-            'date_ended' => 'nullable|date',
-            'position' => 'nullable'
+            'name' => 'required',
+            'description' => 'nullable',
+            'priority_level' => 'nullable',
+            'client_id' => 'required',
+            'client_project_id' => 'required',
+            'board_id' => 'required',
+            'task_status' => 'required',
+            'due_date' => 'nullable',
         ];
     }
 }

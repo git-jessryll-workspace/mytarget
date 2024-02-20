@@ -4,8 +4,8 @@ import { Head } from "@inertiajs/react";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import NavPanel from "@/Components/partials/NavPanel";
 import { RectangleStackIcon } from "@/icons";
-import { ProjectList } from "@/Modules/Project/Partial";
-import { CreateProjectForm } from "@/Modules/Project/Forms";
+import { ProjectList } from "@/Modules/ClientProject/Partial";
+import { CreateProjectForm } from "@/Modules/ClientProject/Forms";
 
 export default function ClientProject({ auth, projects, search_query }) {
     const [projectList, setProjectList] = useState([]);

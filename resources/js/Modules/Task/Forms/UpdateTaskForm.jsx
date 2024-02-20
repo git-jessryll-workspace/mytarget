@@ -29,8 +29,6 @@ const UpdateTaskForm = () => {
         is_archived: false,
     });
 
-    console.log(task);
-
     const { acronym } = task;
 
     useEffect(() => {
@@ -55,7 +53,7 @@ const UpdateTaskForm = () => {
                 <header className="flex justify-between items-center">
                     <div>
                         <h3 className="text-xl font-bold">
-                            #{`${acronym.acronym}-${acronym.counter}`}
+                            #{`${acronym}-${acronym.counter}`}
                         </h3>
                         <h6 className="text-xs flex items-center">
                             {client_project.project_name}

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\ClientProject;
 
 use App\Http\Controllers\Controller;
-use App\Models\Acronym;
 use App\Models\ClientProject;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -18,8 +17,8 @@ class ShowProjectController extends Controller
     {
         $search_query_task = $request->get('search_query_task') ?? "";
         $client = $clientProject->client;
-        $acronym = Acronym::query()->where('client_project_id', $clientProject->id)->first();
-        
+        $acronym = $clientProject->acronym;
+
         $queryTask = Task::query()
             ->select([
                 'tasks.id',
@@ -42,7 +41,7 @@ class ShowProjectController extends Controller
             ->where('tasks.client_project_id', $clientProject->id)
             ->where('tasks.is_archived', false);
 
-        if ($search_query_task !== "") {
+        if (!empty($search_query_task)) {
             $queryTask->where('tasks.name', 'LIKE', "%{$search_query_task}%");
         }
 

@@ -20,4 +20,14 @@ class ClientProject extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function boards()
+    {
+        return $this->hasMany(Board::class);
+    }
+
+    public function acronym()
+    {
+        return $this->hasOne(Acronym::class, 'client_project_id');
+    }
 }

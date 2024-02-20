@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Http\Service\Acronym\TaskBinder;
-use App\Models\Task;
+use App\Http\Service\ClientProject\ClientProjectBinder;
+use App\Http\Service\Task\TaskBinder;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -29,6 +29,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('task', function (string $value) {
             return TaskBinder::bindTask($value);
         });
+
+        Route::bind('clientProject', function(string $value) {
+            return ClientProjectBinder::bindClientProject($value);
+        });
+
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });

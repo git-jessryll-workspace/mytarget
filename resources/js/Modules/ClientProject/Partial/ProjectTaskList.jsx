@@ -5,11 +5,10 @@ import NavPanel from "@/Components/partials/NavPanel";
 import { dateFormat } from "@/utils/date";
 import DropdownActiontable from "@/Components/DropdownActiontable";
 import TableList from "@/Components/TableList";
+import CreateProjectTaskForm from "@/Modules/ClientProject/Forms/CreateProjectTaskForm.jsx";
 
 const ProjectTaskList = () => {
     const { tasks, search_query_task } = usePage().props;
-
-    const [showView, setShowView] = useState(false);
     const [taskList, setTaskList] = useState([]);
 
     useEffect(() => {
@@ -66,7 +65,7 @@ const ProjectTaskList = () => {
                 keyProps={"tasks"}
                 updateList={updateList}
                 data={tasks}
-                disableCreate={true}
+                CreateForm={CreateProjectTaskForm}
                 search_query={search_query_task}
                 routeControl={"projects.show"}
                 search_query_key={"search_query_task"}

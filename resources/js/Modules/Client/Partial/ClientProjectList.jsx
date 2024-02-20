@@ -8,7 +8,7 @@ import {
     CreateProjectForm,
     DeleteProjectForm,
     EditProjectForm,
-} from "@/Modules/Project/Forms";
+} from "@/Modules/ClientProject/Forms";
 import Modal from "@/Components/Modal";
 import TableList from "@/Components/TableList";
 
