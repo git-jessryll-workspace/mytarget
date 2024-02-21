@@ -1,14 +1,14 @@
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import { useForm, usePage } from "@inertiajs/react";
-import { memo } from "react";
+import {useForm, usePage} from "@inertiajs/react";
+import {memo} from "react";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import SecondaryButton from "@/Components/SecondaryButton";
 
-export default memo(function CreateProjectTaskForm({ setShow }) {
-    const { client, project_client } = usePage().props;
-    const { boards } = project_client;
-    console.log(usePage().props);
+export default memo(function CreateProjectTaskForm({setShow}) {
+
+    const {client, project_client} = usePage().props;
+    const {boards} = project_client;
     const {
         data,
         setData,
@@ -19,13 +19,16 @@ export default memo(function CreateProjectTaskForm({ setShow }) {
         description: "",
         priority_level: 0,
         client_id: client.id,
-        project_client_id: project_client.id,
-        board_id: null,
+        client_project_id: project_client.id,
+        board_id: boards[0].id,
     });
     const handleSubmit = async (event) => {
         event.preventDefault();
-        postMethod(route("tasks.store"), {
-            onSuccess: () => reset(),
+        await postMethod(route("tasks.store"), {
+            onSuccess: () => {
+                reset();
+                setShow(false);
+            },
         });
     };
 
@@ -36,7 +39,7 @@ export default memo(function CreateProjectTaskForm({ setShow }) {
             </div>
             <form className={"space-y-4"} onSubmit={handleSubmit}>
                 <div className={"space-y-2"}>
-                    <InputLabel value="Task Name" />
+                    <InputLabel value="Task Name"/>
                     <div>
                         <TextInput
                             value={data.name}
@@ -47,7 +50,7 @@ export default memo(function CreateProjectTaskForm({ setShow }) {
                     </div>
                 </div>
                 <div className="space-y-2">
-                    <InputLabel value="Priority Level" />
+                    <InputLabel value="Priority Level"/>
                     <div>
                         <select
                             value={data.priority_level}
@@ -64,7 +67,7 @@ export default memo(function CreateProjectTaskForm({ setShow }) {
                     </div>
                 </div>
                 <div className="space-y-2">
-                    <InputLabel value="Board" />
+                    <InputLabel value="Board"/>
                     <div>
                         <select
                             value={data.board_id}
@@ -82,7 +85,7 @@ export default memo(function CreateProjectTaskForm({ setShow }) {
                     </div>
                 </div>
                 <div className={"space-y-2"}>
-                    <InputLabel value={"Description"} />
+                    <InputLabel value={"Description"}/>
                     <div>
                         <textarea
                             rows={5}

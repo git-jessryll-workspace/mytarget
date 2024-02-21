@@ -38,7 +38,7 @@ const ProjectTaskList = () => {
         0: null,
     };
 
-    const taskListData = taskList.map((task) => ({
+    const taskListData = tasks.data.map((task) => ({
         id: `#${task.acronym}-${task.counter}`,
         name: task.name,
         priority_level: priorityWrap[task.priority_level],
@@ -65,12 +65,12 @@ const ProjectTaskList = () => {
                 keyProps={"tasks"}
                 updateList={updateList}
                 data={tasks}
-                CreateForm={CreateProjectTaskForm}
+                disableCreate={true}
                 search_query={search_query_task}
                 routeControl={"projects.show"}
                 search_query_key={"search_query_task"}
             />
-            <div className="h-[calc(100dvh-240px)] overflow-auto -mr-5 pr-3">
+            <div className="h-[calc(100dvh-200px)] overflow-auto -mr-5 pr-3">
                 <TableList
                     theadObject={{
                         acronym_id: "#",

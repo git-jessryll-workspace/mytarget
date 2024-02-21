@@ -36,11 +36,11 @@ const Details = () => {
     });
 
     return (
-        <div className="h-[calc(100dvh-200px)] overflow-y-auto -mr-5">
-            <div className="max-w-7xl w-3/4 mx-auto space-y-5 px-1">
-                <section className="border dark:border-gray-700 bg-gray-900 p-6 rounded-md grid grid-cols-1 md:grid-cols-2">
-                    <header className="pt-2">
-                        <h2 className="text-lg font-medium text-gray-900 dark:text-gray-300">
+        <div className="h-[calc(100dvh-165px)] overflow-y-auto -mr-5">
+            <div className="w-full space-y-5 pl-1 pr-5">
+                <section className="border dark:border-gray-700 bg-gray-900 p-4 md:p-6 rounded-md md:grid md:grid-cols-2">
+                    <header className="pt-2 pb-4 md:pb-0">
+                        <h2 className="text-normal md:text-lg font-medium text-gray-900 dark:text-gray-300">
                             General Settings
                         </h2>
                     </header>
@@ -82,9 +82,9 @@ const Details = () => {
                         </div>
                     </div>
                 </section>
-                <section className="border dark:border-gray-700 bg-gray-900 p-6 rounded-md grid grid-cols-1 md:grid-cols-2">
-                    <header>
-                        <h2 className="text-lg font-medium text-gray-900 dark:text-gray-300">
+                <section className="border dark:border-gray-700 bg-gray-900 p-4 md:p-6 rounded-md md:grid md:grid-cols-2">
+                    <header className={"pb-4 md:pb-0"}>
+                        <h2 className="text-normal md:text-lg font-medium text-gray-900 dark:text-gray-300">
                             Client Information
                         </h2>
                     </header>
@@ -99,7 +99,7 @@ const Details = () => {
                            <InputLabel value={"Project Acronym"}/>
                            <div>
                                 <TextInput value={acronym?.acronym} />
-                            </div> 
+                            </div>
                         </div>
                         <div className="space-y-2">
                             <InputLabel value={"Current Position"} />
@@ -107,7 +107,7 @@ const Details = () => {
                                 <TextInput disabled value={client.position} />
                             </div>
                         </div>
-                        
+
                     </div>
                     <div className="flex justify-end col-span-2 mt-5 border-t border-gray-700">
                         <div className="pt-3">
@@ -117,7 +117,7 @@ const Details = () => {
                         </div>
                     </div>
                 </section>
-                <section className="border dark:border-gray-700 bg-gray-900 p-6 rounded-md flex justify-between items-center">
+                <section className="border dark:border-gray-700 bg-gray-900 p-4 md:p-6 rounded-md md:flex md:justify-between items-center">
                     <div>
                         <h2 className="text-lg font-medium text-gray-900 dark:text-gray-300">
                             Archive Project?
@@ -128,11 +128,11 @@ const Details = () => {
                             that connected to this project.
                         </p>
                     </div>
-                    <div>
+                    <div className={"pt-3 md:pt-0 text-balance"}>
                         <DangerButton>Archived</DangerButton>
                     </div>
                 </section>
-                <section className="border dark:border-gray-700 bg-gray-900 p-6 rounded-md flex justify-between items-center">
+                <section className="border dark:border-gray-700 bg-gray-900 p-4 md:p-6 rounded-md md:flex md:justify-between items-center">
                     <div>
                         <h2 className="text-lg font-medium text-gray-900 dark:text-gray-300">
                             Delete Project?
@@ -143,7 +143,7 @@ const Details = () => {
                             deleted.
                         </p>
                     </div>
-                    <div>
+                    <div className={"pt-3 md:pt-0 text-balance"}>
                         <DangerButton>Delete</DangerButton>
                     </div>
                 </section>

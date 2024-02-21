@@ -28,7 +28,6 @@ class CreateTaskRequest extends FormRequest
             'client_id' => 'required',
             'client_project_id' => 'required',
             'board_id' => 'required',
-            'task_status' => 'required',
             'due_date' => 'nullable',
         ];
     }

@@ -151,7 +151,7 @@ const Show = ({ auth, project_client }) => {
                 {currentTab?.code === "detail" && <Details />}
             </Authenticated>
             <Modal show={showCreateTask} maxWidth="sm">
-                <CreateProjectTaskForm setShow={setShowCreateTask} />
+                    <CreateProjectTaskForm setShow={setShowCreateTask}/>
             </Modal>
             <Modal show={showCreateBoard} maxWidth="sm">
                 <CreateBoardForm setShow={setShowCreateBoard} />
