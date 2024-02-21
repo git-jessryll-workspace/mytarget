@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Board\ChangeBoardPositionController;
 use App\Http\Controllers\Board\CreateBoardController;
 use App\Http\Controllers\Board\DeleteBoardController;
 use App\Http\Controllers\Board\UpdateBoardController;
@@ -12,4 +12,8 @@ Route::prefix('boards')->middleware('auth')->group(function () {
       Route::put('/', UpdateBoardController::class)->name('boards.update');
       Route::delete('/', DeleteBoardController::class)->name('boards.destroy');
    });
+});
+
+Route::prefix('board-position')->middleware('auth')->group(function () {
+   Route::patch('/', ChangeBoardPositionController::class)->name('boards.position');
 });

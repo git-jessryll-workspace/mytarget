@@ -2,34 +2,13 @@ import DangerButton from "@/Components/DangerButton";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
+import { ArrowUpCircleIcon } from "@/icons";
 import { useForm, usePage } from "@inertiajs/react";
-
-const selectOptions = [
-    {
-        label: "None",
-        value: 0,
-        color: "bg-transparent",
-    },
-    {
-        label: "LOW",
-        value: 1,
-        color: "bg-gray-500",
-    },
-    {
-        label: "MEDIUM",
-        value: 2,
-        color: "bg-yellow-600",
-    },
-    {
-        label: "HIGH",
-        value: 3,
-        color: "bg-red-500",
-    },
-];
+import BoardList from "./BoardList";
 
 const Details = () => {
     const { project_client, client, acronym } = usePage().props;
-
+    const {boards} = project_client;
     const { data, setData } = useForm({
         project_name: project_client.project_name,
         description: project_client.description,
@@ -83,6 +62,16 @@ const Details = () => {
                     </div>
                 </section>
                 <section className="border dark:border-gray-700 bg-gray-900 p-4 md:p-6 rounded-md md:grid md:grid-cols-2">
+                    <header className="pb-4 md:pb-0">
+                        <h2 className="text-normal md:text-lg font-medium text-gray-900 dark:text-gray-300">
+                            Boards
+                        </h2>
+                    </header>
+                    <div className="space-y-4">
+                        <BoardList/>
+                    </div>
+                </section>
+                <section className="border dark:border-gray-700 bg-gray-900 p-4 md:p-6 rounded-md md:grid md:grid-cols-2">
                     <header className={"pb-4 md:pb-0"}>
                         <h2 className="text-normal md:text-lg font-medium text-gray-900 dark:text-gray-300">
                             Client Information
@@ -96,8 +85,8 @@ const Details = () => {
                             </div>
                         </div>
                         <div className="space-y-2">
-                           <InputLabel value={"Project Acronym"}/>
-                           <div>
+                            <InputLabel value={"Project Acronym"} />
+                            <div>
                                 <TextInput value={acronym?.acronym} />
                             </div>
                         </div>
@@ -107,7 +96,6 @@ const Details = () => {
                                 <TextInput disabled value={client.position} />
                             </div>
                         </div>
-
                     </div>
                     <div className="flex justify-end col-span-2 mt-5 border-t border-gray-700">
                         <div className="pt-3">
