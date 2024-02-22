@@ -16,9 +16,17 @@ export default memo(function BoardList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {boards.sort((item1, item2) => item2.sort - item1.sort).map((boardItem) => (
-                        <BoardItem key={boardItem.id} boardItem={boardItem}/>
-                    ))}
+                    {boards
+                        .sort((item1, item2) => item2.sort - item1.sort)
+                        .map((boardItem, idx) => (
+                            <BoardItem
+                                key={boardItem.id}
+                                boardItem={boardItem}
+                                boards={boards}
+                                boardUp={boards[idx + 1] || null}
+                                boardDown={boards[idx - 1] || null}
+                            />
+                        ))}
                 </tbody>
             </table>
         </>

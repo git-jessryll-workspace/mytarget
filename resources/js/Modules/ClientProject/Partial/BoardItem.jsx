@@ -2,10 +2,9 @@ import {ArrowUpCircleIcon} from "@/icons";
 import {useForm} from "@inertiajs/react";
 import {memo} from "react";
 
-export default memo(function BoardItem({boardItem}) {
+export default memo(function BoardItem({boardItem, boardUp, boardDown}) {
     const {patch: patchMethod, reset, setData} = useForm({});
     const handleBoardPosition = async (board, position = "up") => {
-console.log(board)
         await patchMethod(route("boards.position", [
             {
                 board_id: boardItem.id
