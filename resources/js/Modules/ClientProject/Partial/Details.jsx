@@ -8,7 +8,6 @@ import BoardList from "./BoardList";
 
 const Details = () => {
     const { project_client, client, acronym } = usePage().props;
-    const {boards} = project_client;
     const { data, setData } = useForm({
         project_name: project_client.project_name,
         description: project_client.description,
@@ -87,7 +86,7 @@ const Details = () => {
                         <div className="space-y-2">
                             <InputLabel value={"Project Acronym"} />
                             <div>
-                                <TextInput value={acronym?.acronym} />
+                                <TextInput disabled={true} value={acronym?.acronym} />
                             </div>
                         </div>
                         <div className="space-y-2">

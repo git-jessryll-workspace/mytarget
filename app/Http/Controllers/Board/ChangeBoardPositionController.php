@@ -8,11 +8,12 @@ use App\Models\Board;
 
 class ChangeBoardPositionController extends Controller
 {
-    
-    public function __invoke(Board $board, ChangeBoardPositionRequest $request)
+
+    public function __invoke(ChangeBoardPositionRequest $request)
     {
         $sort = (int) $request->validated('sort');
-        $board->update(['sort' => $sort]);
+        $boardId = $request->validated('board_id');
+        Board::query()->where('id', $boardId)->update(['sort' => $sort]);
         return redirect()->back();
     }
 }

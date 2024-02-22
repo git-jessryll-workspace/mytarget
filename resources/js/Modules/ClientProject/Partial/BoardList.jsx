@@ -16,7 +16,7 @@ export default memo(function BoardList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {boards.map((boardItem) => (
+                    {boards.sort((item1, item2) => item2.sort - item1.sort).map((boardItem) => (
                         <BoardItem key={boardItem.id} boardItem={boardItem}/>
                     ))}
                 </tbody>
