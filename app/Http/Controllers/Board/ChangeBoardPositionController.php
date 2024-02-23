@@ -11,9 +11,18 @@ class ChangeBoardPositionController extends Controller
 
     public function __invoke(ChangeBoardPositionRequest $request)
     {
-        $sort = (int) $request->validated('sort');
-        $boardId = $request->validated('board_id');
-        Board::query()->where('id', $boardId)->update(['sort' => $sort]);
+        $boardFromId = $request->validated('board_from_id');
+        $boardToId = $request->validated('board_to_id');
+        $boardFrom = Board::query()->where('id', $boardFromId)->firstOrFail();
+        $boardTo = Board::query()->where('id', $boardToId)->firstOrFail();
+
+        Board::query()->where('id', $boardFrom->id)->update([
+            'sort' => $boardTo->sort
+        ]);
+
+        Board::query()->where('id', $boardTo->id)->update([
+            'sort' => $boardFrom->sort,
+        ]);
         return redirect()->back();
     }
 }

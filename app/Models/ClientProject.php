@@ -23,7 +23,7 @@ class ClientProject extends Model
 
     public function boards()
     {
-        return $this->hasMany(Board::class);
+        return $this->hasMany(Board::class)->orderBy('sort', 'asc');
     }
 
     public function acronym()

@@ -22,8 +22,8 @@ class ChangeBoardPositionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sort' => 'required',
-            'board_id' => 'required'
+            'board_from_id' => 'required',
+            'board_to_id' => 'required'
         ];
     }
 }
