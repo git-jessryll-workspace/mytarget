@@ -41,6 +41,7 @@ const ProjectTaskList = () => {
     const taskListData = tasks.data.map((task) => ({
         id: `#${task.acronym}-${task.counter}`,
         name: task.name,
+        board_name: task.board_name,
         priority_level: priorityWrap[task.priority_level],
         updated_at: dateFormat(task.updated_at),
         action: (
@@ -75,6 +76,7 @@ const ProjectTaskList = () => {
                     theadObject={{
                         acronym_id: "#",
                         name: "Name",
+                        board_name: "Board Position",
                         priority_level: "Priority Level",
                         updated_at: "Date Updated",
                         action: "",
