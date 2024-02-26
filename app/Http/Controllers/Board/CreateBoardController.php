@@ -15,9 +15,11 @@ class CreateBoardController extends Controller
      */
     public function __invoke(CreateBoardRequest $request): RedirectResponse
     {
+        $clientProjectId = $request->validated("client_project_id");
+        $boards = Board::query()->where('client_project_id', $clientProjectId)->count();
         $data = [
             'name' => $request->validated('name'),
-            'sort' => (int)$request->validated('sort') ?? 0,
+            'sort' => $boards,
             'client_id' => $request->validated('client_id'),
             'client_project_id' => $request->validated('client_project_id'),
         ];
