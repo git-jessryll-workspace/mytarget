@@ -43,7 +43,6 @@ class AcronymService
             ->where('client_project_id', $task->client_project_id)
             ->orderBy('counter', 'desc')
             ->first();
-        
         Acronym::query()->create([
             'client_project_id' => $task->client_project_id,
             'client_id' => $task->client_id,

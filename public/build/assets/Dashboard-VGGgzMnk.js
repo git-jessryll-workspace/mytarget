@@ -1,1 +1,0 @@
-import{j as r,a as e}from"./app-IeTSK-tL.js";import{A as s}from"./AuthenticatedLayout-TWqcFy5M.js";import"./transition-wc5XYkds.js";import"./Bars3Icon-i7vWMIFl.js";import"./dialog-Mn_1d4wM.js";function n({auth:a}){return r.jsxs(s,{user:a.user,header:"Dashboard",children:[r.jsx(e,{title:"Dashboard"}),r.jsx("div",{className:"",children:"You're logged in!"})]})}export{n as default};
