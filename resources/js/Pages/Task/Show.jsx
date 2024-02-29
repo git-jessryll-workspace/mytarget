@@ -40,10 +40,10 @@ export default function Show({ task, auth, time_log_object }) {
                                         className="text-gray-400 hover:text-gray-700 flex items-center text-sm font-medium"
                                     >
                                         <RectangleStackIcon
-                                            className="h-5 w-5 flex-shrink-0 mr-1"
+                                            className="h-5 w-5 flex-shrink-0 mr-3"
                                             aria-hidden="true"
                                         />
-                                        <span className="sr-only">Home</span>
+                                        <span className="sr-only">Projects</span>
                                         Projects
                                     </a>
                                 </div>

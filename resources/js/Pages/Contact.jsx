@@ -22,8 +22,8 @@ export default function Contact({ auth, contacts, search_query }) {
             user={auth.user}
             header={
                 <div className="flex space-x-2">
-                    <UsersIcon />
-                    <h3 className="font-bold text-lg">Contacts</h3>
+                    <UsersIcon className="h-5 w-6"/>
+                    <h3 className="font-bold text-sm">Contacts</h3>
                 </div>
             }
         >
@@ -35,7 +35,7 @@ export default function Contact({ auth, contacts, search_query }) {
                 data={contacts}
                 CreateForm={CreateContactForm}
             />
-            <div className="h-[calc(100dvh-220px)] overflow-auto -mr-5 pr-3 mt-3">
+            <div className="h-[calc(100dvh-180px)] overflow-auto -mr-5 pr-3 mt-3">
                 <ContactList contacts={contactList} updateList={updateList} />
             </div>
         </Authenticated>

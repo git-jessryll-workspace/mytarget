@@ -1,3 +1,5 @@
+import {memo} from "react";
+
 const CheckCircleSolidIcon = ({ className = "w-6 h-6" }) => {
     return (
         <svg
@@ -15,4 +17,4 @@ const CheckCircleSolidIcon = ({ className = "w-6 h-6" }) => {
     );
 };
 
-export default CheckCircleSolidIcon
+export default memo(CheckCircleSolidIcon)

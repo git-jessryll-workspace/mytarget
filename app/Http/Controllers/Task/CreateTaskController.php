@@ -23,7 +23,8 @@ class CreateTaskController extends Controller
             'client_project_id'=>$request->validated('client_project_id'),
             'board_id' => $request->validated('board_id'),
             'task_status' => $request->validated('task_status') ?? 0,
-            'due_date' => $request->validated('due_date') ?? null
+            'due_date' => $request->validated('due_date') ?? null,
+            'created_at' => $request->validated('created_at') ?? now(),
         ];
 
         $task = Task::query()->create($data);

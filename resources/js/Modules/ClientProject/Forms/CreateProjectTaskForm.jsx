@@ -21,6 +21,7 @@ export default memo(function CreateProjectTaskForm({setShow}) {
         client_id: client.id,
         client_project_id: project_client.id,
         board_id: boards[0].id,
+        created_at: null
     });
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -64,6 +65,16 @@ export default memo(function CreateProjectTaskForm({setShow}) {
                             <option value="2">Medium</option>
                             <option value="3">High</option>
                         </select>
+                    </div>
+                </div>
+                <div className={"space-y-2"}>
+                    <InputLabel value={"Date Started"}/>
+                    <div>
+                        <TextInput
+                            type={"date"}
+                            onChange={event => setData('created_at', event.target.value)}
+                            value={data.value}
+                        />
                     </div>
                 </div>
                 <div className="space-y-2">

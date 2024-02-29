@@ -15,7 +15,9 @@ class ClientProjectBinder
     public static function bindClientProject(string $value): Model|Builder
     {
         return ClientProject::query()
-            ->with(['boards', 'client', 'acronym'])
+            ->with(['boards' => function($query) {
+                $query->where('is_hidden', false);
+            }, 'client', 'acronym'])
             ->where('id', $value)
             ->firstOrFail();
     }

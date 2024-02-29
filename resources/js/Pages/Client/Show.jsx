@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Head } from "@inertiajs/react";
 
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { ChevronRightIcon, QueueListIcon } from "@/icons";
+import { QueueListIcon } from "@/icons";
 import ClientProjectList from "@/Modules/Client/Partial/ClientProjectList";
 import ClientContactList from "@/Modules/Client/Partial/ClientContactList";
 import ClientTaskList from "@/Modules/Client/Partial/ClientTaskList";
@@ -25,11 +25,10 @@ export default function Show({ auth, client }) {
             current: false,
         },
     ]);
-    
 
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
-        console.log(queryParams.size)
+        console.log(queryParams.size);
         if (queryParams.size !== 0) {
             setPanelTabs((prevPanelTabs) =>
                 prevPanelTabs.map((tab) => ({
@@ -49,31 +48,50 @@ export default function Show({ auth, client }) {
             <Authenticated
                 user={auth.user}
                 header={
-                    <div className="flex space-x-1">
-                        <div
-                            className="flex space-x-2 cursor-pointer"
-                            onClick={() =>
-                                (window.location.href = route("clients.index"))
-                            }
-                        >
-                            <QueueListIcon />
-                            <h3
-                                className="font-semibold text-lg"
-                                style={{ letterSpacing: "0.5px" }}
+                    <nav>
+                        <div>
+                            <ol
+                                role="list"
+                                className="flex items-center space-x-4"
                             >
-                                Clients
-                            </h3>
+                                <li>
+                                    <a
+                                        href={`${route("clients.index")}`}
+                                        className="text-gray-500 hover:text-gray-300 flex items-center text-sm font-medium"
+                                    >
+                                        <QueueListIcon
+                                            className="h-5 w-5 flex-shrink-0 mr-3"
+                                            aria-hidden="true"
+                                        />
+                                        <span className="sr-only">Clients</span>
+                                        Clients
+                                    </a>
+                                </li>
+                                <li>
+                                    <div className="flex items-center">
+                                        <svg
+                                            className="h-5 w-5 flex-shrink-0 text-gray-300"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            aria-hidden="true"
+                                        >
+                                            <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                                        </svg>
+                                        <a
+                                            href={`${route(
+                                                "clients.show",
+                                                client.id
+                                            )}`}
+                                            className="ml-4 text-sm font-bold antialiased text-gray-300 hover:text-gray-700"
+                                            aria-current={"page"}
+                                        >
+                                            {client.name}
+                                        </a>
+                                    </div>
+                                </li>
+                            </ol>
                         </div>
-                        <div className="flex">
-                            <ChevronRightIcon className="w-5 h-5 mt-1 mr-1" />
-                            <h3
-                                className="font-bold text-xl"
-                                style={{ letterSpacing: "0.5px" }}
-                            >
-                                {client.name}
-                            </h3>
-                        </div>
-                    </div>
+                    </nav>
                 }
             >
                 <div>
@@ -93,9 +111,8 @@ export default function Show({ auth, client }) {
                                                 ...i,
                                                 current: tab.code === i.code,
                                             }));
-                                        })
-                                    }
-                                    }
+                                        });
+                                    }}
                                     className={`${
                                         tab.current
                                             ? "border-teal-600 text-gray-600 dark:text-gray-300 font-bold"

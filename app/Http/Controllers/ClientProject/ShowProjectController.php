@@ -32,26 +32,31 @@ class ShowProjectController extends Controller
                 'acronyms.acronym',
                 'clients.name AS client_name',
                 'client_projects.project_name',
-                'boards.name AS board_name'
+                'boards.name AS board_name',
+                'boards.id AS board_id',
+                'boards.is_hidden AS board_is_hidden',
             ])
             ->leftJoin('acronyms', 'tasks.id', '=', 'acronyms.task_id')
             ->leftJoin('clients', 'tasks.client_id', '=', 'clients.id')
             ->leftJoin('client_projects', 'tasks.client_project_id', '=', 'client_projects.id')
             ->leftJoin('boards', 'tasks.board_id', '=', 'boards.id')
             ->where('tasks.client_project_id', $clientProject->id)
-            ->where('tasks.is_archived', false);
+            ->where('tasks.is_archived', false)
+            ->where('boards.is_hidden', false);
 
         if (!empty($search_query_task)) {
             $queryTask->where(function ($q) use ($search_query_task) {
                 $q->where('tasks.name', 'LIKE', "%{$search_query_task}%")
-                    ->orWhereHas('acronym', function ($q1) use ($search_query_task){
+                    ->orWhereHas('acronym', function ($q1) use ($search_query_task) {
                         $q1->whereRaw('CONCAT("#",acronym,"-",counter) LIKE ?', ["%$search_query_task%"]);
                     });
             });
         }
 
-        $tasks = $queryTask->orderBy('tasks.priority_level', 'desc')
-            ->orderBy('tasks.updated_at', 'desc')->paginate(perPage: 50);
+        $tasks = $queryTask
+            ->orderBy('tasks.priority_level', 'desc')
+            ->orderBy('tasks.created_at', 'desc')
+            ->paginate(perPage: 50);
 
         $tasks->appends([
             'search_query_task' => $search_query_task,

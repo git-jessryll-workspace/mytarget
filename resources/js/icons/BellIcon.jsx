@@ -1,4 +1,6 @@
-export default function BellIcon({className="w-5 h-5"}) {
+import {memo} from "react";
+
+export default memo(function BellIcon({className="w-5 h-5"}) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +17,4 @@ export default function BellIcon({className="w-5 h-5"}) {
             />
         </svg>
     );
-}
+})

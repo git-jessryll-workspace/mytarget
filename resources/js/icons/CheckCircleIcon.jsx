@@ -1,4 +1,5 @@
-export default function CheckCircleIcon({ className = "h-6 w-6" }) {
+import { memo } from "react";
+export default memo(function CheckCircleIcon({ className = "h-6 w-6" }) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +16,4 @@ export default function CheckCircleIcon({ className = "h-6 w-6" }) {
             />
         </svg>
     );
-}
+});

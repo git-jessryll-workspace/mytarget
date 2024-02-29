@@ -23,6 +23,8 @@ import EllipsisVerticalIcon from "@/icons/EllipsisVerticalIcon";
 import Bars3Icon from "./Bars3Icon";
 import IdentificationIcon from "./IdentificationIcon";
 import ArrowUpCircleIcon from './ArrowUpCircleIcon';
+import ArchiveXIcon from "./ArchiveXIcon";
+import PencilSquareIcon from "./PencilSquareIcon";
 
 export {
     HomeIcon,
@@ -49,5 +51,7 @@ export {
     EllipsisVerticalIcon,
     Bars3Icon,
     IdentificationIcon,
-    ArrowUpCircleIcon
+    ArrowUpCircleIcon,
+    ArchiveXIcon,
+    PencilSquareIcon
 };

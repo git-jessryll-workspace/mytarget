@@ -23,14 +23,18 @@ export default function Client({ auth, clients, search_query }) {
             <Authenticated
                 user={auth.user}
                 header={
-                    <div className="flex space-x-2">
-                        <QueueListIcon />
-                        <h3
-                            className="font-bold text-lg"
-                            style={{ letterSpacing: "0.5px" }}
+                    <div>
+                        <a
+                            href={`${route("projects.index")}`}
+                            className="text-gray-500 dark:text-gray-300 hover:opacity-75 flex items-center text-sm font-bold antialiased"
                         >
-                            Clients
-                        </h3>
+                            <QueueListIcon
+                                className="h-5 w-5 flex-shrink-0 mr-3"
+                                aria-hidden="true"
+                            />
+                            <span className="sr-only">Client</span>
+                            Client
+                        </a>
                     </div>
                 }
             >

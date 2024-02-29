@@ -1,3 +1,5 @@
+import {memo} from "react";
+
 const PencilIcon = ({className="h-6 w-6"}) => {
     return (
         <svg
@@ -17,4 +19,4 @@ const PencilIcon = ({className="h-6 w-6"}) => {
     );
 };
 
-export default PencilIcon;
+export default memo(PencilIcon);

@@ -13,6 +13,7 @@ import {
 } from "@/Modules/ClientProject/Forms";
 
 const Show = ({ auth, project_client }) => {
+    const {boards} = project_client
     const [showCreateTask, setShowCreateTask] = useState(false);
     const [showCreateBoard, setShowCreateBoard] = useState(false);
     const [panelTabs, setPanelTabs] = useState([
@@ -57,11 +58,11 @@ const Show = ({ auth, project_client }) => {
                                             className="text-gray-400 hover:text-gray-500 flex items-center text-sm font-medium"
                                         >
                                             <RectangleStackIcon
-                                                className="h-5 w-5 flex-shrink-0 mr-1"
+                                                className="h-5 w-5 flex-shrink-0 mr-3"
                                                 aria-hidden="true"
                                             />
                                             <span className="sr-only">
-                                                Home
+                                                Projects
                                             </span>
                                             Projects
                                         </a>
@@ -100,12 +101,14 @@ const Show = ({ auth, project_client }) => {
                                     createTask: {
                                         action: () => setShowCreateTask(true),
                                         label: "Add New Task",
+                                        disabled: boards.length === 0
                                     },
                                     view: {
                                         action: () => {
                                             setShowCreateBoard(true)
                                         },
                                         label: "Add New Board",
+
                                     },
                                 }}
                                 childIcon={

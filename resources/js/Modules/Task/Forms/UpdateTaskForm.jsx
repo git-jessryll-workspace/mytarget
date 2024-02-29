@@ -3,18 +3,18 @@ import InputLabel from "@/Components/InputLabel";
 import Modal from "@/Components/Modal";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { dateFormat } from "@/utils/date";
-import { useForm, usePage } from "@inertiajs/react";
-import { useEffect, useState } from "react";
+import {dateFormat} from "@/utils/date";
+import {useForm, usePage} from "@inertiajs/react";
+import {useEffect, useState} from "react";
 import ArchiveForm from "../Forms/ArchiveForm";
 import DropdownActiontable from "@/Components/DropdownActiontable";
-import { EllipsisCircle } from "@/icons";
+import {EllipsisCircle} from "@/icons";
 
-const UpdateTaskForm = () => {
-    const { task, boards } = usePage().props;
+const UpdateTaskForm = ({task}) => {
+    const {project_client} = usePage().props;
     const [showArchived, setShowArchived] = useState(false);
-
-    const { client_project, board } = task;
+    const {boards} = project_client;
+    console.log(project_client, task)
     const {
         data,
         setData,
@@ -23,13 +23,14 @@ const UpdateTaskForm = () => {
         name: "",
         description: "",
         board_id: boards[0]?.id,
-        client_project_id: client_project.id,
+        client_project_id: project_client?.id,
         client_id: task.client_id,
         priority_level: 0,
         is_archived: false,
+        created_at: null
     });
 
-    const { acronym } = task;
+    const {acronym} = task;
 
     useEffect(() => {
         setData({
@@ -37,14 +38,15 @@ const UpdateTaskForm = () => {
             description: task.description,
             board_id: task.board_id,
             priority_level: task.priority_level,
-            is_archived: task.is_archived,
+            is_archived: task?.is_archived,
+            created_at: task.created_at
         });
     }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        putFn(route("tasks.update", { id: task.id }));
+        putFn(route("tasks.update", {id: task.id}));
     };
 
     return (
@@ -56,12 +58,12 @@ const UpdateTaskForm = () => {
                             #{`${acronym}-${acronym.counter}`}
                         </h3>
                         <h6 className="text-xs flex items-center">
-                            {client_project.project_name}
+                            {project_client.project_name}
                             <svg
                                 viewBox="0 0 2 2"
                                 className="h-1 w-1 fill-current mx-1"
                             >
-                                <circle cx={1} cy={1} r={1} />
+                                <circle cx={1} cy={1} r={1}/>
                             </svg>
                             {dateFormat(task.updated_at)}
                         </h6>
@@ -77,7 +79,7 @@ const UpdateTaskForm = () => {
                                 },
                             }}
                             childIcon={
-                                <EllipsisCircle className="cursor-pointer rotate-90 h-6 w-6" />
+                                <EllipsisCircle className="cursor-pointer rotate-90 h-6 w-6"/>
                             }
                         />
                     </div>
@@ -86,7 +88,7 @@ const UpdateTaskForm = () => {
                 <form className="space-y-6 pt-6" onSubmit={handleSubmit}>
                     <div className="flex justify-between">
                         <div className="space-y-2">
-                            <InputLabel value={"Board"} />
+                            <InputLabel value={"Board"}/>
                             <div>
                                 <select
                                     value={data.board_id}
@@ -107,7 +109,7 @@ const UpdateTaskForm = () => {
                             </div>
                         </div>
                         <div className="space-y-2 w-44">
-                            <InputLabel value="Priority Level" />
+                            <InputLabel value="Priority Level"/>
                             <div>
                                 <select
                                     value={data.priority_level}
@@ -128,7 +130,7 @@ const UpdateTaskForm = () => {
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <InputLabel value={"Task"} />
+                        <InputLabel value={"Task"}/>
                         <div>
                             <TextInput
                                 value={data.name}
@@ -138,9 +140,18 @@ const UpdateTaskForm = () => {
                             />
                         </div>
                     </div>
-
+                    <div className={"space-y-2"}>
+                        <InputLabel value={"Date Created"}/>
+                        <div>
+                            <TextInput
+                                type={"date"}
+                                value={data.created_at}
+                                onChange={(event) => setData('created_at', event.target.value)}
+                            />
+                        </div>
+                    </div>
                     <div className="space-y-2">
-                        <InputLabel value={"Description"} />
+                        <InputLabel value={"Description"}/>
                         <div>
                             <textarea
                                 rows={5}
@@ -161,7 +172,7 @@ const UpdateTaskForm = () => {
                 </form>
             </section>
             <Modal show={showArchived} maxWidth="md">
-                <ArchiveForm setShow={setShowArchived} />
+                <ArchiveForm setShow={setShowArchived}/>
             </Modal>
         </>
     );

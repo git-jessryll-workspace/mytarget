@@ -80,7 +80,7 @@ const ClientProjectList = () => {
                     routeControl={"clients.show"}
                     search_query_key={"search_query_project"}
                 />
-                <div className="h-[calc(100dvh-290px)] overflow-y-auto -mr-5 pr-3 mt-3 overflow-x-auto">
+                <div className="h-[calc(100dvh-240px)] overflow-y-auto -mr-5 pr-3 mt-3 overflow-x-auto">
                     <TableList
                         theadObject={{
                             id: "#",

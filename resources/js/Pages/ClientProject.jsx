@@ -27,10 +27,10 @@ export default function ClientProject({ auth, projects, search_query }) {
                             <div>
                                 <a
                                     href={`${route("projects.index")}`}
-                                    className="text-gray-500 hover:text-gray-700 flex items-center text-sm font-bold antialiased"
+                                    className="text-gray-500 dark:text-gray-300 hover:opacity-75 flex items-center text-sm font-bold antialiased"
                                 >
                                     <RectangleStackIcon
-                                        className="h-5 w-5 flex-shrink-0 mr-1"
+                                        className="h-5 w-5 flex-shrink-0 mr-3"
                                         aria-hidden="true"
                                     />
                                     <span className="sr-only">Home</span>

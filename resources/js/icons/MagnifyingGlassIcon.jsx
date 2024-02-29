@@ -1,4 +1,5 @@
-export default function MagnifyingGlassIcon({ className }) {
+import {memo} from "react";
+export default memo(function MagnifyingGlassIcon({ className }) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +16,4 @@ export default function MagnifyingGlassIcon({ className }) {
             />
         </svg>
     );
-}
+})

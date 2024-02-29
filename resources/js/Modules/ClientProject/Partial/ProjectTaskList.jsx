@@ -5,11 +5,14 @@ import NavPanel from "@/Components/partials/NavPanel";
 import { dateFormat } from "@/utils/date";
 import DropdownActiontable from "@/Components/DropdownActiontable";
 import TableList from "@/Components/TableList";
-import CreateProjectTaskForm from "@/Modules/ClientProject/Forms/CreateProjectTaskForm.jsx";
+import Modal from "@/Components/Modal.jsx";
+import {UpdateTaskForm} from "@/Modules/Task/Forms/index.js";
 
 const ProjectTaskList = () => {
     const { tasks, search_query_task } = usePage().props;
     const [taskList, setTaskList] = useState([]);
+    const [taskSelected, setTaskSelected] = useState(null);
+    const [showEdit, setShowEdit] = useState(false);
 
     useEffect(() => {
         setTaskList(tasks.data);
@@ -21,7 +24,7 @@ const ProjectTaskList = () => {
 
     const priorityWrap = {
         3: (
-            <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs uppercase font-bold">
+            <span className="text-red-500 rounded-full text-xs uppercase font-bold">
                 High
             </span>
         ),
@@ -43,10 +46,18 @@ const ProjectTaskList = () => {
         name: task.name,
         board_name: task.board_name,
         priority_level: priorityWrap[task.priority_level],
+        created_at: dateFormat(task.created_at),
         updated_at: dateFormat(task.updated_at),
         action: (
             <DropdownActiontable
                 actionObject={{
+                    edit: {
+                        action: () => {
+                            setTaskSelected(task)
+                            setShowEdit(true)
+                        },
+                        label: "Edit"
+                    },
                     view: {
                         action: () => {
                             window.location.href = route("tasks.show", {
@@ -78,12 +89,16 @@ const ProjectTaskList = () => {
                         name: "Name",
                         board_name: "Board Position",
                         priority_level: "Priority Level",
+                        created_at: "Date Created",
                         updated_at: "Date Updated",
                         action: "",
                     }}
                     items={taskListData}
                 />
             </div>
+            <Modal show={showEdit}>
+                <UpdateTaskForm task={taskSelected}/>
+            </Modal>
         </>
     );
 };

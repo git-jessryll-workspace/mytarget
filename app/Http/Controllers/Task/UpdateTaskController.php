@@ -20,10 +20,9 @@ class UpdateTaskController extends Controller
             'board_id' => $request->validated('board_id'),
             'is_archived' => $request->validated('is_archived'),
             'priority_level' => $request->validated('priority_level'),
+            'created_at' => $request->get('created_at') ?? $task->created_at,
         ];
-
-        $task->fill($data);
-        $task->save();
+        $task->update($data);
         return redirect()->back()->with(['task' => $task->fresh()]);
     }
 }

@@ -23,11 +23,6 @@ export default function Authenticated({ user, header, children }) {
 
     const [navigation, setNavigation] = useState([
         {
-            name: "Dashboard",
-            icon: HomeIcon,
-            to: "/dashboard",
-        },
-        {
             name: "Tasks",
             icon: QueueListIcon,
             to: "/tasks",
@@ -360,7 +355,7 @@ export default function Authenticated({ user, header, children }) {
                             </div>
                         </div>
                     </nav>
-                    <main className="h-[calc(100dvh-20px)] w-full bg-gray-100 dark:bg-gray-800 border p-1 border-gray-300 rounded-lg shadow-lg">
+                    <main className="h-[calc(100dvh-20px)] w-full bg-[#FCFCFC] dark:bg-gray-800 border p-1 border-gray-300 rounded-lg shadow-lg">
                         {header && (
                             <div className="border-b border-gray-300 dark:border-gray-600 p-3">
                                 {header || null}
