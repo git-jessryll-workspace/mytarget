@@ -3,27 +3,35 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Client;
+use App\Http\Service\Client\GeneralClientService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ClientController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * @param GeneralClientService $clientService
      */
-    public function __invoke(Request $request)
+    public function __construct(
+        private readonly GeneralClientService $clientService
+    )
     {
-        $query = Client::query()->where('user_id', auth()->id());
-        if ($request->has('search_query')) {
-            $search = $request->get('search_query');
-            $query->where('name', 'LIKE', "%{$search}%");
-        }
-        $clients = $query->orderBy('updated_at', 'desc')->paginate(50);
-        $clients->appends(['search_query' => $request->get('search_query') ?? '']);
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function __invoke(Request $request): \Inertia\Response
+    {
+        $searchQuery = $request->get('search_query') ?? "";
+        $clients = $this->clientService
+            ->getClients(['search_query' => $searchQuery]);
+
         return Inertia::render('Client', [
             'clients' => $clients,
-            'search_query' => $request->get('search_query') ?? ''
+            'search_query' => $searchQuery
         ]);
     }
 }

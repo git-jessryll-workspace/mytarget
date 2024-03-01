@@ -4,12 +4,26 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\CreateClientRequest;
-use App\Models\Client;
+use App\Http\Service\Client\ClientService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
 class CreateClientController extends Controller
 {
-    public function __invoke(CreateClientRequest $request)
+    /**
+     * @param ClientService $clientService
+     */
+    public function __construct(
+        private readonly ClientService $clientService
+    )
+    {
+    }
+
+    /**
+     * @param CreateClientRequest $request
+     * @return RedirectResponse
+     */
+    public function __invoke(CreateClientRequest $request): \Illuminate\Http\RedirectResponse
     {
         $data = [
             'name' => $request->validated('name'),
@@ -21,8 +35,8 @@ class CreateClientController extends Controller
             'active' => true
         ];
 
-        Client::query()->create($data);
-        
+        $this->clientService->create($data);
+
         return Redirect::route('clients.index');
     }
 }

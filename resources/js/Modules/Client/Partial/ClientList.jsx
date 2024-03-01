@@ -14,7 +14,7 @@ const ClientList = ({ clients, updateClientList }) => {
         id: client.id,
         name: client.name,
         position: client.position,
-        status: client.status === 1 ? "Active" : "Inactive",
+        status: client.active === 1 ? "Active" : "Inactive",
         action: (
             <DropdownActiontable
                 actionObject={{

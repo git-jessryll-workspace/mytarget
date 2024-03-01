@@ -4,22 +4,36 @@ namespace App\Http\Controllers\Board;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Board\ArchiveBoardRequest;
+use App\Http\Service\Board\BoardService;
+use App\Http\Service\Task\BoardTaskService;
+use App\Http\Service\Task\TaskService;
 use App\Models\Board;
 use App\Models\Task;
+use Illuminate\Http\RedirectResponse;
 
 class ArchiveBoardController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * @param BoardService $boardService
+     * @param BoardTaskService $boardTaskService
      */
-    public function __invoke(ArchiveBoardRequest $request)
+    public function __construct(
+        private readonly BoardService $boardService,
+        private readonly BoardTaskService $boardTaskService
+    )
     {
-        $board = Board::query()->where('id', $request->validated('board_id'))->first();
-        if (!$board) {
-            return redirect()->back()->with('error', 'Board not found');
-        }
-        Task::query()->where('board_id', $board->id)->update(['is_archived' => true]);
-        $board->update(['is_hidden' => true]);
+    }
+
+    /**
+     * @param ArchiveBoardRequest $request
+     * @return RedirectResponse
+     */
+    public function __invoke(ArchiveBoardRequest $request): \Illuminate\Http\RedirectResponse
+    {
+        $board = $this->boardService->findById((int)$request->get('board_id'));
+
+        $this->boardTaskService->archivedTasks($board->id);
+        $this->boardService->update($board->id, ['is_hidden' => true]);
         return redirect()->back();
     }
 }

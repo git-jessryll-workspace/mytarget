@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ClientProject extends Model
 {
@@ -16,17 +19,26 @@ class ClientProject extends Model
         'client_id'
     ];
 
-    public function client()
+    /**
+     * @return BelongsTo
+     */
+    public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
     }
 
-    public function boards()
+    /**
+     * @return HasMany
+     */
+    public function boards(): HasMany
     {
         return $this->hasMany(Board::class)->orderBy('sort', 'asc');
     }
 
-    public function acronym()
+    /**
+     * @return HasOne
+     */
+    public function acronym(): HasOne
     {
         return $this->hasOne(Acronym::class, 'client_project_id');
     }

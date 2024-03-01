@@ -4,15 +4,27 @@ namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\UpdateTaskRequest;
+use App\Http\Service\Task\TaskService;
 use App\Models\Task;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class UpdateTaskController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * @param TaskService $taskService
      */
-    public function __invoke(Task $task, UpdateTaskRequest $request)
+    public function __construct(
+        private readonly TaskService $taskService
+    )
+    {
+    }
+
+    /**
+     * @param Task $task
+     * @param UpdateTaskRequest $request
+     * @return RedirectResponse
+     */
+    public function __invoke(Task $task, UpdateTaskRequest $request): RedirectResponse
     {
         $data = [
             'name' => $request->validated('name'),
@@ -22,7 +34,7 @@ class UpdateTaskController extends Controller
             'priority_level' => $request->validated('priority_level'),
             'created_at' => $request->get('created_at') ?? $task->created_at,
         ];
-        $task->update($data);
+        $this->taskService->update($task->id, $data);
         return redirect()->back()->with(['task' => $task->fresh()]);
     }
 }

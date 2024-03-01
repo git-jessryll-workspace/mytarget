@@ -3,20 +3,30 @@
 namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
+use App\Http\Service\Task\TaskService;
 use App\Models\Task;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class ArchiveTaskController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * @param TaskService $taskService
      */
-    public function __invoke(Task $task)
+    public function __construct(
+        private readonly TaskService $taskService
+    )
     {
-        $task->fill([
+    }
+
+    /**
+     * @param Task $task
+     * @return RedirectResponse
+     */
+    public function __invoke(Task $task): \Illuminate\Http\RedirectResponse
+    {
+        $this->taskService->update($task->id,[
             'is_archived' => true,
         ]);
-        $task->save();
         return redirect()->back();
     }
 }

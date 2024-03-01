@@ -3,18 +3,32 @@
 namespace App\Http\Controllers\Contact;
 
 use App\Http\Controllers\Controller;
-use App\Models\Contact;
+use App\Http\Service\Contact\GeneralContactService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ContactController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(Request $request)
+    public function __construct(
+        private readonly GeneralContactService $contactService
+    )
     {
-        $contacts = Contact::query()->where('user_id', auth()->id())->paginate(50);
-        return Inertia::render('Contact', ['contacts' => $contacts]);
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function __invoke(Request $request): Response
+    {
+        $searchQuery = $request->get('search_query') ?? "";
+        $contacts = $this->contactService->getContacts([
+            'search_query' => $searchQuery
+        ]);
+        return Inertia::render('Contact', [
+            'contacts' => $contacts,
+            'search_query' => $searchQuery
+        ]);
     }
 }

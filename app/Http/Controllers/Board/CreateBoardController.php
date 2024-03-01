@@ -4,11 +4,18 @@ namespace App\Http\Controllers\Board;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Board\CreateBoardRequest;
+use App\Http\Service\Board\BoardService;
 use App\Models\Board;
 use Illuminate\Http\RedirectResponse;
 
 class CreateBoardController extends Controller
 {
+    public function __construct(
+        private readonly BoardService $boardService
+    )
+    {
+    }
+
     /**
      * @param CreateBoardRequest $request
      * @return RedirectResponse
@@ -23,8 +30,7 @@ class CreateBoardController extends Controller
             'client_id' => $request->validated('client_id'),
             'client_project_id' => $request->validated('client_project_id'),
         ];
-
-        $board = Board::query()->create($data);
-        return redirect()->back()->with(['board' => $board]);
+        $this->boardService->create($data);
+        return redirect()->back();
     }
 }

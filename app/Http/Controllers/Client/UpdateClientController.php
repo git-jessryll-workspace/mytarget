@@ -4,12 +4,24 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\UpdateClientRequest;
+use App\Http\Service\Client\ClientService;
 use App\Models\Client;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class UpdateClientController extends Controller
 {
-    public function __invoke(Client $client, UpdateClientRequest $request)
+    public function __construct(
+        private readonly ClientService $clientService
+    )
+    {
+    }
+
+    /**
+     * @param Client $client
+     * @param UpdateClientRequest $request
+     * @return RedirectResponse
+     */
+    public function __invoke(Client $client, UpdateClientRequest $request): \Illuminate\Http\RedirectResponse
     {
         $data = [
             'name' => $request->validated('name'),
@@ -19,8 +31,8 @@ class UpdateClientController extends Controller
             'date_ended' => $request->validated('date_ended'),
             'active' => $request->validated('active')
         ];
-        $client->fill($data);
-        $client->save();
+
+        $this->clientService->update($client->id, $data);
 
         return redirect()->route('clients.index');
     }

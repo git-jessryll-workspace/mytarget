@@ -2,41 +2,35 @@
 
 namespace App\Http\Controllers\Project;
 
-use App\Http\Controllers\Controller;
-use App\Models\ClientProject;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Service\ClientProject\GeneralProjectService;
 
 class ProjectController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * @param GeneralProjectService $clientProjectService
      */
-    public function __invoke(Request $request)
+    public function __construct(
+        private readonly GeneralProjectService $clientProjectService
+    )
     {
-        $search = $request->get('search_query') ?? null;
-        $query = ClientProject::query()
-            ->with(['client' => function ($q) {
-                $q->select(['clients.id', 'clients.name', 'clients.user_id']);
-            }])
-            ->where(function ($q1) use ($search) {
-                if ($search && $search !== '') {
-                    return $q1->whereHas('client', function ($q) {
-                        $q->where('clients.user_id', auth()->id());
-                    })->where('project_name', 'LIKE', "%{$search}%");
-                }
-                return $q1->whereHas('client', function ($q) {
-                    $q->where('clients.user_id', auth()->id());
-                });
-            });
+    }
 
-        $projects = $query
-            ->orderBy('client_projects.active', 'desc')
-            ->orderBy('client_projects.updated_at', 'desc')
-            ->paginate(50);
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function __invoke(Request $request): Response
+    {
+        $search = $request->get('search_query') ?? "";
+        $projects = $this->clientProjectService->getProjects(['search_query' => $search]);
 
-        $projects->appends(["search_query" => $search]);
-
-        return Inertia::render('ClientProject', ['projects' => $projects, 'search_query' => $search]);
+        return Inertia::render('ClientProject', [
+            'projects' => $projects,
+            'search_query' => $search
+        ]);
     }
 }

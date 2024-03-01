@@ -4,25 +4,28 @@ namespace App\Http\Controllers\Board;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Board\ChangeBoardPositionRequest;
+use App\Http\Service\Board\BoardService;
 use App\Models\Board;
 
 class ChangeBoardPositionController extends Controller
 {
+    public function __construct(
+        private readonly BoardService $boardService
+    )
+    {
+    }
 
     public function __invoke(ChangeBoardPositionRequest $request)
     {
         $boardFromId = $request->validated('board_from_id');
         $boardToId = $request->validated('board_to_id');
-        $boardFrom = Board::query()->where('id', $boardFromId)->firstOrFail();
-        $boardTo = Board::query()->where('id', $boardToId)->firstOrFail();
 
-        Board::query()->where('id', $boardFrom->id)->update([
-            'sort' => $boardTo->sort
-        ]);
+        $boardFrom = $this->boardService->findById($boardFromId);
+        $boardTo = $this->boardService->findById($boardToId);
 
-        Board::query()->where('id', $boardTo->id)->update([
-            'sort' => $boardFrom->sort,
-        ]);
+        $this->boardService->update((int)$boardFromId, ['sort' => $boardTo->sort]);
+        $this->boardService->update((int)$boardToId, ['sort' => $boardFrom->sort]);
+
         return redirect()->back();
     }
 }

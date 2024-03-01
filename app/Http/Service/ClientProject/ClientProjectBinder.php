@@ -2,9 +2,9 @@
 
 namespace App\Http\Service\ClientProject;
 
-use App\Models\ClientProject;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Repositories\Eloquent\ClientProjectRepository;
 
 class ClientProjectBinder
 {
@@ -14,11 +14,13 @@ class ClientProjectBinder
      */
     public static function bindClientProject(string $value): Model|Builder
     {
-        return ClientProject::query()
-            ->with(['boards' => function($query) {
-                $query->where('is_hidden', false);
-            }, 'client', 'acronym'])
-            ->where('id', $value)
-            ->firstOrFail();
+        return (new ClientProjectRepository())
+            ->with([
+                'boards' => function ($query) {
+                    $query->where('is_hidden', false);
+                }, 'client', 'acronym'
+            ])
+            ->findById((int)$value);
+
     }
 }

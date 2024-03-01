@@ -4,15 +4,26 @@ namespace App\Http\Controllers\Contact;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Contact\CreateContactRequest;
-use App\Models\Contact;
-use Illuminate\Http\Request;
+use App\Http\Service\Contact\ContactService;
+use Illuminate\Http\RedirectResponse;
 
 class CreateContactController extends Controller
 {
+
     /**
-     * Handle the incoming request.
+     * @param ContactService $contactService
      */
-    public function __invoke(CreateContactRequest $request)
+    public function __construct(
+        private readonly ContactService $contactService
+    )
+    {
+    }
+
+    /**
+     * @param CreateContactRequest $request
+     * @return RedirectResponse
+     */
+    public function __invoke(CreateContactRequest $request): \Illuminate\Http\RedirectResponse
     {
         $data = [
             'name' => $request->validated('name'),
@@ -21,7 +32,7 @@ class CreateContactController extends Controller
             'user_id' => auth()->id()
         ];
 
-        Contact::query()->create($data);
+        $this->contactService->create($data);
 
         return redirect()->route('contacts.index');
     }

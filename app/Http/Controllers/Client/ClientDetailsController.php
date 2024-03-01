@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ClientDetailsController extends Controller
 {
-    public function __invoke(Client $client)
+    /**
+     * @param Client $client
+     * @return Response
+     */
+    public function __invoke(Client $client): \Inertia\Response
     {
         return Inertia::render('Client/Show', ['client' => $client]);
     }
