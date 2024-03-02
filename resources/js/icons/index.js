@@ -25,6 +25,8 @@ import IdentificationIcon from "./IdentificationIcon";
 import ArrowUpCircleIcon from './ArrowUpCircleIcon';
 import ArchiveXIcon from "./ArchiveXIcon";
 import PencilSquareIcon from "./PencilSquareIcon";
+import ClockIcon from "./ClockIcon";
+import QuestionMarkIcon from "./QuestionMarkIcon";
 
 export {
     HomeIcon,
@@ -53,5 +55,7 @@ export {
     IdentificationIcon,
     ArrowUpCircleIcon,
     ArchiveXIcon,
-    PencilSquareIcon
+    PencilSquareIcon,
+    ClockIcon,
+    QuestionMarkIcon,
 };

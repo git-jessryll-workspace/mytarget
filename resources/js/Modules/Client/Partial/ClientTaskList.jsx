@@ -7,6 +7,7 @@ import NavPanel from "@/Components/partials/NavPanel";
 import TableList from "@/Components/TableList";
 import { dateFormat } from "@/utils/date";
 import DropdownActiontable from "@/Components/DropdownActiontable";
+import TaskStatus from "@/Components/partials/TaskStatus";
 
 const ClientTaskList = () => {
     const { tasks, search_query_task } = usePage().props;
@@ -23,31 +24,15 @@ const ClientTaskList = () => {
         setTaskList(list.data);
     };
 
-    const priorityWrap = {
-        3: (
-            <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs uppercase font-bold">
-                High
-            </span>
-        ),
-        2: (
-            <span className="bg-yellow-600 text-white px-2 py-1 rounded-full text-xs uppercase font-bold">
-                Medium
-            </span>
-        ),
-        1: (
-            <span className="bg-gray-500 px-2 py-1 rounded-full text-xs uppercase font-bold">
-                Low
-            </span>
-        ),
-        0: null,
-    };
 
     const taskListData = taskList.map((task) => ({
-        id: `#${task.acronym}-${task.counter}`,
-        name: task.name,
-        priority_level: priorityWrap[task.priority_level],
-        project_name: task.project_name,
-        updated_at: dateFormat(task.updated_at),
+        id: `${task.acronym}-${task.counter}`,
+        name: <p className="line-clamp-1 py-0.5">
+            <span className="mr-1 border boarder-gray-300 py-0.5 px-1 text-xs rounded-sm">{task.project_name}</span>
+            {task.name}
+        </p>,
+        priority_level: task.priority_level,
+        status: <TaskStatus status={task.task_status}/>,
         action: (
             <DropdownActiontable
                 actionObject={{
@@ -81,14 +66,14 @@ const ClientTaskList = () => {
             <div className="h-[calc(100dvh-240px)] overflow-auto -mr-5 pr-3 mt-3">
                 <TableList
                     theadObject={{
-                        acronym_id: "#",
+                        id: "#",
                         name: "Name",
                         priority_level: "Priority Level",
-                        project_name: "Project Name",
-                        updated_at: "Date Updated",
+                        status: "Status",
                         action: "",
                     }}
                     items={taskListData}
+                    indexPrio={1}
                 />
             </div>
         </>

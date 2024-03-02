@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Task extends Model
 {
@@ -21,28 +24,77 @@ class Task extends Model
         'due_date',
     ];
 
-    public function client()
+    protected $casts = [
+        'created_at' => 'date:Y-m-d'
+    ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
     }
 
-    public function clientProject()
+    /**
+     * @return BelongsTo
+     */
+    public function clientProject(): BelongsTo
     {
         return $this->belongsTo(ClientProject::class);
     }
 
-    public function board()
+    /**
+     * @return BelongsTo
+     */
+    public function board(): BelongsTo
     {
         return $this->belongsTo(Board::class);
     }
 
-    public function acronym()
+    /**
+     * @return HasOne
+     */
+    public function acronym(): HasOne
     {
         return $this->hasOne(Acronym::class, 'task_id');
     }
 
-    public function timeLogs()
+    /**
+     * @return HasMany
+     */
+    public function timeLogs(): HasMany
     {
         return $this->hasMany(TaskTimeLog::class)->orderBy('created_at', 'desc');
+    }
+
+    public function getTaskStatusAttribute($value)
+    {
+        switch ($value) {
+            case 1:
+                return "In Progress";
+            case 2:
+                return "Done";
+            case 3:
+                return "Backlog";
+            case 4:
+                return "Canceled";
+            default:
+                return "Todo";
+        }
+    }
+
+    public function getPriorityLevelAttribute($value)
+    {
+        switch ($value) {
+            case 3:
+                return "High";
+            case 2:
+                return "Medium";
+            case 1:
+                return "Low";
+            default:
+                return "";
+        }
     }
 }

@@ -32,6 +32,7 @@ class UpdateTaskController extends Controller
             'board_id' => $request->validated('board_id'),
             'is_archived' => $request->validated('is_archived'),
             'priority_level' => $request->validated('priority_level'),
+            'task_status' => $request->validated('task_status') ?? 0,
             'created_at' => $request->get('created_at') ?? $task->created_at,
         ];
         $this->taskService->update($task->id, $data);

@@ -10,6 +10,7 @@ import { useEffect, useRef } from "react";
 import { dateFormat } from "@/utils/date";
 import SecondaryButton from "@/Components/SecondaryButton";
 import TableList from "@/Components/TableList";
+import TaskStatus from "@/Components/partials/TaskStatus";
 
 const Task = ({ auth, tasks, search_query, search_date }) => {
     const inputSearch = useRef();
@@ -53,10 +54,14 @@ const Task = ({ auth, tasks, search_query, search_date }) => {
 
     const taskListData = tasks.data.map((task) => ({
         id: `#${task.acronym}-${task.counter}`,
-        name: task.name,
-        board_name: task.board_name,
-        priority_level: priorityWrap[task.priority_level],
-        created_at: dateFormat(task.created_at),
+        name: (
+            <p className="line-clamp-1 py-0.5">
+            <span className="mr-1 border boarder-gray-300 py-0.5 px-1 text-xs rounded-sm">{task.project_name}</span>
+            {task.name}
+        </p>
+        ),
+        priority_level: task.priority_level,
+        status: <TaskStatus status={task.task_status} />,
         action: (
             <DropdownActiontable
                 actionObject={{
@@ -157,12 +162,12 @@ const Task = ({ auth, tasks, search_query, search_date }) => {
                         theadObject={{
                             acronym_id: "#",
                             name: "Name",
-                            board_name: "Board Position",
                             priority_level: "Priority Level",
-                            created_at: "Date Created",
+                            status: "Status",
                             action: "",
                         }}
                         items={taskListData}
+                        indexPrio={1}
                     />
                 </div>
             </Authenticated>

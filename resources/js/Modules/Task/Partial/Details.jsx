@@ -5,7 +5,7 @@ import { dateFormat } from "@/utils/date";
 
 const Details = () => {
     const { task, time_log_object } = usePage().props;
-    const { board, client_project, client } = task;
+    const { board, client } = task;
     return (
         <div className="">
             <div>

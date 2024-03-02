@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-const TableList = ({ theadObject, items, uniqueKey = "id" }) => {
+const TableList = ({ theadObject, items, uniqueKey = "id", indexPrio = -1 }) => {
     return (
         <table className="table table-sm">
             <thead>
@@ -13,15 +13,23 @@ const TableList = ({ theadObject, items, uniqueKey = "id" }) => {
             <tbody>
                 {items.length === 0 && (
                     <tr>
-                        <td colSpan={Object.entries(theadObject).length} className="text-center">
+                        <td
+                            colSpan={Object.entries(theadObject).length}
+                            className="text-center"
+                        >
                             <h3>No data available</h3>
                         </td>
                     </tr>
                 )}
                 {items.map((item) => (
-                    <tr className="hover font-semibold text-balance" key={item[uniqueKey]}>
-                        {Object.entries(item).map(([key, value]) => (
-                            <td key={key}>{value}</td>
+                    <tr
+                        className="hover font-semibold text-balance"
+                        key={item[uniqueKey]}
+                    >
+                        {Object.entries(item).map(([key, value], index) => (
+                            <td key={key} className={`${indexPrio === index ? "w-[65%]": "w-auto"}`}>
+                                {value}
+                            </td>
                         ))}
                     </tr>
                 ))}

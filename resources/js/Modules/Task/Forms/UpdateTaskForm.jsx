@@ -1,24 +1,26 @@
-import DangerButton from "@/Components/DangerButton";
 import InputLabel from "@/Components/InputLabel";
 import Modal from "@/Components/Modal";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import {dateFormat} from "@/utils/date";
-import {useForm, usePage} from "@inertiajs/react";
-import {useEffect, useState} from "react";
+import { dateFormat } from "@/utils/date";
+import { useForm, usePage } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 import ArchiveForm from "../Forms/ArchiveForm";
 import DropdownActiontable from "@/Components/DropdownActiontable";
-import {EllipsisCircle} from "@/icons";
+import { EllipsisCircle } from "@/icons";
+import SecondaryButton from "@/Components/SecondaryButton";
 
-const UpdateTaskForm = ({task}) => {
-    const {project_client} = usePage().props;
+const UpdateTaskForm = ({ task, setShow }) => {
+    const { project_client } = usePage().props;
+    const { acronym, acronym_counter } = task;
+
     const [showArchived, setShowArchived] = useState(false);
-    const {boards} = project_client;
-    console.log(project_client, task)
+    const { boards } = project_client;
     const {
         data,
         setData,
         put: putFn,
+        reset,
     } = useForm({
         name: "",
         description: "",
@@ -27,10 +29,10 @@ const UpdateTaskForm = ({task}) => {
         client_id: task.client_id,
         priority_level: 0,
         is_archived: false,
-        created_at: null
+        created_at: null,
     });
 
-    const {acronym} = task;
+    
 
     useEffect(() => {
         setData({
@@ -39,23 +41,28 @@ const UpdateTaskForm = ({task}) => {
             board_id: task.board_id,
             priority_level: task.priority_level,
             is_archived: task?.is_archived,
-            created_at: task.created_at
+            created_at: task.created_at,
         });
     }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        putFn(route("tasks.update", {id: task.id}));
+        putFn(route("tasks.update", { id: task.id }), {
+            onSuccess: () => {
+                reset();
+                setShow(false);
+            },
+        });
     };
 
     return (
         <>
             <section className="">
-                <header className="flex justify-between items-center">
+                <header className="flex justify-between">
                     <div>
                         <h3 className="text-xl font-bold">
-                            #{`${acronym}-${acronym.counter}`}
+                            #{`${acronym}-${acronym_counter}`}
                         </h3>
                         <h6 className="text-xs flex items-center">
                             {project_client.project_name}
@@ -63,7 +70,7 @@ const UpdateTaskForm = ({task}) => {
                                 viewBox="0 0 2 2"
                                 className="h-1 w-1 fill-current mx-1"
                             >
-                                <circle cx={1} cy={1} r={1}/>
+                                <circle cx={1} cy={1} r={1} />
                             </svg>
                             {dateFormat(task.updated_at)}
                         </h6>
@@ -73,13 +80,13 @@ const UpdateTaskForm = ({task}) => {
                             actionObject={{
                                 view: {
                                     action: () => {
-                                        setShowArchived(true)
+                                        setShowArchived(true);
                                     },
                                     label: "Archive",
                                 },
                             }}
                             childIcon={
-                                <EllipsisCircle className="cursor-pointer rotate-90 h-6 w-6"/>
+                                <EllipsisCircle className="cursor-pointer rotate-90 h-6 w-6" />
                             }
                         />
                     </div>
@@ -88,7 +95,7 @@ const UpdateTaskForm = ({task}) => {
                 <form className="space-y-6 pt-6" onSubmit={handleSubmit}>
                     <div className="flex justify-between">
                         <div className="space-y-2">
-                            <InputLabel value={"Board"}/>
+                            <InputLabel value={"Board Position"} />
                             <div>
                                 <select
                                     value={data.board_id}
@@ -109,7 +116,7 @@ const UpdateTaskForm = ({task}) => {
                             </div>
                         </div>
                         <div className="space-y-2 w-44">
-                            <InputLabel value="Priority Level"/>
+                            <InputLabel value="Priority Level" />
                             <div>
                                 <select
                                     value={data.priority_level}
@@ -130,7 +137,7 @@ const UpdateTaskForm = ({task}) => {
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <InputLabel value={"Task"}/>
+                        <InputLabel value={"Task"} />
                         <div>
                             <TextInput
                                 value={data.name}
@@ -141,17 +148,19 @@ const UpdateTaskForm = ({task}) => {
                         </div>
                     </div>
                     <div className={"space-y-2"}>
-                        <InputLabel value={"Date Created"}/>
+                        <InputLabel value={"Date Created"} />
                         <div>
                             <TextInput
                                 type={"date"}
                                 value={data.created_at}
-                                onChange={(event) => setData('created_at', event.target.value)}
+                                onChange={(event) =>
+                                    setData("created_at", event.target.value)
+                                }
                             />
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <InputLabel value={"Description"}/>
+                        <InputLabel value={"Description"} />
                         <div>
                             <textarea
                                 rows={5}
@@ -166,13 +175,19 @@ const UpdateTaskForm = ({task}) => {
                     </div>
                     <div className="border-t border-gray-400 dark:border-gray-700 flex justify-end pt-4">
                         <div className="">
+                            <SecondaryButton
+                                onClick={() => setShow(false)}
+                                type="button"
+                            >
+                                Cancel
+                            </SecondaryButton>
                             <PrimaryButton type="submit">Save</PrimaryButton>
                         </div>
                     </div>
                 </form>
             </section>
             <Modal show={showArchived} maxWidth="md">
-                <ArchiveForm setShow={setShowArchived}/>
+                <ArchiveForm setShow={setShowArchived} />
             </Modal>
         </>
     );

@@ -26,7 +26,8 @@ class UpdateTaskRequest extends FormRequest
             'description' => 'nullable',
             'board_id' => 'required',
             'is_archived' => 'required|boolean',
-            'priority_level' => 'required'
+            'priority_level' => 'required',
+            'task_status' => 'nullable'
         ];
     }
 }
