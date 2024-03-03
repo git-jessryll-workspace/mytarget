@@ -2,14 +2,20 @@
 
 namespace App\Http\Repositories\Pipelines\Query\ClientProject;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ClientProjectWithPipe
+class ClientProjectWithPipe extends HandleQueryPipe
 {
-    public function handle(Builder $query, \Closure $next)
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    protected function queryBuilder(Builder $query): Builder
     {
-        return $next($query->with([
+        return $query->with([
             'client' => function (BelongsTo $query) {
                 $query->select([
                     'clients.id',
@@ -17,6 +23,6 @@ class ClientProjectWithPipe
                     'clients.user_id'
                 ]);
             }
-        ]));
+        ]);
     }
 }

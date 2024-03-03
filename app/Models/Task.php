@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Constant\Task\PriorityLevel;
+use App\Http\Constant\Task\TaskStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -68,33 +71,19 @@ class Task extends Model
         return $this->hasMany(TaskTimeLog::class)->orderBy('created_at', 'desc');
     }
 
-    public function getTaskStatusAttribute($value)
+    protected function priorityLevel(): Attribute
     {
-        switch ($value) {
-            case 1:
-                return "In Progress";
-            case 2:
-                return "Done";
-            case 3:
-                return "Backlog";
-            case 4:
-                return "Canceled";
-            default:
-                return "Todo";
-        }
+        return Attribute::make(
+            get: fn($value) => PriorityLevel::getMaskValue($value),
+            set: fn($value) => PriorityLevel::getOriginalValue($value)
+        );
     }
 
-    public function getPriorityLevelAttribute($value)
+    protected function taskStatus(): Attribute
     {
-        switch ($value) {
-            case 3:
-                return "High";
-            case 2:
-                return "Medium";
-            case 1:
-                return "Low";
-            default:
-                return "";
-        }
+        return Attribute::make(
+            get: fn($value) => TaskStatus::getMaskValue($value),
+            set: fn($value) => TaskStatus::getOriginalValue($value)
+        );
     }
 }

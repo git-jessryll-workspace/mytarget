@@ -42,4 +42,9 @@ class ProjectService
     {
         return $this->clientProjectRepository->delete($id);
     }
+
+    public function findById(int $id)
+    {
+        return $this->clientProjectRepository->findById($id);
+    }
 }

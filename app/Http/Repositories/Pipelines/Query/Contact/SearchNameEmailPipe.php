@@ -2,18 +2,17 @@
 
 namespace App\Http\Repositories\Pipelines\Query\Contact;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 
-class SearchNameEmailPipe
+class SearchNameEmailPipe extends HandleQueryPipe
 {
-    public function handle(Builder $builder, \Closure $next)
+    protected function queryBuilder(Builder $query): Builder
     {
-        return $next(
-            $builder->where(function (Builder $query) {
-                $search = request('search_query') ?? "";
-                $query->where('contacts.name', 'LIKE', "%$search%")
-                    ->orWhere('contacts.email', 'LIKE', "%$search%");
-            })
-        );
+        return $query->where(function (Builder $query1) {
+            $search = request('search_query') ?? "";
+            $query1->where('contacts.name', 'LIKE', "%$search%")
+                ->orWhere('contacts.email', 'LIKE', "%$search%");
+        });
     }
 }

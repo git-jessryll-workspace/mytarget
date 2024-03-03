@@ -2,16 +2,22 @@
 
 namespace App\Http\Repositories\Pipelines\Query\ClientProject;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 
-class FilterByClientIdPipe
+class FilterByClientIdPipe extends HandleQueryPipe
 {
-    public function __construct(private readonly int $clientId)
+    /**
+     * @param int $clientId
+     */
+    public function __construct(
+        private readonly int $clientId
+    )
     {
     }
 
-    public function handle(Builder $query, \Closure $next)
+    protected function queryBuilder(Builder $query): Builder
     {
-        return $next($query->where('client_projects.client_id', $this->clientId));
+        return $query->where('client_projects.client_id', $this->clientId);
     }
 }

@@ -9,15 +9,14 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 
 class ContactRepository extends Repository implements ContactContract
 {
+    public function __construct(Contact $contact)
+    {
+        parent::__construct($contact);
+    }
 
     public function getContacts(): Builder|QueryBuilder
     {
         return $this->queryPipeline();
-    }
-
-    protected function model(): Builder
-    {
-        return Contact::query();
     }
 
     public function setPipelines(array $pipes = []): static

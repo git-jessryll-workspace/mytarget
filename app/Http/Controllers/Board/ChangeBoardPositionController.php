@@ -5,17 +5,24 @@ namespace App\Http\Controllers\Board;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Board\ChangeBoardPositionRequest;
 use App\Http\Service\Board\BoardService;
-use App\Models\Board;
+use Illuminate\Http\RedirectResponse;
 
 class ChangeBoardPositionController extends Controller
 {
+    /**
+     * @param BoardService $boardService
+     */
     public function __construct(
         private readonly BoardService $boardService
     )
     {
     }
 
-    public function __invoke(ChangeBoardPositionRequest $request)
+    /**
+     * @param ChangeBoardPositionRequest $request
+     * @return RedirectResponse
+     */
+    public function __invoke(ChangeBoardPositionRequest $request): \Illuminate\Http\RedirectResponse
     {
         $boardFromId = $request->validated('board_from_id');
         $boardToId = $request->validated('board_to_id');

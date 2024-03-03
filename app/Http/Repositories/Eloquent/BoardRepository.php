@@ -9,6 +9,10 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 
 class BoardRepository extends Repository implements BoardContract
 {
+    public function __construct(Board $board)
+    {
+        parent::__construct($board);
+    }
 
     /**
      * @return Builder|QueryBuilder

@@ -2,11 +2,13 @@
 
 namespace App\Http\Repositories\Pipelines\Query\ClientProject;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 
-class SearchNamePipe
+class SearchNamePipe extends HandleQueryPipe
 {
-    public function handle(Builder $query, \Closure $next)
+
+    protected function queryBuilder(Builder $query): Builder
     {
         $searchName = request('search_query') ?? "";
         if (!empty($searchName)) {
@@ -18,6 +20,6 @@ class SearchNamePipe
             });
 
         }
-        return $next($query);
+        return $query;
     }
 }

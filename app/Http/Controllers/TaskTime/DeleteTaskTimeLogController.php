@@ -3,17 +3,28 @@
 namespace App\Http\Controllers\TaskTime;
 
 use App\Http\Controllers\Controller;
+use App\Http\Service\TaskTimeLog\TimelogService;
 use App\Models\TaskTimeLog;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class DeleteTaskTimeLogController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * @param TimelogService $timelogService
      */
-    public function __invoke(TaskTimeLog $taskTimeLog)
+    public function __construct(
+        private readonly TimelogService $timelogService
+    )
     {
-        $taskTimeLog->delete();
+    }
+
+    /**
+     * @param TaskTimeLog $taskTimeLog
+     * @return RedirectResponse
+     */
+    public function __invoke(TaskTimeLog $taskTimeLog): \Illuminate\Http\RedirectResponse
+    {
+        $this->timelogService->delete($taskTimeLog->id);
         return redirect()->back();
     }
 }

@@ -11,7 +11,9 @@ import { EllipsisCircle } from "@/icons";
 import SecondaryButton from "@/Components/SecondaryButton";
 
 const UpdateTaskForm = ({ task, setShow }) => {
+    
     const { project_client } = usePage().props;
+    
     const { acronym, acronym_counter } = task;
 
     const [showArchived, setShowArchived] = useState(false);
@@ -30,9 +32,8 @@ const UpdateTaskForm = ({ task, setShow }) => {
         priority_level: 0,
         is_archived: false,
         created_at: null,
+        task_status: "Todo"
     });
-
-    
 
     useEffect(() => {
         setData({
@@ -42,6 +43,7 @@ const UpdateTaskForm = ({ task, setShow }) => {
             priority_level: task.priority_level,
             is_archived: task?.is_archived,
             created_at: task.created_at,
+            task_status: task.task_status,
         });
     }, []);
 
@@ -94,27 +96,6 @@ const UpdateTaskForm = ({ task, setShow }) => {
 
                 <form className="space-y-6 pt-6" onSubmit={handleSubmit}>
                     <div className="flex justify-between">
-                        <div className="space-y-2">
-                            <InputLabel value={"Board Position"} />
-                            <div>
-                                <select
-                                    value={data.board_id}
-                                    onChange={(e) =>
-                                        setData("board_id", e.target.value)
-                                    }
-                                    className="bg-[var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))] text-sm rounded-md"
-                                >
-                                    {boards.map((boardItem) => (
-                                        <option
-                                            key={boardItem.id}
-                                            value={boardItem.id}
-                                        >
-                                            {boardItem.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
                         <div className="space-y-2 w-44">
                             <InputLabel value="Priority Level" />
                             <div>
@@ -128,10 +109,31 @@ const UpdateTaskForm = ({ task, setShow }) => {
                                     }
                                     className="bg-[var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))] text-sm rounded-md w-full"
                                 >
-                                    <option value="0">None</option>
-                                    <option value="1">Low</option>
-                                    <option value="2">Medium</option>
-                                    <option value="3">High</option>
+                                    <option value="None">None</option>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="space-y-2 w-44">
+                            <InputLabel value="Priority Level" />
+                            <div>
+                                <select
+                                    value={data.task_status}
+                                    onChange={(e) =>
+                                        setData(
+                                            "task_status",
+                                            e.target.value
+                                        )
+                                    }
+                                    className="bg-[var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))] text-sm rounded-md w-full"
+                                >
+                                    <option value="Todo">Todo</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Done">Done</option>
+                                    <option value="Backlog">Backlog</option>
+                                    <option value="Canceled">Canceled</option>
                                 </select>
                             </div>
                         </div>
@@ -147,16 +149,42 @@ const UpdateTaskForm = ({ task, setShow }) => {
                             />
                         </div>
                     </div>
-                    <div className={"space-y-2"}>
-                        <InputLabel value={"Date Created"} />
-                        <div>
-                            <TextInput
-                                type={"date"}
-                                value={data.created_at}
-                                onChange={(event) =>
-                                    setData("created_at", event.target.value)
-                                }
-                            />
+                    <div className="flex items-center justify-between space-x-3">
+                        <div className={"space-y-2 w-full"}>
+                            <InputLabel value={"Date Created"} />
+                            <div>
+                                <TextInput
+                                    type={"date"}
+                                    value={data.created_at}
+                                    onChange={(event) =>
+                                        setData(
+                                            "created_at",
+                                            event.target.value
+                                        )
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className="space-y-2 w-full">
+                            <InputLabel value={"Board Position"} />
+                            <div>
+                                <select
+                                    value={data.board_id}
+                                    onChange={(e) =>
+                                        setData("board_id", e.target.value)
+                                    }
+                                    className="bg-[var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))] text-sm rounded-md w-full"
+                                >
+                                    {boards.map((boardItem) => (
+                                        <option
+                                            key={boardItem.id}
+                                            value={boardItem.id}
+                                        >
+                                            {boardItem.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div className="space-y-2">

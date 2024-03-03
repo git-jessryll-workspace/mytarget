@@ -6,20 +6,37 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
-use Illuminate\Validation\ValidationException;
 
 abstract class Repository
 {
     /**
-     * @return Builder
+     * @var Model
      */
-    abstract protected function model(): Builder;
+    private Model $model;
 
+    /**
+     * @param array $pipes
+     * @return $this
+     */
     abstract public function setPipelines(array $pipes = []): static;
 
+    /**
+     * @var array
+     */
     private array $relations = [];
 
+    /**
+     * @var array
+     */
     private array $throughClasses = [];
+
+    /**
+     * @param Model $model
+     */
+    public function __construct(Model $model)
+    {
+        $this->setModel($model);
+    }
 
     /**
      * @param array $relations
@@ -35,9 +52,9 @@ abstract class Repository
      * @param array $data
      * @return Model|Builder
      */
-    public function create(array $data): \Illuminate\Database\Eloquent\Model|Builder
+    public function create(array $data): Model|Builder
     {
-        return $this->model()->create($data);
+        return $this->newQuery()->create($data);
     }
 
     /**
@@ -47,7 +64,8 @@ abstract class Repository
      */
     public function update(int $id, array $data): int
     {
-        return $this->model()->where('id', $id)->update($data);
+        $item = $this->findById($id);
+        return $item->update($data);
     }
 
     /**
@@ -56,7 +74,7 @@ abstract class Repository
      */
     public function delete(int $id): mixed
     {
-        return $this->model()->where('id', $id)->delete();
+        return $this->newQuery()->where('id', $id)->delete();
     }
 
     /**
@@ -66,7 +84,7 @@ abstract class Repository
      */
     public function findById(int $id, array $selectColumns = ['*']): Model|Collection|Builder|array|null
     {
-        return $this->model()
+        return $this->newQuery()
             ->select($selectColumns)
             ->with($this->getRelations())
             ->findOrFail($id);
@@ -80,7 +98,24 @@ abstract class Repository
      */
     public function updateBy(string|int $value, array $data, string $key = "id"): int
     {
-        return $this->model()->where($key, $value)->update($data);
+        return $this->newQuery()->where($key, $value)->update($data);
+    }
+
+    /**
+     * @return Model
+     */
+    protected function getModel(): Model
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param Model $model
+     * @return void
+     */
+    protected function setModel(Model $model): void
+    {
+        $this->model = $model;
     }
 
     /**
@@ -101,12 +136,23 @@ abstract class Repository
     }
 
 
+    /**
+     * @return Builder
+     */
     protected function queryPipeline(): Builder
     {
         return app(Pipeline::class)
-            ->send($this->model())
+            ->send($this->newQuery())
             ->through($this->getThroughClasses())
             ->thenReturn();
+    }
+
+    /**
+     * @return Builder
+     */
+    protected function newQuery(): Builder
+    {
+        return $this->getModel()->newQuery();
     }
 
     /**

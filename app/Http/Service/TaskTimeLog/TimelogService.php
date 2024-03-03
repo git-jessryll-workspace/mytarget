@@ -2,8 +2,46 @@
 
 namespace App\Http\Service\TaskTimeLog;
 
+use App\Http\Repositories\Contract\TaskTimelogContract;
+
 class TimelogService
 {
+
+    public function __construct(
+        protected readonly TaskTimelogContract $taskTimelogRepository
+    )
+    {
+    }
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    public function create(array $data): mixed
+    {
+        return $this->taskTimelogRepository->create($data);
+    }
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function update(int $id, array $data): mixed
+    {
+        return $this->taskTimelogRepository->update($id, $data);
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function delete(int $id): mixed
+    {
+        return $this->taskTimelogRepository->delete($id);
+    }
+
+
     public function calculateTotalHoursAndWeeks($timeString, $currentValues): array
     {
         // Split the time string into individual time components

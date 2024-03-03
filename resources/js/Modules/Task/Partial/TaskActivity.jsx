@@ -19,7 +19,6 @@ const TaskActivity = () => {
                 </div>
                 <div className="flow-root overflow-y-auto">
                     <ul role="list">
-                        <div className="block lg:hidden">test asd</div>
                         {all_time_logs.map((event, eventIdx) => (
                             <li key={event.id}>
                                 <div className="relative pb-5">

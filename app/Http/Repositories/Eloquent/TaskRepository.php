@@ -8,13 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class TaskRepository extends Repository implements TaskContract
 {
-
-    /**
-     * @return Builder
-     */
-    protected function model(): Builder
+    public function __construct()
     {
-        return Task::query();
+        parent::__construct(new Task());
     }
 
     /**

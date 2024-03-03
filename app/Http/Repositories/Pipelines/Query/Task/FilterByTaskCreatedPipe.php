@@ -2,11 +2,16 @@
 
 namespace App\Http\Repositories\Pipelines\Query\Task;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 
-class FilterByTaskCreatedPipe
+class FilterByTaskCreatedPipe extends HandleQueryPipe
 {
-    public function handle(Builder $query, \Closure $next)
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function queryBuilder(Builder $query): Builder
     {
         $searchDate = request('search_date') ?? '';
 
@@ -17,6 +22,6 @@ class FilterByTaskCreatedPipe
                 ->where('tasks.created_at', '<=', "$dateEnd");
         }
 
-        return $next($query);
+        return $query;
     }
 }

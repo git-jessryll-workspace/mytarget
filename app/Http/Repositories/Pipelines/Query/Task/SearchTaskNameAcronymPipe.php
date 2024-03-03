@@ -2,11 +2,16 @@
 
 namespace App\Http\Repositories\Pipelines\Query\Task;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 
-class SearchTaskNameAcronymPipe
+class SearchTaskNameAcronymPipe extends HandleQueryPipe
 {
-    public function handle(Builder $query, \Closure $next)
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function queryBuilder(Builder $query): Builder
     {
         $searchTaskQuery = request('search_query_task') ?? "";
 
@@ -19,6 +24,6 @@ class SearchTaskNameAcronymPipe
             });
         }
 
-        return $next($query);
+        return $query;
     }
 }

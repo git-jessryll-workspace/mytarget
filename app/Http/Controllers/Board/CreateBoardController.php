@@ -10,6 +10,9 @@ use Illuminate\Http\RedirectResponse;
 
 class CreateBoardController extends Controller
 {
+    /**
+     * @param BoardService $boardService
+     */
     public function __construct(
         private readonly BoardService $boardService
     )

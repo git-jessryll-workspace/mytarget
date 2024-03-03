@@ -2,12 +2,17 @@
 
 namespace App\Http\Repositories\Pipelines\Query\ClientProject;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 
-class SortByUpdatedAtPipe
+class SortByUpdatedAtPipe extends HandleQueryPipe
 {
-    public function handle(Builder $query, \Closure $next)
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    protected function queryBuilder(Builder $query): Builder
     {
-        return $next($query->orderBy('client_projects.updated_at', 'desc'));
+        return $query->orderBy('client_projects.updated_at', 'desc');
     }
 }

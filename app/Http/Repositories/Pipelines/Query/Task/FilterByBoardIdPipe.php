@@ -2,20 +2,26 @@
 
 namespace App\Http\Repositories\Pipelines\Query\Task;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 
-class FilterByBoardIdPipe
+class FilterByBoardIdPipe extends HandleQueryPipe
 {
+    /**
+     * @param int $boardId
+     */
     public function __construct(
         private readonly int $boardId
     )
     {
     }
 
-    public function handle(Builder $query, \Closure $next)
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    protected function queryBuilder(Builder $query): Builder
     {
-        return $next(
-            $query->where('tasks.board_id', $this->boardId)
-        );
+        return $query->where('tasks.board_id', $this->boardId);
     }
 }

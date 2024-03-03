@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Task;
 
+use App\Http\Constant\Task\TaskStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Http\Service\Task\TaskService;
@@ -26,13 +27,14 @@ class UpdateTaskController extends Controller
      */
     public function __invoke(Task $task, UpdateTaskRequest $request): RedirectResponse
     {
+
         $data = [
             'name' => $request->validated('name'),
             'description' => $request->validated('description'),
             'board_id' => $request->validated('board_id'),
             'is_archived' => $request->validated('is_archived'),
             'priority_level' => $request->validated('priority_level'),
-            'task_status' => $request->validated('task_status') ?? 0,
+            'task_status' => $request->validated('task_status'),
             'created_at' => $request->get('created_at') ?? $task->created_at,
         ];
         $this->taskService->update($task->id, $data);

@@ -10,6 +10,9 @@ use Inertia\Response;
 
 class ContactController extends Controller
 {
+    /**
+     * @param GeneralContactService $contactService
+     */
     public function __construct(
         private readonly GeneralContactService $contactService
     )

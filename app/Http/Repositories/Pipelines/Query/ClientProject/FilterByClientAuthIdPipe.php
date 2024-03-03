@@ -2,14 +2,20 @@
 
 namespace App\Http\Repositories\Pipelines\Query\ClientProject;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 
-class FilterByClientAuthIdPipe
+class FilterByClientAuthIdPipe extends HandleQueryPipe
 {
-    public function handle(Builder $query, \Closure $next)
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    protected function queryBuilder(Builder $query): Builder
     {
-        return $next($query->whereHas('client', function(Builder $queryClient) {
+        return $query->whereHas('client', function(Builder $queryClient) {
             $queryClient->where('clients.user_id', auth()->id());
-        }));
+        });
     }
 }

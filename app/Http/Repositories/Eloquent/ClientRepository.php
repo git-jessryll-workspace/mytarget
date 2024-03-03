@@ -9,6 +9,10 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 
 class ClientRepository extends Repository implements ClientContract
 {
+    public function __construct(Client $client)
+    {
+        parent::__construct($client);
+    }
 
     /**
      * @return Builder|QueryBuilder
@@ -16,14 +20,6 @@ class ClientRepository extends Repository implements ClientContract
     public function getClients(): Builder|QueryBuilder
     {
         return $this->queryPipeline();
-    }
-
-    /**
-     * @return Builder
-     */
-    protected function model(): Builder
-    {
-        return Client::query();
     }
 
     /**

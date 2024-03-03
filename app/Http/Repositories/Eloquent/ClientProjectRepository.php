@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ClientProjectRepository extends Repository implements ClientProjectContract
 {
+    public function __construct()
+    {
+        $clientProject = new ClientProject();
+        parent::__construct($clientProject);
+    }
 
     /**
      * @return Builder

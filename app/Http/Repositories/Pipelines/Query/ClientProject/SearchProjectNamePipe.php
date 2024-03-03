@@ -2,15 +2,19 @@
 
 namespace App\Http\Repositories\Pipelines\Query\ClientProject;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 
-class SearchProjectNamePipe
+class SearchProjectNamePipe extends HandleQueryPipe
 {
-    public function handle(Builder $query, \Closure $next)
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    protected function queryBuilder(Builder $query): Builder
     {
         $search = request('search_query_project') ?? "";
-        return $next(
-            $query->where('client_projects.project_name', 'LIKE', "%$search%")
-        );
+        return $query->where('client_projects.project_name', 'LIKE', "%$search%");
     }
 }

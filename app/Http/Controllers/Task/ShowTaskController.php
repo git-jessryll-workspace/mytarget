@@ -21,13 +21,13 @@ class ShowTaskController extends Controller
 
     /**
      * @param Task $task
-     * @param Request $request
      * @return Response
      */
-    public function __invoke(Task $task, Request $request): Response
+    public function __invoke(Task $task): Response
     {
         $boards = $this->projectBoardService->getBoards($task->client_project_id);
         $timeLogs = $task->timeLogs;
+        $project = $task->clientProject;
 
         $timeLogObject = [
             'weeks' => 0,
@@ -35,6 +35,7 @@ class ShowTaskController extends Controller
             'hours' => 0,
             'minutes' => 0
         ];
+        $project->boards = $boards;
         foreach ($timeLogs as $timeLog) {
             $timeLogObject = $this->timelogService
                 ->calculateTotalHoursAndWeeks($timeLog->time_log, $timeLogObject);
@@ -44,7 +45,8 @@ class ShowTaskController extends Controller
             'task' => $task,
             'boards' => $boards,
             'all_time_logs' => $timeLogs,
-            'time_log_object' => $timeLogObject
+            'time_log_object' => $timeLogObject,
+            'project_client' => $project,
         ]);
     }
 }

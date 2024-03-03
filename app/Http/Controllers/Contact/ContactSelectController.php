@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Contact;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class ContactSelectController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * @return JsonResponse
      */
-    public function __invoke()
+    public function __invoke(): \Illuminate\Http\JsonResponse
     {
         $contacts = Contact::query()
             ->whereNotExists(function ($query) {

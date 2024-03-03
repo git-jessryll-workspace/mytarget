@@ -33,45 +33,22 @@ const Task = ({ auth, tasks, search_query, search_date }) => {
             ])
         );
     };
-    const priorityWrap = {
-        3: (
-            <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs uppercase font-bold">
-                High
-            </span>
-        ),
-        2: (
-            <span className="bg-yellow-600 text-white px-2 py-1 rounded-full text-xs uppercase font-bold">
-                Medium
-            </span>
-        ),
-        1: (
-            <span className="bg-gray-500 px-2 py-1 rounded-full text-xs uppercase font-bold">
-                Low
-            </span>
-        ),
-        0: null,
-    };
 
     const taskListData = tasks.data.map((task) => ({
         id: `#${task.acronym}-${task.counter}`,
         name: (
             <p className="line-clamp-1 py-0.5">
-            <span className="mr-1 border boarder-gray-300 py-0.5 px-1 text-xs rounded-sm">{task.project_name}</span>
-            {task.name}
-        </p>
+                <span className="mr-1 border boarder-gray-300 py-0.5 px-1 text-xs rounded-sm">
+                    {task.project_name}
+                </span>
+                {task.name}
+            </p>
         ),
         priority_level: task.priority_level,
         status: <TaskStatus status={task.task_status} />,
         action: (
             <DropdownActiontable
                 actionObject={{
-                    edit: {
-                        action: () => {
-                            setTaskSelected(task);
-                            setShowEdit(true);
-                        },
-                        label: "Edit",
-                    },
                     view: {
                         action: () => {
                             window.location.href = route("tasks.show", {

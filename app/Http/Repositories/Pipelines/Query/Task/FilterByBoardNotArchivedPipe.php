@@ -2,12 +2,17 @@
 
 namespace App\Http\Repositories\Pipelines\Query\Task;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 
-class FilterByBoardNotArchivedPipe
+class FilterByBoardNotArchivedPipe extends HandleQueryPipe
 {
-    public function handle(Builder $query, \Closure $next)
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    protected function queryBuilder(Builder $query): Builder
     {
-        return $next($query->where('boards.is_hidden', false));
+        return $query->where('boards.is_hidden', false);
     }
 }

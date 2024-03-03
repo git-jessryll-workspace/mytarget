@@ -2,9 +2,10 @@
 
 namespace App\Http\Repositories\Pipelines\Query\Task;
 
+use App\Http\Repositories\Pipelines\Query\HandleQueryPipe;
 use Illuminate\Database\Eloquent\Builder;
 
-class FilterByClientProjectIdPipe
+class FilterByClientProjectIdPipe extends HandleQueryPipe
 {
     public function __construct(
         private readonly int $clientProjectId
@@ -12,10 +13,12 @@ class FilterByClientProjectIdPipe
     {
     }
 
-    public function handle(Builder $query, \Closure $next)
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function queryBuilder(Builder $query): Builder
     {
-        return $next(
-            $query->where('tasks.client_project_id', $this->clientProjectId)
-        );
+        return $query->where('tasks.client_project_id', $this->clientProjectId);
     }
 }
