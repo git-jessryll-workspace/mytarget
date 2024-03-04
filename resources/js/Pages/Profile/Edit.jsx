@@ -12,7 +12,7 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-sm leading-tight flex items-center">
-                    <IdentificationIcon className="w-5 h-5 mr-2"/>
+                    <IdentificationIcon className="w-5 h-5 mr-2" />
                     Profile
                 </h2>
             }

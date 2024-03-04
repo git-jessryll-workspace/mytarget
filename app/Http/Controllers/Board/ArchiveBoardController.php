@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Board\ArchiveBoardRequest;
 use App\Http\Service\Board\BoardService;
 use App\Http\Service\Task\BoardTaskService;
-use App\Http\Service\Task\TaskService;
-use App\Models\Board;
-use App\Models\Task;
 use Illuminate\Http\RedirectResponse;
 
 class ArchiveBoardController extends Controller
@@ -28,7 +25,7 @@ class ArchiveBoardController extends Controller
      * @param ArchiveBoardRequest $request
      * @return RedirectResponse
      */
-    public function __invoke(ArchiveBoardRequest $request): \Illuminate\Http\RedirectResponse
+    public function __invoke(ArchiveBoardRequest $request): RedirectResponse
     {
         $board = $this->boardService->findById((int)$request->get('board_id'));
 

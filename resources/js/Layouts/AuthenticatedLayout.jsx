@@ -6,7 +6,6 @@ import {
     Bars3Icon,
     BellIcon,
     Cog6Tooth,
-    HomeIcon,
     QueueListIcon,
     UserGroupIcon,
     UsersIcon,
@@ -14,12 +13,13 @@ import {
 import RectangleStackIcon from "@/icons/RectangleStackIcon";
 import XCircleIcon from "@/icons/XCircleIcon";
 import DropdownActiontable from "@/Components/DropdownActiontable";
+import ThemeSetting from "@/Components/ThemeSetting";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(true);
     const [showNav, setShowNav] = useState(false);
-    const { post: postMethod, reset } = useForm({});
+    const { post: postMethod } = useForm({});
 
     const [navigation, setNavigation] = useState([
         {
@@ -203,35 +203,12 @@ export default function Authenticated({ user, header, children }) {
                 <div
                     className={`hidden lg:block w-0 lg:w-[20%] h-full pt-3 transition-all`}
                 >
-                    {/* <div className="flex items-center pb-2 mx-6">
-                        <div className={`mr-3 -ml-2`}>
-                            <ViewFinderCircleIcon
-                                className={
-                                    "h-11 text-gray-800 dark:text-gray-300"
-                                }
-                            />
-                        </div>
-                        <div>
-                            <h1 className="text-xl leading-6 font-bold antialiased text-gray-800 dark:text-gray-300">
-                                MyTarget
-                            </h1>
-                        </div>
-                    </div> */}
                     <div className="px-3">
-                        <div className="dark:bg-transparent p-2 rounded-lg flex justify-between">
+                        <div className="dark:bg-transparent pl-2.5 rounded-lg flex justify-between">
                             <div className="flex space-x-2">
-                                <div className="flex justify-center">
-                                    <img
-                                        src={
-                                            "https://cdn.jsdelivr.net/gh/alohe/avatars/png/vibrent_3.png"
-                                        }
-                                        className="rounded-full h-10 w-10 select-none cursor-pointer"
-                                        draggable={false}
-                                    />
-                                </div>
                                 <div className="">
                                     <a
-                                        className="font-bold leading-6 hover:border-b"
+                                        className="font-bold leading-6 hover:border-b line-clamp-1"
                                         href="/profile"
                                     >
                                         {user.name}
@@ -239,7 +216,10 @@ export default function Authenticated({ user, header, children }) {
                                     <p className="text-xs">{user.email}</p>
                                 </div>
                             </div>
-                            <div>
+                            <div className="flex gap-2">
+                                <div className="mt-0.5">
+                                    <ThemeSetting />
+                                </div>
                                 <DropdownActiontable
                                     actionObject={{
                                         profile: {
@@ -263,7 +243,7 @@ export default function Authenticated({ user, header, children }) {
 
                     <div className="pt-6">
                         <div className="px-6">
-                            <span className="text-xs font-bold lg:opacity-70">
+                            <span className="text-xs font-bold lg:opacity-70 select-none">
                                 Main
                             </span>
                         </div>

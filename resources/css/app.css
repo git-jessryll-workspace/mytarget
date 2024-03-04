@@ -13,3 +13,7 @@
 ::-webkit-scrollbar-thumb {
     @apply border-gray-300 border-4 bg-teal-600 rounded-sm;
 }
+
+.input-sm {
+    @apply py-4;
+}

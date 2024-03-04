@@ -1,5 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
+// import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -9,7 +9,7 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.jsx',
     ],
-
+    darkMode: 'class',
     theme: {
         extend: {
             fontFamily: {
@@ -17,5 +17,8 @@ export default {
             },
         },
     },
-    plugins: [forms, require("daisyui"), require('@tailwindcss/typography'), require('@tailwindcss/line-clamp')],
+    plugins: [ require("daisyui"), require('@tailwindcss/typography'), require('@tailwindcss/line-clamp')],
+    daisyui: {
+        themes: ["light", "dark", "cupcake"],
+      },
 };
