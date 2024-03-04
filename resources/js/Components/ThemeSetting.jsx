@@ -5,10 +5,15 @@ export default memo(function ThemeSetting() {
     const [darkMode, setDarkMode] = useLocalStorage("darkMode", false);
     useEffect(() => {
         document.body.classList.toggle("dark", darkMode);
+        document.documentElement.setAttribute(
+            "data-theme",
+            darkMode ? "dark" : "light"
+        );
     }, [darkMode]);
+    console.log(darkMode);
     const handleToggleTheme = (event) => {
-        setDarkMode(event.target.checked);
-        if (event.target.checked) {
+        setDarkMode(!darkMode);
+        if (!darkMode) {
             document.documentElement.classList.add("dark");
         } else {
             document.documentElement.classList.remove("dark");
@@ -21,13 +26,14 @@ export default memo(function ThemeSetting() {
                 <input
                     type="checkbox"
                     className="theme-controller"
-                    value={darkMode && "dark"}
+                    value={darkMode ? "dark" : "light"}
                     onClick={handleToggleTheme}
+                    checked={darkMode}
                 />
 
                 {/* sun icon */}
                 <svg
-                    className="swap-on fill-current w-5 h-5"
+                    className={`fill-current w-5 h-5 swap-on`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                 >
@@ -36,7 +42,7 @@ export default memo(function ThemeSetting() {
 
                 {/* moon icon */}
                 <svg
-                    className="swap-off fill-current w-5 h-5"
+                    className={`fill-current w-5 h-5 swap-off`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                 >
