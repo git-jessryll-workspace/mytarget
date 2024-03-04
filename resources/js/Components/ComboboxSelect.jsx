@@ -36,7 +36,7 @@ export default memo(function ComboboxSelect({
             <div className="relative mt-1">
                 <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-900 text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                     <Combobox.Input
-                        className="w-full text-sm border border-gray-300 dark:border-gray-700 rounded-lg bg-[var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))] focus:ring-gray-800 focus:outline-none focus:ring-1 focus:border-gray-600"
+                        className="w-full input-sm border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-[#3d4451] focus:ring-gray-800 focus:outline-none focus:ring-1 focus:border-gray-600"
                         displayValue={(item) => item[keySearch]}
                         onChange={(event) => setQuery(event.target.value)}
                     />

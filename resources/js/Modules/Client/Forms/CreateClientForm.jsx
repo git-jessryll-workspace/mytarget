@@ -5,6 +5,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import TextInput from "@/Components/TextInput";
 import ErrorInput from "@/Components/ErrorInput";
+import TextArea from "@/Components/TextArea.jsx";
 
 const CreateClientForm = ({ updateList, setShowCreate }) => {
     const {
@@ -116,14 +117,13 @@ const CreateClientForm = ({ updateList, setShowCreate }) => {
                 <div className="space-y-2">
                     <InputLabel value="Note" />
                     <div>
-                        <textarea
+                        <TextArea
                             value={data.note}
                             onChange={(event) =>
                                 setData("note", event.target.value)
                             }
-                            className="textarea border border-gray-300 dark:border-gray-700 focus:ring-gray-800 focus:outline-none focus:ring-1 focus:border-gray-600 h-24 w-full "
                             placeholder="Short note on this client"
-                        ></textarea>
+                        />
                     </div>
                 </div>
                 <div className="flex justify-end">

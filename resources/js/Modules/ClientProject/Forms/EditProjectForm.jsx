@@ -8,6 +8,7 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import TextInput from "@/Components/TextInput";
 import ComboboxSelect from "@/Components/ComboboxSelect";
 import ErrorInput from "@/Components/ErrorInput";
+import TextArea from "@/Components/TextArea.jsx";
 
 export default function EditProjectForm({
     updateList,
@@ -118,14 +119,13 @@ export default function EditProjectForm({
                 <div className="space-y-2">
                     <InputLabel value={"Description"} />
                     <div>
-                        <textarea
+                        <TextArea
                             value={data.description}
                             onChange={(event) =>
                                 setData("description", event.target.value)
                             }
-                            className="textarea border border-gray-300 dark:border-gray-700 focus:ring-gray-800 focus:outline-none focus:ring-1 focus:border-gray-600 h-24 w-full "
                             placeholder="Short description on this client"
-                        ></textarea>
+                        />
                     </div>
                     <ErrorInput errors={errors} errorKey="description" />
                 </div>

@@ -28,6 +28,7 @@ class ShowTaskController extends Controller
         $boards = $this->projectBoardService->getBoards($task->client_project_id);
         $timeLogs = $task->timeLogs;
         $project = $task->clientProject;
+        $acronymItem = $task->acronym;
 
         $timeLogObject = [
             'weeks' => 0,
