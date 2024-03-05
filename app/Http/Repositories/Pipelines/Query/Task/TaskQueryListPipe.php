@@ -27,13 +27,9 @@ class TaskQueryListPipe extends HandleQueryPipe
             'acronyms.acronym',
             'clients.name AS client_name',
             'client_projects.project_name',
-            'boards.name AS board_name',
-            'boards.id AS board_id',
-            'boards.is_hidden AS board_is_hidden',
         ])
             ->leftJoin('acronyms', 'tasks.id', '=', 'acronyms.task_id')
             ->leftJoin('clients', 'tasks.client_id', '=', 'clients.id')
-            ->leftJoin('client_projects', 'tasks.client_project_id', '=', 'client_projects.id')
-            ->leftJoin('boards', 'tasks.board_id', '=', 'boards.id');
+            ->leftJoin('client_projects', 'tasks.client_project_id', '=', 'client_projects.id');
     }
 }

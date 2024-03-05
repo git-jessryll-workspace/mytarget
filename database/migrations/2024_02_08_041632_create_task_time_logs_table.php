@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('task_time_logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('task_id')->index();
-            $table->unsignedBigInteger('user_id')->nullable()->index();
-            $table->unsignedBigInteger('client_id')->index();
-            $table->unsignedBigInteger('client_project_id')->index();
+            $table->unsignedBigInteger('task_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('client_project_id');
             $table->text('body')->nullable();
             $table->string('time_log')->index();
             $table->timestamps();

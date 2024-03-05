@@ -2,7 +2,6 @@
 
 namespace App\Http\Service\Task;
 
-use App\Http\Repositories\Pipelines\Query\Task\FilterByBoardNotArchivedPipe;
 use App\Http\Repositories\Pipelines\Query\Task\FilterByClientProjectIdPipe;
 use App\Http\Repositories\Pipelines\Query\Task\FilterByTaskNotArchivedPipe;
 use App\Http\Repositories\Pipelines\Query\Task\SearchTaskNameAcronymPipe;
@@ -20,7 +19,6 @@ class ProjectTaskService extends TaskService
             ->setPipelines([
                 TaskQueryListPipe::class,
                 new FilterByClientProjectIdPipe($clientProjectId),
-                FilterByBoardNotArchivedPipe::class,
                 FilterByTaskNotArchivedPipe::class,
                 SearchTaskNameAcronymPipe::class,
                 SortByPriorityLevelPipe::class,

@@ -27,7 +27,6 @@ class CreateTaskRequest extends FormRequest
             'priority_level' => 'nullable',
             'client_id' => 'required',
             'client_project_id' => 'required',
-            'board_id' => 'required',
             'due_date' => 'nullable',
             'created_at' => 'nullable|date'
         ];

@@ -25,7 +25,6 @@ class TaskFactory extends Factory
             'priority_level' => 3,
             'client_id' => 1,
             'client_project_id' => $query->id,
-            'board_id' => $this->faker->numberBetween(1, 4),
             'task_status' => $this->faker->numberBetween(0, 3)
         ];
     }

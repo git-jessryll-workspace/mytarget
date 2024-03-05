@@ -2,7 +2,6 @@
 
 namespace App\Http\Service\Task;
 
-use App\Http\Repositories\Pipelines\Query\Task\FilterByBoardNotArchivedPipe;
 use App\Http\Repositories\Pipelines\Query\Task\FilterByTaskCreatedPipe;
 use App\Http\Repositories\Pipelines\Query\Task\FilterByTaskNotArchivedPipe;
 use App\Http\Repositories\Pipelines\Query\Task\SearchTaskPipe;
@@ -23,7 +22,6 @@ class GeneralTaskService extends TaskService
             ->setPipelines([
                 TaskQueryListPipe::class,
                 FilterByTaskNotArchivedPipe::class,
-                FilterByBoardNotArchivedPipe::class,
                 FilterByTaskCreatedPipe::class,
                 SearchTaskPipe::class,
                 SortByPriorityLevelPipe::class,

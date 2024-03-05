@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->index(['is_hidden', 'sort']);
 
-            $table->indxe(['client_id', 'client_project_id']);
+            $table->index(['client_id', 'client_project_id']);
 
             $table->foreign('client_id')
                 ->references('id')

@@ -19,7 +19,7 @@ class SearchTaskNameAcronymPipe extends HandleQueryPipe
             $query->where(function (Builder $q) use ($searchTaskQuery) {
                 $q->where('tasks.name', 'LIKE', "%$searchTaskQuery%")
                     ->orWhereHas('acronym', function (Builder $ql) use ($searchTaskQuery) {
-                        $ql->whereRaw('CONCAT("#",acronym,"-",counter) LIKE ?', ["%$searchTaskQuery%"]);
+                        $ql->whereRaw('acro_counter LIKE ?', ["%$searchTaskQuery%"]);
                     });
             });
         }

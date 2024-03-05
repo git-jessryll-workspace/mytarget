@@ -101,14 +101,6 @@ const Show = ({ auth, project_client }) => {
                                     createTask: {
                                         action: () => setShowCreateTask(true),
                                         label: "Add New Task",
-                                        disabled: boards.length === 0
-                                    },
-                                    view: {
-                                        action: () => {
-                                            setShowCreateBoard(true)
-                                        },
-                                        label: "Add New Board",
-
                                     },
                                 }}
                                 childIcon={

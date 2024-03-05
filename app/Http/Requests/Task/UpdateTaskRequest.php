@@ -24,7 +24,6 @@ class UpdateTaskRequest extends FormRequest
         return [
             'name' => 'required|min:3',
             'description' => 'nullable',
-            'board_id' => 'required',
             'is_archived' => 'required|boolean',
             'priority_level' => 'required',
             'task_status' => 'nullable'

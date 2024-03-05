@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('priority_level')->default(0);
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('client_project_id');
-            $table->unsignedBigInteger('board_id');
+            $table->unsignedBigInteger('board_id')->nullable();
             $table->integer('task_status')->default(0);
             $table->date('due_date')->nullable();
             $table->timestamps();
@@ -35,15 +35,13 @@ return new class extends Migration
 
             $table->foreign('board_id')
                 ->references('id')
-                ->on('boards')
-                ->onDelete('cascade');
+                ->on('boards');
 
-            $table->index(['client_id', 'client_project_id', 'is_archived', 'priority_level']);
-            $table->unique(['client_id', 'client_project_id']);
+            $table->index(['client_id', 'client_project_id', 'is_archived', 'priority_level'], 'task_index');
 
             $table->engine = "InnoDB";
-            DB::statement('ALTER TABLE tasks ADD FULLTEXT fulltext_index (name)');
         });
+        DB::statement('ALTER TABLE tasks ADD FULLTEXT fulltext_index (name)');
     }
 
     /**

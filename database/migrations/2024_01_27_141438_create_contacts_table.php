@@ -26,8 +26,8 @@ return new class extends Migration
             $table->unique(['name','email']);
 
             $table->engine = "InnoDB";
-            DB::statement('ALTER TABLE contacts ADD FULLTEXT fulltext_index (name,email,contact_number)');
         });
+        DB::statement('ALTER TABLE contacts ADD FULLTEXT fulltext_index (name,email,contact_number)');
     }
 
     /**

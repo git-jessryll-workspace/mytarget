@@ -203,22 +203,22 @@ const UpdateTaskForm = ({task, setShow}) => {
                                 />
                             </div>
                         </div>
-                        <div className="space-y-2 w-full">
-                            <InputLabel value={"Board Position"}/>
-                            <div>
-                                <Select
-                                    value={data.board_id}
-                                    onChange={(e) =>
-                                        setData("board_id", e.target.value)
-                                    }
-                                    options={boards.map((boardItem) => ({
-                                        ...boardItem,
-                                        value: boardItem.id,
-                                        text: boardItem.name
-                                    }))}
-                                />
-                            </div>
-                        </div>
+                        {/*<div className="space-y-2 w-full">*/}
+                        {/*    <InputLabel value={"Board Position"}/>*/}
+                        {/*    <div>*/}
+                        {/*        <Select*/}
+                        {/*            value={data.board_id}*/}
+                        {/*            onChange={(e) =>*/}
+                        {/*                setData("board_id", e.target.value)*/}
+                        {/*            }*/}
+                        {/*            options={boards.map((boardItem) => ({*/}
+                        {/*                ...boardItem,*/}
+                        {/*                value: boardItem.id,*/}
+                        {/*                text: boardItem.name*/}
+                        {/*            }))}*/}
+                        {/*        />*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
                     <div className="space-y-2">
                         <InputLabel value={"Description"}/>

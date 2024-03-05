@@ -4,11 +4,12 @@ import {useForm, usePage} from "@inertiajs/react";
 import {memo} from "react";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import SecondaryButton from "@/Components/SecondaryButton";
+import Select from "@/Components/Select";
+import TextArea from "@/Components/TextArea";
 
 export default memo(function CreateProjectTaskForm({setShow}) {
 
     const {client, project_client} = usePage().props;
-    const {boards} = project_client;
     const {
         data,
         setData,
@@ -20,7 +21,6 @@ export default memo(function CreateProjectTaskForm({setShow}) {
         priority_level: 0,
         client_id: client.id,
         client_project_id: project_client.id,
-        board_id: boards[0].id,
         created_at: null
     });
     const handleSubmit = async (event) => {
@@ -53,18 +53,30 @@ export default memo(function CreateProjectTaskForm({setShow}) {
                 <div className="space-y-2">
                     <InputLabel value="Priority Level"/>
                     <div>
-                        <select
+                        <Select
                             value={data.priority_level}
                             onChange={(e) =>
                                 setData("priority_level", e.target.value)
                             }
-                            className="bg-[var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))] text-sm rounded-md w-full"
-                        >
-                            <option value="0">None</option>
-                            <option value="1">Low</option>
-                            <option value="2">Medium</option>
-                            <option value="3">High</option>
-                        </select>
+                            options={[
+                                {
+                                    value: "None",
+                                    text: "None"
+                                },
+                                {
+                                    value: "Low",
+                                    text: "Low"
+                                },
+                                {
+                                    value: "Medium",
+                                    text: "Medium"
+                                },
+                                {
+                                    value: "High",
+                                    text: "High"
+                                },
+                            ]}
+                        />
                     </div>
                 </div>
                 <div className={"space-y-2"}>
@@ -77,34 +89,33 @@ export default memo(function CreateProjectTaskForm({setShow}) {
                         />
                     </div>
                 </div>
-                <div className="space-y-2">
-                    <InputLabel value="Board"/>
-                    <div>
-                        <select
-                            value={data.board_id}
-                            onChange={(e) =>
-                                setData("board_id", e.target.value)
-                            }
-                            className="bg-[var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))] text-sm rounded-md w-full"
-                        >
-                            {boards.map((item) => (
-                                <option value={item.id} key={item.id}>
-                                    {item.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
+                {/*<div className="space-y-2">*/}
+                {/*    <InputLabel value="Board"/>*/}
+                {/*    <div>*/}
+                {/*        <select*/}
+                {/*            value={data.board_id}*/}
+                {/*            onChange={(e) =>*/}
+                {/*                setData("board_id", e.target.value)*/}
+                {/*            }*/}
+                {/*            className="bg-[var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)))] text-sm rounded-md w-full"*/}
+                {/*        >*/}
+                {/*            {boards.map((item) => (*/}
+                {/*                <option value={item.id} key={item.id}>*/}
+                {/*                    {item.name}*/}
+                {/*                </option>*/}
+                {/*            ))}*/}
+                {/*        </select>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 <div className={"space-y-2"}>
                     <InputLabel value={"Description"}/>
                     <div>
-                        <textarea
+                        <TextArea
                             rows={5}
                             value={data.description}
                             onChange={(event) =>
                                 setData("description", event.target.value)
                             }
-                            className="textarea border resize-none border-gray-300 dark:border-gray-700 focus:ring-gray-800 focus:outline-none focus:ring-1 focus:border-gray-600 w-full "
                             placeholder="Short description of the task"
                         />
                     </div>

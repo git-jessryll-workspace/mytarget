@@ -31,7 +31,6 @@ class UpdateTaskController extends Controller
         $data = [
             'name' => $request->validated('name'),
             'description' => $request->validated('description'),
-            'board_id' => $request->validated('board_id'),
             'is_archived' => $request->validated('is_archived'),
             'priority_level' => $request->validated('priority_level'),
             'task_status' => $request->validated('task_status'),

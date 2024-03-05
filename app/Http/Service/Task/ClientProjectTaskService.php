@@ -26,7 +26,6 @@ class ClientProjectTaskService extends TaskService
                 new FilterByClientIdPipe($clientId),
                 SearchTaskNameAcronymPipe::class,
                 FilterByTaskNotArchivedPipe::class,
-                FilterByBoardNotArchivedPipe::class,
                 SortByPriorityLevelPipe::class,
                 SortByCreatedAt::class,
             ])
