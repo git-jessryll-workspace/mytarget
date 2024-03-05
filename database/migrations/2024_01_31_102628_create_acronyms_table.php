@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('acronyms', function (Blueprint $table) {
             $table->id();
-            $table->string('acronym')->index();
-            $table->integer('counter')->index()->default(0);
-            $table->unsignedBigInteger('client_project_id')->nullable()->index();
-            $table->unsignedBigInteger('client_id')->nullable()->index();
-            $table->unsignedBigInteger('task_id')->nullable()->index();
-            $table->unsignedBigInteger('user_id')->nullable()->index();
+            $table->string('acronym');
+            $table->integer('counter')->default(0);
+            $table->unsignedBigInteger('client_project_id')->nullable();
+            $table->unsignedBigInteger('client_id')->nullable();
+            $table->unsignedBigInteger('task_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('client_id')->references('id')->on('clients');

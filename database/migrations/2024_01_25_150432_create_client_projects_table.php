@@ -20,7 +20,8 @@ return new class extends Migration
             $table->boolean('active')->default(true);
             $table->timestamps();
 
-            $table->foreign('client_id')->references('id')
+            $table->foreign('client_id')
+            ->references('id')
                 ->on('clients')
                 ->onDelete('cascade');
 

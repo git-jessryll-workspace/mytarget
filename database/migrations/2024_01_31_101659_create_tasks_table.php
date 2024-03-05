@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,15 +14,15 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index();
+            $table->string('name');
             $table->text('description')->nullable();
-            $table->boolean('is_archived')->default(false)->index();
-            $table->integer('priority_level')->index()->default(0);
-            $table->unsignedBigInteger('client_id')->index();
-            $table->unsignedBigInteger('client_project_id')->index();
-            $table->unsignedBigInteger('board_id')->index();
-            $table->integer('task_status')->default(0)->index();
-            $table->date('due_date')->index()->nullable();
+            $table->boolean('is_archived')->default(false);
+            $table->integer('priority_level')->default(0);
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('client_project_id');
+            $table->unsignedBigInteger('board_id');
+            $table->integer('task_status')->default(0);
+            $table->date('due_date')->nullable();
             $table->timestamps();
 
             $table->foreign('client_project_id')
@@ -36,6 +37,12 @@ return new class extends Migration
                 ->references('id')
                 ->on('boards')
                 ->onDelete('cascade');
+
+            $table->index(['client_id', 'client_project_id', 'is_archived', 'priority_level']);
+            $table->unique(['client_id', 'client_project_id']);
+
+            $table->engine = "InnoDB";
+            DB::statement('ALTER TABLE tasks ADD FULLTEXT fulltext_index (name)');
         });
     }
 
