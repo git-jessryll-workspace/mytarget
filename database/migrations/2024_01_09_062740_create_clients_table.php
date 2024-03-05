@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index();
+            $table->string('name');
             $table->longText('note')->nullable();
-            $table->boolean('active')->index();
-            $table->unsignedBigInteger('user_id')->index();
-            $table->string('position')->default('N/A')->index();
-            $table->date('date_started')->nullable()->index();
-            $table->date('date_ended')->nullable()->index();
+            $table->boolean('active');
+            $table->unsignedBigInteger('user_id');
+            $table->string('position')->default('N/A');
+            $table->date('date_started')->nullable();
+            $table->date('date_ended')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            
+            $table->index(['active', 'name']);
         });
     }
 

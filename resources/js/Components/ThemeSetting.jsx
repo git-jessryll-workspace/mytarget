@@ -10,7 +10,6 @@ export default memo(function ThemeSetting() {
             darkMode ? "dark" : "light"
         );
     }, [darkMode]);
-    console.log(darkMode);
     const handleToggleTheme = (event) => {
         setDarkMode(!darkMode);
         if (!darkMode) {
