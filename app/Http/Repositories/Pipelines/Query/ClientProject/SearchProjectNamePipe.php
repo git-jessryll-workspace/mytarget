@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SearchProjectNamePipe extends HandleQueryPipe
 {
+    const PROJECT_NAME_KEY = "client_projects.project_name";
+    public function __construct()
+    {
+        $this->setAllowedKeys([self::PROJECT_NAME_KEY]);
+    }
 
     /**
      * @param Builder $query
@@ -15,6 +20,6 @@ class SearchProjectNamePipe extends HandleQueryPipe
     protected function queryBuilder(Builder $query): Builder
     {
         $search = request('search_query_project') ?? "";
-        return $query->where('client_projects.project_name', 'LIKE', "%$search%");
+        return $this->searchByFulltext($query, $search, self::PROJECT_NAME_KEY);
     }
 }

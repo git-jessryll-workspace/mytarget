@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SearchNameEmailPipe extends HandleQueryPipe
 {
+    public function __construct()
+    {
+        $this->setAllowedKeys([]);
+    }
+
     protected function queryBuilder(Builder $query): Builder
     {
         return $query->where(function (Builder $query1) {
