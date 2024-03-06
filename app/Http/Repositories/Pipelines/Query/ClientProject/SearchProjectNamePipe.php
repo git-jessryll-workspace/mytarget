@@ -20,6 +20,6 @@ class SearchProjectNamePipe extends HandleQueryPipe
     protected function queryBuilder(Builder $query): Builder
     {
         $search = request('search_query_project') ?? "";
-        return $this->searchByFulltext($query, $search, self::PROJECT_NAME_KEY);
+        return $this->applyFulltextSearchToQuery($query, $search, self::PROJECT_NAME_KEY);
     }
 }
