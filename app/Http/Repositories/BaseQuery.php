@@ -18,7 +18,7 @@ class BaseQuery
      * @param string|array $key
      * @return Builder
      */
-    public function applyFulltextSearchToQuery(Builder $query, string $keywords, string|array $key): Builder
+    public function applyFulltextSearchToQuery(Builder $query, string $keywords, string|array $key, string $mode = 'boolean'): Builder
     {
         // ignore if empty keywords to search
         if (empty($keywords)) return $query;
@@ -30,16 +30,20 @@ class BaseQuery
         if (is_string($key)) {
 
             if (!in_array($key, $this->allowedKeys)) throw new \InvalidArgumentException("Invalid key: $key");
-            
+
             $keys = $key;
         } else if(is_array ($key)) {
-            
+
             $arrayAccepted = array_intersect($key, $this->allowedKeys);
-            
+
             $keys = implode(",", $arrayAccepted);
-            
+
             if (empty($arrayAccepted)) throw new \InvalidArgumentException("Invalid keys: $keys");
 
+        }
+
+        if ($mode === 'boolean') {
+            return $query->whereRaw("MATCH ($keys) AGAINST (? IN BOOLEAN MODE)", [$keywords]);
         }
 
         return $query->whereRaw("MATCH ($keys) AGAINST (? IN NATURAL LANGUAGE MODE)", [$keywords]);

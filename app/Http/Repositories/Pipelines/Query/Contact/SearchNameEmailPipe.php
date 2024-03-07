@@ -13,6 +13,7 @@ class SearchNameEmailPipe extends HandleQueryPipe
         "email",
         "contact_number"
     ];
+
     public function __construct()
     {
         $this->setAllowedKeys($this->keys);
@@ -21,10 +22,14 @@ class SearchNameEmailPipe extends HandleQueryPipe
     protected function queryBuilder(Builder $query): Builder
     {
         $query->where(function (Builder $query1) {
-            return $this->applyFulltextSearchToQuery($query1, request('search_query') ?? "", $this->keys);
+            $searchKeywords = request('search_query') ?? "";
+
+            if (!empty($searchKeywords)) {
+                $searchKeywords .= '*';
+            }
+
+            return $this->applyFulltextSearchToQuery($query1, $searchKeywords, $this->keys);
         });
-        Log::info('Query: ' . $query->toSql());
-    Log::info('Bindings: ' . implode(', ', $query->getBindings()));
-    return $query;
+        return $query;
     }
 }

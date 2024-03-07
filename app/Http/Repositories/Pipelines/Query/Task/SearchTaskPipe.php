@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SearchTaskPipe extends HandleQueryPipe
 {
+    private array $keys = [
+        'acronyms.acro_counter'
+    ];
+
+    public function __construct()
+    {
+        $this->setAllowedKeys($this->keys);
+    }
+
     /**
      * @param Builder $query
      * @return Builder
@@ -26,7 +35,8 @@ class SearchTaskPipe extends HandleQueryPipe
                         $q->where('client_projects.project_name', 'LIKE', "%{$searchName}%");
                     })
                     ->orWhereHas('acronym', function ($ql) use ($searchName) {
-                        $ql->whereRaw('CONCAT("#", acronym, "-", counter) LIKE ?', ["%$searchName%"]);
+                        $this->applyFulltextSearchToQuery($ql, $searchName."*", 'acronyms.acro_counter');
+//                        $ql->whereRaw('CONCAT("#", acronym, "-", counter) LIKE ?', ["%$searchName%"]);
                     });
             });
         }

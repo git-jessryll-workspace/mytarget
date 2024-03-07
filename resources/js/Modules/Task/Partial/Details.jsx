@@ -1,11 +1,12 @@
-import PriorityLevel from "@/Components/PriorityLevel";
-import { usePage } from "@inertiajs/react";
 import { memo } from "react";
+import { usePage } from "@inertiajs/react";
+
+import PriorityLevel from "@/Components/PriorityLevel";
 import { dateFormat } from "@/utils/date";
 
 const Details = () => {
     const { task, time_log_object } = usePage().props;
-    const { board, client } = task;
+    const { client } = task;
     return (
         <div className="">
             <div className="w-full">
