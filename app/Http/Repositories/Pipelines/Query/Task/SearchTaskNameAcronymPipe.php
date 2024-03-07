@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 class SearchTaskNameAcronymPipe extends HandleQueryPipe
 {
     private array $allowedKeys = [
-        'acronyms.acro_counter'
+        'acronyms.acro_counter',
     ];
     public function __construct()
     {

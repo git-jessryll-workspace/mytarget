@@ -23,6 +23,7 @@ class SearchTaskPipe extends HandleQueryPipe
     protected function queryBuilder(Builder $query): Builder
     {
         $searchQuery = request('search_query') ?? "";
+    
         if (!empty($searchQuery)) {
             $searchName = $searchQuery;
 
@@ -35,8 +36,7 @@ class SearchTaskPipe extends HandleQueryPipe
                         $q->where('client_projects.project_name', 'LIKE', "%{$searchName}%");
                     })
                     ->orWhereHas('acronym', function ($ql) use ($searchName) {
-                        $this->applyFulltextSearchToQuery($ql, $searchName."*", 'acronyms.acro_counter');
-//                        $ql->whereRaw('CONCAT("#", acronym, "-", counter) LIKE ?', ["%$searchName%"]);
+                        $this->applyFulltextSearchToQuery($ql, $searchName, 'acronyms.acro_counter');
                     });
             });
         }

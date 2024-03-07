@@ -33,6 +33,7 @@ class AcronymService
             'task_id' => null,
             'acronym' => $acr,
             'user_id' => $orgId,
+            'acro_counter' => $acr,
             'counter' => 0,
         ]);
     }
@@ -49,8 +50,9 @@ class AcronymService
             'client_project_id' => $task->client_project_id,
             'client_id' => $task->client_id,
             'acronym' => $findExistingAcronym->acronym,
-            'counter' => $findExistingAcronym->counter + 1,
+            'counter' => $counterGenerated,
             'user_id' => $findExistingAcronym->user_id,
+            'acro_counter' => "{$findExistingAcronym->acronym}-{$counterGenerated}",
             'task_id' => $task->id,
         ]);
     }

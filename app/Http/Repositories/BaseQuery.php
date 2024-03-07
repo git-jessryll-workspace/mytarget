@@ -43,9 +43,9 @@ class BaseQuery
         }
 
         if ($mode === 'boolean') {
-            return $query->whereRaw("MATCH ($keys) AGAINST (? IN BOOLEAN MODE)", [$keywords]);
+            return $query->whereRaw("MATCH ($keys) AGAINST (? IN BOOLEAN MODE)", ["\"$keywords*\""]);
         }
 
-        return $query->whereRaw("MATCH ($keys) AGAINST (? IN NATURAL LANGUAGE MODE)", [$keywords]);
+        return $query->whereRaw("MATCH ($keys) AGAINST (? IN NATURAL LANGUAGE MODE)", ["\"$keywords\""]);
     }
 }

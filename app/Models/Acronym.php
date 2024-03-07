@@ -16,7 +16,8 @@ class Acronym extends Model
         'acronym',
         'task_id',
         'user_id',
-        'counter'
+        'counter',
+        'acro_counter'
     ];
 
     public function board()

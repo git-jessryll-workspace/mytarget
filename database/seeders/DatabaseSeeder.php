@@ -20,12 +20,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       \App\Models\User::factory(10)->create();
+       \App\Models\User::factory(500)->create();
 
-       Client::factory(8000)->create();
-       Service::factory(20)->create();
+       Client::factory(1)->create();
+       Service::factory(200)->create();
        ClientProject::factory(20)->create();
-       Contact::factory(20)->create();
+       Contact::factory(200)->create();
        $clientContactsData = [];
        DB::table('contacts')->get()->each(function ($contact) use (&$clientContactsData) {
            $clientContactsData[] = [
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
        ];
        
 
-       Task::factory(30)->create();
-        TaskTimeLog::factory(30)->create();
+       Task::factory(3030)->create();
+        TaskTimeLog::factory(1030)->create();
     }
 }

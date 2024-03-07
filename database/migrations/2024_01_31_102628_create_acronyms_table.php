@@ -13,6 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('acronyms', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->id();
             $table->string('acronym');
             $table->integer('counter')->default(0);
@@ -26,11 +27,10 @@ return new class extends Migration
             $table->foreign('client_id')->references('id')->on('clients');
             $table->foreign('client_project_id')->references('id')->on('client_projects')->onDelete('cascade');
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
-            $table->engine = "InnoDB";
         });
         // DB::statement('ALTER TABLE acronyms ADD acro_counter VARCHAR(255) AS (CONCAT(acronym, "-", counter))');
         // DB::statement('CREATE INDEX acro_counter_index ON acronyms(acro_counter)');
-        DB::statement('ALTER TABLE acronyms ADD FULLTEXT fulltext_index (acronym, acro_counter)');
+        DB::statement('ALTER TABLE acronyms ADD FULLTEXT fulltext_index (acro_counter)');
     }
 
     /**

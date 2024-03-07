@@ -22,7 +22,8 @@ class ClientProjectFactory extends Factory
             'project_name' => $this->faker->windowsPlatformToken,
             'description' => $this->faker->paragraph,
             'active' => $this->faker->numberBetween(0, 1),
-            'client_id' => $this->faker->numberBetween(1, 20)
+            // 'client_id' => $this->faker->numberBetween(1, 20)
+            'client_id' => 1,
         ];
     }
 }
