@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -24,7 +25,10 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('client_id')->references('id')->on('clients');
             $table->foreign('client_project_id')->references('id')->on('client_projects');
+            $table->index(['task_id', 'user_id', 'client_id', 'client_project_id'], 'task_time_logs_index');
+            $table->engine = 'InnoDB';
         });
+        DB::statement('ALTER TABLE task_time_logs ADD FULLTEXT fulltext_index (body, time_log)');
     }
 
     /**

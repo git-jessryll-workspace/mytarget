@@ -11,9 +11,8 @@ class SearchNamePipe extends HandleQueryPipe
     protected function queryBuilder(Builder $query): Builder
     {
         $searchName = request('search_query') ?? "";
-        if (!empty($searchName)) {
-            $query->where('clients.name', 'LIKE', "%$searchName%");
-        }
-        return $query;
+        if (empty($searchName)) return $query;
+        
+        return $this->applyFulltextSearchToQuery($query,$searchName."*", 'clients.name');
     }
 }

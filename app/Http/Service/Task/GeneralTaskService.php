@@ -21,9 +21,9 @@ class GeneralTaskService extends TaskService
         return $this->taskRepository
             ->setPipelines([
                 TaskQueryListPipe::class,
+                SearchTaskPipe::class,
                 FilterByTaskNotArchivedPipe::class,
                 FilterByTaskCreatedPipe::class,
-                SearchTaskPipe::class,
                 SortByPriorityLevelPipe::class,
                 SortByCreatedAt::class,
             ])

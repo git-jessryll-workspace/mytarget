@@ -104,7 +104,7 @@ export default memo(function NavPanel({
                                             });
                                         }}
                                     >
-                                        <XCircleIcon className="w-5 h-5 text-gray-600/100 hover:text-gray-700 dark:hover:text-white" />
+                                        <XCircleIcon className="w-5 h-5 text-gray-600/100 dark:text-gray-300/100 hover:text-gray-700 dark:hover:text-white" />
                                     </div>
                                 )}
                             </>

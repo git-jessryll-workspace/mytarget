@@ -7,14 +7,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SearchTaskNameAcronymPipe extends HandleQueryPipe
 {
-    private array $allowedKeys = [
-        'acronyms.acro_counter',
-    ];
-    public function __construct()
-    {
-        $this->setAllowedKeys($this->allowedKeys);
-    }
-
     /**
      * @param Builder $query
      * @return Builder
@@ -23,18 +15,15 @@ class SearchTaskNameAcronymPipe extends HandleQueryPipe
     {
         $searchTaskQuery = request('search_query_task') ?? "";
 
-        if (!empty($searchTaskQuery)) {
-            $query->where(function (Builder $q) use ($searchTaskQuery) {
-                $q->where('tasks.name', 'LIKE', "%$searchTaskQuery%")
-                    ->orWhereHas('acronym', function (Builder $ql) use ($searchTaskQuery) {
-                        if (!empty($searchTaskQuery)) {
-                            $searchTaskQuery .= "*";
-                        }
-                        $this->applyFulltextSearchToQuery($ql,$searchTaskQuery,$this->allowedKeys);
-                    });
-            });
-        }
+        if (empty($searchTaskQuery)) return $query;
 
-        return $query;
+        return $query->where(function (Builder $q) use ($searchTaskQuery) {
+            $this->applyFulltextSearchToQuery($q, $searchTaskQuery."*", ['tasks.name'])
+                ->orWhereHas('acronym', function (Builder $ql) use ($searchTaskQuery) {
+                    if (empty($searchTaskQuery)) return $ql;
+                    $searchTaskQuery.="*";
+                    return $this->applyFulltextSearchToQuery($ql, "\".$searchTaskQuery . *\"", 'acronyms.acro_counter');
+                });
+        });
     }
 }

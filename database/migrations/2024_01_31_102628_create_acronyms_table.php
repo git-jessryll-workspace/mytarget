@@ -23,10 +23,24 @@ return new class extends Migration
             $table->unsignedBigInteger('task_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('client_id')->references('id')->on('clients');
-            $table->foreign('client_project_id')->references('id')->on('client_projects')->onDelete('cascade');
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('client_id')
+                ->references('id')
+                ->on('clients');
+            $table->foreign('client_project_id')
+                ->references('id')
+                ->on('client_projects')
+                ->onDelete('cascade');
+            $table->foreign('task_id')
+                ->references('id')
+                ->on('tasks')
+                ->onDelete('cascade');
+
+            $table->index(['user_id', 'client_id', 'client_project_id', 'task_id'], 'acronyms_index');
         });
         // DB::statement('ALTER TABLE acronyms ADD acro_counter VARCHAR(255) AS (CONCAT(acronym, "-", counter))');
         // DB::statement('CREATE INDEX acro_counter_index ON acronyms(acro_counter)');

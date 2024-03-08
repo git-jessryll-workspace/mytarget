@@ -21,10 +21,10 @@ class GeneralProjectService extends ProjectService
         return $this->clientProjectRepository
             ->setPipelines([
                 ClientProjectWithPipe::class,
-                FilterByClientAuthIdPipe::class,
                 SearchNamePipe::class,
-                SortByActivePipe::class,
-                SortByUpdatedAtPipe::class,
+                // FilterByClientAuthIdPipe::class,
+                // SortByActivePipe::class,
+                // SortByUpdatedAtPipe::class,
             ])
             ->getClientProjects()
             ->paginate(50)

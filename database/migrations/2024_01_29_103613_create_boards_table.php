@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('boards', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index();
+            $table->string('name');
             $table->integer('sort');
             $table->string('color')->default('transparent');
             $table->unsignedBigInteger('client_id');
@@ -21,9 +22,7 @@ return new class extends Migration
             $table->boolean('is_hidden')->default(false);
             $table->timestamps();
 
-            $table->index(['is_hidden', 'sort']);
-
-            $table->index(['client_id', 'client_project_id']);
+            $table->index(['client_id', 'client_project_id', 'is_hidden', 'sort'], 'board_index');
 
             $table->foreign('client_id')
                 ->references('id')
@@ -33,7 +32,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('client_projects')
                 ->onDelete('cascade');
+
+            $table->engine = "InnoDB";
         });
+
+        DB::statement('ALTER TABLE boards ADD FULLTEXT fulltext_index (name)');
     }
 
     /**
