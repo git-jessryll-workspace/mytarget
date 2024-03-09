@@ -13,24 +13,13 @@ class SearchNamePipe extends HandleQueryPipe
     protected function queryBuilder(Builder $query): Builder
     {
         $searchName = request('search_query') ?? "";
-        if (!empty($searchName)) {
+        if (empty($searchName)) return $query;
 
-            $query->where(function (Builder $q) use ($searchName){
-                return $q->whereRaw("MATCH (project_name) AGAINST (? IN BOOLEAN MODE)", [$searchName."*"]);
-            });
-        }
-        Log::info('Query: ' . $query->toSql());
-        Log::info('Bindings: ' . implode(', ', $query->getBindings()));
-return $query;
-        // if (!empty($searchName)) {
-        //     $query->where(function (Builder $q) use ($searchName) {
-        //         $q->where('client_projects.project_name', 'LIKE', "%$searchName%")
-        //             ->orWhereHas('client', function (Builder $qc) use ($searchName) {
-        //                 $qc->where('clients.name', 'LIKE', "%$searchName%");
-        //             });
-        //     });
-
-        // }
-        // return $query;
+        return $query->where(function (Builder $q) use ($searchName) {
+            $q->where('client_projects.project_name', 'LIKE', "%$searchName%")
+                ->orWhereHas('client', function (Builder $qc) use ($searchName) {
+                    $qc->where('clients.name', 'LIKE', "%$searchName%");
+                });
+        });
     }
 }

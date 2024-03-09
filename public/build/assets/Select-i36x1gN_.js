@@ -1,0 +1,1 @@
+import{j as r}from"./app-Go47YkBo.js";function l({options:a,...d}){return r.jsx("select",{...d,className:"dark:bg-[#3d4451] text-sm w-full py-2 px-1 rounded-md border border-gray-300 dark:border-gray-700",children:a.map(e=>r.jsx("option",{value:e.value,children:e.text},e.value))})}export{l as S};

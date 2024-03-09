@@ -16,12 +16,10 @@ class SearchTaskNameAcronymPipe extends HandleQueryPipe
         $searchTaskQuery = request('search_query_task') ?? "";
 
         if (empty($searchTaskQuery)) return $query;
-
         return $query->where(function (Builder $q) use ($searchTaskQuery) {
             $this->applyFulltextSearchToQuery($q, $searchTaskQuery."*", ['tasks.name'])
                 ->orWhereHas('acronym', function (Builder $ql) use ($searchTaskQuery) {
                     if (empty($searchTaskQuery)) return $ql;
-                    $searchTaskQuery.="*";
                     return $this->applyFulltextSearchToQuery($ql, "\".$searchTaskQuery . *\"", 'acronyms.acro_counter');
                 });
         });

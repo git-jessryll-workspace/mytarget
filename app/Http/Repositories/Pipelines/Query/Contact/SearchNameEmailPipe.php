@@ -15,7 +15,7 @@ class SearchNameEmailPipe extends HandleQueryPipe
         if (empty($searchKeywords)) return $query;
 
         return $query->where(function (Builder $query1) use ($searchKeywords) {
-            return $this->applyFulltextSearchToQuery($query1, $searchKeywords . "*", $this->keys);
+            return $this->applyFulltextSearchToQuery($query1, $searchKeywords . "*", ["contacts.name", "contacts.email", "contacts.contact_number"]);
         });
     }
 }
